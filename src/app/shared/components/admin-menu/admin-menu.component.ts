@@ -1,0 +1,15 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-admin-menu',
+  imports: [],
+  templateUrl: './admin-menu.component.html',
+  styleUrl: './admin-menu.component.css'
+})
+export class AdminMenuComponent {
+  constructor(private router:Router){}
+  navigateTo(path:string):void{
+    this.router.navigate([path])
+  }
+}
