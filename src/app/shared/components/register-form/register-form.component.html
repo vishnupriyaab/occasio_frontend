@@ -1,0 +1,170 @@
+<div
+  class="bg-white bg-opacity-55 shadow-lg min-h-[440px] w-[430px] ml-20 mr-8 rounded-lg mt-2 mb-[20px] pt-5"
+>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <p class="text-sm ml-8 mb-1">Name</p>
+      <input
+        formControlName="name"
+        type="text"
+        placeholder="Name"
+        required
+        class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+      />
+      @if(hasError('name', 'required') && (registerForm.get('name')?.dirty ||
+      registerForm.get('name')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        This field is required
+      </p>
+      }@else if(hasError('name', 'minlength') &&
+      (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Name must be longer than 3 characters
+      </p>
+      }@else if (hasError('name', 'allSpaces') && !hasError('name', 'required')
+      && (registerForm.get('name')?.dirty ||
+      registerForm.get('name')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        This field cannot contain only spaces
+      </p>
+      }@else if(hasError('name', 'alphabetsOnly') &&
+      (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Name must not contain numbers, special characters and unwanted spaces
+      </p>
+      }@else if(hasError('name', 'repeatedCharacters') && !hasError('name',
+      'required') && (registerForm.get('name')?.dirty ||
+      registerForm.get('name')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Name cannot contain numerous repeated characters.
+      </p>
+      }
+
+      <p class="text-sm ml-8 mb-1 mt-3">Email</p>
+      <input
+        formControlName="email"
+        type="text"
+        placeholder="Email"
+        required
+        class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+      />
+      @if(hasError('email', 'required') && (registerForm.get('email')?.dirty ||
+      registerForm.get('email')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">Email is required</p>
+      }@else if(hasError('email', 'allSpaces') &&
+      (registerForm.get('email')?.dirty ||
+      registerForm.get('email')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Email cannot contain spaces
+      </p>
+      }@else if(hasError('email', 'email') && (registerForm.get('email')?.dirty
+      || registerForm.get('email')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Please enter a valid email address
+      </p>
+      }
+
+      <p class="text-sm ml-8 mb-1 mt-3">Phone Number</p>
+      <input
+        formControlName="mobile"
+        type="text"
+        placeholder="Phone number"
+        required
+        class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+        pattern="[0-9]*"
+        inputmode="numeric"
+      />
+      @if(hasError('mobile', 'required') && (registerForm.get('mobile')?.dirty
+      || registerForm.get('mobile')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Mobile number is required
+      </p>
+      }@else if(hasError('mobile', 'allSpaces') &&
+      (registerForm.get('mobile')?.dirty ||
+      registerForm.get('mobile')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Mobile cannot contain spaces
+      </p>
+      }@else if(hasError('mobile', 'invalidMobile') &&
+      (registerForm.get('mobile')?.dirty ||
+      registerForm.get('mobile')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Invalid mobile number
+      </p>
+      }
+
+      <p class="text-sm ml-8 mb-1 mt-3">Password</p>
+      <input
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        required
+        class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+      />
+      @if(hasError('password', 'required') &&
+      (registerForm.get('password')?.dirty ||
+      registerForm.get('password')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Password is required
+      </p>
+      }@else if(hasError('password', 'allSpaces') &&
+      (registerForm.get('password')?.dirty ||
+      registerForm.get('password')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Password cannot contain spaces
+      </p>
+      }@else if(hasError('password', 'strongPassword') &&
+      (registerForm.get('password')?.dirty ||
+      registerForm.get('password')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Password must be at least 8 characters long and include: an uppercase
+        letter, a lowercase letter, a number, and a special character.
+      </p>
+      }
+
+      <p class="text-sm ml-8 mb-1 mt-3">Confirm Password</p>
+      <input
+        formControlName="confirmPassword"
+        type="password"
+        placeholder="Confirm password"
+        required
+        class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500"
+      />
+      @if(hasError('confirmPassword', 'required') &&
+      (registerForm.get('confirmPassword')?.dirty ||
+      registerForm.get('confirmPassword')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Confirm password is required
+      </p>
+      }@else if(hasError('confirmPassword', 'allSpaces') &&
+      (registerForm.get('confirmPassword')?.dirty ||
+      registerForm.get('confirmPassword')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        confirmpassword cannot contain spaces
+      </p>
+      }@else if(registerForm.hasError('passwordMismatch') &&
+      (registerForm.get('confirmPassword')?.dirty ||
+      registerForm.get('confirmPassword')?.touched)){
+      <p class="mt-1 ml-5 text-sm font-light text-red-500">
+        Password and Confirm Password do not match.
+      </p>
+      }
+    </div>
+
+    <div class="flex justify-center mt-8">
+      <button
+        type="submit"
+        class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-8 mb-[20px] rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+      >
+        Sign Up
+      </button>
+    </div>
+  </form>
+  <!------------------------------------------------------------>
+</div>
+
+<!-- OTP Modal Component here -->
+@if (showOtpModal) {
+    <app-otp [showOtpModal]="showOtpModal" (cancel)="onOtpCancel()" [formType]="formType"></app-otp>
+    }
+    <!------------------------------>

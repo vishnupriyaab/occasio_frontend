@@ -1,0 +1,106 @@
+<!------------Searching input-------------->
+<div class="flex items-center justify-center mt-7">
+  <div
+    class="w-[950px] h-[32px] flex items-center justify-between border border-gray-300 rounded-md shadow-md bg-white"
+  >
+    <input
+      type="text"
+      placeholder="Search..."
+      class="flex-grow ml-4 text-gray-600 font-Roboto text-sm outline-none bg-transparent"
+    />
+    <button class="mr-4 text-gray-500 hover:text-black">
+      <img src="/searchimg.png" alt="search" class="h-5 w-5" />
+    </button>
+  </div>
+</div>
+<!--------------------------------------->
+
+<!----------------------client listing----------------------->
+
+<div class="flex items-center justify-center mt-5">
+  <div
+    class="w-[950px] bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+  >
+    <table class="table-auto w-full border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Sl no
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Profile Img
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Name
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            email
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Status
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Block / Unblock
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="hover:bg-gray-50 cursor-pointer"
+          *ngFor="let user of users; let i = index"
+        >
+          <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
+          @if(user.imageUrl){
+          <td
+            class="px-4 py-2 text-center text-gray-600 flex items-center justify-center cursor-pointer"
+          >
+            <img
+              [src]="user.imageUrl"
+              alt="user.png"
+              class="rounded-full h-10 w-10"
+            />
+          </td>
+          }@else {
+          <td
+            class="px-4 py-2 text-center text-gray-600 flex items-center justify-center cursor-pointer"
+          >
+            <img
+              hre
+              src="user.png"
+              alt="user.png"
+              class="rounded-full h-10 w-10"
+            />
+          </td>
+          }
+          <td class="px-4 py-2 text-center text-gray-600 cursor-pointer">
+            {{ user.name }}
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600 cursor-pointer">
+            {{ user.email }}
+          </td>
+
+          @if(user.isActivated){
+          <td class="px-4 py-2 text-center cursor-pointer">
+            <p class="text-green-700 text-sm">Online</p>
+          </td>
+          }@else{
+          <td class="px-4 py-2 text-center cursor-pointer">
+            <p class="text-red-700 text-sm">Offline</p>
+          </td>
+          }
+          @if(user.isBlocked){
+            <td class="px-4 py-2 text-center cursor-pointer">
+                <button (click)="toggleBlockStatus(user._id,user.isBlocked)" class="bg-green-600 text-white rounded-md w-20">Unblock</button>
+            </td>
+          }@else {
+            <td class="px-4 py-2 text-center cursor-pointer">
+                <button (click)="toggleBlockStatus(user._id,user.isBlocked)" class="bg-red-700 text-white rounded-md w-14">Block</button>
+            </td>
+          }
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!----------------------------------------------------------->

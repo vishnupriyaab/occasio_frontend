@@ -7,23 +7,45 @@
         <div class="flex items-center justify-between w-full max-w-7xl px-20">
             <!-- Left Menu -->
             <div class="flex gap-24">
-                <a href="#about" class="text-black font-normal hover:underline" style="font-family: Kay Pho Du, serif;">ABOUT</a>
-                <a href="#services" class="text-black font-medium hover:underline" style="font-family: Kay Pho Du, serif;">SERVICES</a>
-                <a href="#kind-words" class="text-black font-medium hover:underline" style="font-family: Kay Pho Du, serif;">KIND WORDS</a>
+                <a href="#about" class="text-black font-normal hover:underline font-KayPhoDu">ABOUT</a>
+                <a href="#services" class="text-black font-medium hover:underline font-KayPhoDu">SERVICES</a>
+                <a href="#kind-words" class="text-black font-medium hover:underline font-KayPhoDu">KIND WORDS</a>
             </div>
 
             <!-- Logo and Title -->
             <div class="flex flex-col items-center">
                 <img src="logo.png" alt="logo" class="h-12 w-auto mb-2">
-                <p class="text-4xl font-semibold text-black" style="font-family: 'Kaushan Script', serif;">Occasio</p>
+                <p class="text-4xl font-semibold text-black font-kaushan">Occasio</p>
                 <p class="text-black text-sm font-semibold">EVENTS</p>
             </div>
 
             <!-- Right Menu -->
             <div class="flex gap-24">
-                <a href="#gallery" class="text-black font-medium hover:underline" style="font-family: Kay Pho Du, serif;">GALLERY</a>
-                <a href="#contact" class="text-black font-medium hover:underline" style="font-family: Kay Pho Du, serif;">CONTACT</a>
-                <a href="#profile" class="text-black font-medium hover:underline" style="font-family: Kay Pho Du, serif;">PROFILE</a>
+                <a href="#gallery" class="text-black font-medium hover:underline font-KayPhoDu">GALLERY</a>
+                <a href="#contact" class="text-black font-medium hover:underline font-KayPhoDu">CONTACT</a>
+                  <div class="profile-dropdown" *ngIf="isLoggedIn; else signupLink">
+                    <div class="profile-container">
+                      <a href="#profile" class="text-black font-medium hover:underline font-KayPhoDu profile-link">
+                        PROFILE
+                      </a>
+                      <button 
+                        class="dropdown-button" 
+                        (click)="dropDown()" 
+                        aria-label="Toggle Dropdown">
+                        ▼
+                      </button>
+                    </div>
+                    <div class="dropdown-menu cursor-pointer" *ngIf="isDropdownOpen">
+                      <a 
+                        class="text-black font-medium hover:underline font-KayPhoDu" 
+                        (click)="logout()">
+                        LOGOUT
+                      </a>
+                    </div>
+                  </div>
+                  <ng-template #signupLink>
+                    <a routerLink="/user-register" class="text-black font-medium hover:underline font-KayPhoDu">SIGN UP</a>
+                  </ng-template>
             </div>
         </div>
     </div>
@@ -227,32 +249,32 @@
                 <p class="text-white text-xs">occasioevents&commat;gmail.com</p>
             </div>
             <div>
-                <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg" style="font-family: Kay Pho Du, serif;">Useful Links</p>
+                <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg font-KayPhoDu">Useful Links</p>
                 <div class="flex justify-between gap-16 text-sm">
                     <div class="w-2/4">
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Home</p>
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">About</p>
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Services</p>
+                        <p class="text-white mb-3 font-KayPhoDu">Home</p>
+                        <p class="text-white mb-3 font-KayPhoDu">About</p>
+                        <p class="text-white mb-3 font-KayPhoDu">Services</p>
                     </div>
                     <div class="w-2/4">
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Kindwords</p>
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Gallery</p>
-                        <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Contact</p>
+                        <p class="text-white mb-3 font-KayPhoDu">Kindwords</p>
+                        <p class="text-white mb-3 font-KayPhoDu">Gallery</p>
+                        <p class="text-white mb-3 font-KayPhoDu">Contact</p>
                     </div>
                 </div>
         </div>
         <div>
             <div class="w-[250px]">
-                <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg" style="font-family: Kay Pho Du, serif;">Our Events</p>
+                <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg font-KayPhoDu" >Our Events</p>
                 <div class="flex flex-col items-center text-sm">
-                    <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Wedding Events</p>
-                    <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Birthday Events</p>
-                    <p class="text-white mb-3" style="font-family: Kay Pho Du, serif;">Live shows</p>
+                    <p class="text-white mb-3 font-KayPhoDu">Wedding Events</p>
+                    <p class="text-white mb-3 font-KayPhoDu">Birthday Events</p>
+                    <p class="text-white mb-3 font-KayPhoDu">Live shows</p>
                 </div>
             </div>
         </div>
         <div class="w-4/4">
-            <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg" style="font-family: Kay Pho Du, serif;">Follow Us</p>
+            <p class="flex justify-center items-center mb-4 text-white font-semibold text-lg font-KayPhoDu">Follow Us</p>
             <div class="flex justify-center gap-5">
                 <img src="instagram.png" alt="instagram" class="h-10 w-10 mt-2">
                 <img src="twitter.png" alt="twitter" class="h-14 w-14">

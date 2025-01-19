@@ -1,70 +1,38 @@
-<div class="w-screen relative flex">
-    <img src="bg.jpg" alt="Background Image" class="h-full w-full object-cover absolute z-0" />
-    <!------------left side------------>
-    <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10">
-        <div class="h-60 w-60 flex flex-col items-center justify-center">
-            <img src="logo.png" alt="logo" class="h-24 w-auto">
-            <p class="text-6xl text-black" 
-            style="font-family: 'Kaushan Script', serif; 
-            font-weight: 400; 
-            font-style: normal;">Occasio</p>
-            <p class="text-black text-sm font-semibold">
-                EVENTS
-            </p>
-        </div>
+<div class="flex">
+  <img
+    src="bg.jpg"
+    alt="Background Image"
+    class="h-full w-full top-0 left-0 object-cover fixed z-[-1]"
+  />
+  <!------------left side------------>
+  <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center">
+    <div class="h-60 w-60 flex flex-col items-center justify-center">
+      <img src="logo.png" alt="logo" class="h-24 w-auto" />
+      <p class="text-6xl text-black font-kaushan">Occasio</p>
+      <p class="text-black text-sm font-semibold">EVENTS</p>
     </div>
-    <!----------right side----------->
-    <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10">
-        <div class="bg-white bg-opacity-60 h-[700px] w-[600px] m-20 rounded-lg ">
-            <p class="text-yellow-600 mt-12 mb-2 text-center font-bold text-4xl" style="font-family: Kaushan Script, serif;
-            font-weight: 400;
-            font-style: normal;">Welcome</p>
-            <div class="flex justify-center items-center mt-1 space-x-2">
-                <p class="text-sm mb-3">Already have an account?</p>
-                <a href="#" class="text-blue-600 text-sm mb-3">Sign in</a>
-            </div>
-            <div class="bg-white bg-opacity-55 shadow-lg h-[540px] w-[430px] ml-20 mr-8 rounded-lg mt-2 pt-5">
-                <div class="flex items-start justify-center bg-white border border-blue-400 rounded-lg px-24 py-2 ml-5 mr-5 hover:shadow-lg cursor-pointer mt-1">
-                    <img src="google.png" alt="Google" class="h-5 w-5 mr-3">
-                    <span class="text-blue-700 font-normal text-sm ">Sign up with Google</span>
-                </div>
-                <div class="flex items-center my-4">
-                    <div class="flex-grow border-t border-gray-500"></div>
-                    <span class="px-4 text-gray-500 text-sm font-normal">or continue with email</span>
-                    <div class="flex-grow border-t border-gray-500"></div>
-                </div>
-                
-                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <p class="text-sm ml-8 mb-1">Name</p>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <input type="text" placeholder="Name" class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-                    
-                    <p class="text-sm ml-8 mb-1 mt-3">Email</p>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <input type="email" placeholder="Email" class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-                    
-                    <p class="text-sm ml-8 mb-1 mt-3">Phone Number</p>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <input type="tel" placeholder="Phone number" class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500" 
-                    pattern="[0-9]*" inputmode="numeric" />
-                    
-                    <p class="text-sm ml-8 mb-1 mt-3">Password</p>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <input type="password" placeholder="Password" class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-                    
-                    <p class="text-sm ml-8 mb-1 mt-3">Confirm Password</p>
-                    <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                    <input type="password" placeholder="Confirm password" class="h-8 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-                </div>
-                <div class="flex justify-center mt-8">
-                    <button class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-8 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300">
-                        Sign Up
-                    </button>
-                </div>
-            </form>
-                <!------------------------------------------------------------>
-            </div>
-        </div>
+  </div>
+  <!----------right side----------->
+  <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center">
+    <div class="bg-white bg-opacity-60 min-h-[600px] w-[590px] m-20 rounded-lg">
+      <p
+        class="text-yellow-600 mt-12 mb-2 text-center font-bold text-4xl font-kaushan"
+      >
+        Welcome
+      </p>
+      <div class="flex justify-center items-center mt-1 space-x-2">
+        <p class="text-sm mb-3">Already have an account?</p>
+        <a routerLink="/user-login" href="#" class="text-blue-600 text-sm mb-3"
+          >Sign in</a
+        >
+      </div>
+
+      <!---------register form--------->
+
+      <app-register-form [formType]="'user'"></app-register-form>
+      
+      <!------------------------------->
+
     </div>
+  </div>
+</div>

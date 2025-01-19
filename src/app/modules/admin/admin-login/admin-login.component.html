@@ -1,33 +1,18 @@
 <div class="bg-white bg-opacity-60 flex-1 flex items-center justify-center z-10">
     <div class="bg-white bg-opacity-60 h-[500px] w-[600px] rounded-lg ">
         <div class="flex justify-center">
-            <div class="h-52 w-60 flex flex-col items-center justify-center">
+            <div class="h-52 w-60 flex flex-col items-center justify-center mt-5">
                 <img src="logo.png" alt="logo" class="h-16 w-auto">
-                <p class="text-4xl text-black" 
-                style="font-family: 'Kaushan Script', serif; 
-                font-weight: 300; 
-                font-style: normal;">Occasio</p>
+                <p class="text-4xl text-black font-kaushan">Occasio</p>
                 <p class="text-black text-sm font-semibold">
                     EVENTS
                 </p>
             </div>
         </div>
-        <div class="bg-white bg-opacity-55 shadow-lg h-[300px] w-[430px] ml-20 mr-8 rounded-lg pt-1">
-            <p class="text-yellow-600 mt-6 mb-5 text-center font-bold text-4xl" >Welcome Admin</p>
-            <div>
-                <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                <p class="text-sm ml-8 mb-1">Email</p>
-                <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                <input type="email" placeholder="Email" class="h-9 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-                <p class="text-sm ml-8 mt-3 mb-1">Password</p>
-                <p class="text-xs text-red-600 ml-8 mb-1 hidden">Error</p>
-                <input type="password" placeholder="Password" class="h-9 w-96 border ml-5 border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-500">
-            </div>
-            <div class="flex justify-center mt-4">
-                <button class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-8 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300">
-                    Sign In
-                </button>
-            </div>
+        <div class="bg-white bg-opacity-55 w-[430px] ml-20 mr-8">
+            <p class="text-yellow-600 mb-5 text-center font-bold text-4xl" >Welcome Admin</p>
+            <app-login-form [formType]="'admin'"></app-login-form>
+
         </div>
     </div>
 </div>

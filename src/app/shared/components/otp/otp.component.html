@@ -1,0 +1,44 @@
+<!-- <app-toast></app-toast> -->
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-center text-lg font-bold">Enter OTP</h2>
+        <p class="text-center text-sm">Please enter 4-digit code sent to you at registered Email.</p>
+        <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+          <div class="mt-4">
+            <input
+              type="text"
+              formControlName="otp"
+              name="otp"
+              placeholder="Enter OTP"
+              maxlength="4"
+              pattern="^[0-9]{4}$"
+              inputmode="numeric"
+              class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-indigo-600"
+            />
+            @if(hasError('otp','required') && (otpForm.get('otp')?.dirty ||
+            otpForm.get('otp')?.touched)){
+                <p class="text-red-500 text-sm mt-1">OTP is required.</p>
+            }@else if(hasError('otp','pattern') && (otpForm.get('otp')?.dirty ||
+            otpForm.get('otp')?.touched)){
+                <p class="text-red-500 text-sm mt-1">Please enter a valid 4-digit OTP.</p>
+            }
+          </div>
+          <div class="mt-6 flex justify-between">
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+              Verify
+            </button>
+        </div>
+        <p class="mt-1 mr-7 text-xs items-end flex justify-end">Time remaining:{{timer}} seconds</p>
+        </form>
+      </div>
+    </div>

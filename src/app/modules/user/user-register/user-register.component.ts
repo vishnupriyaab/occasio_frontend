@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup } from "@angular/forms";
+import { RegisterFormComponent } from '../../../shared/components/register-form/register-form.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-register',
-  imports: [FormGroup],
+  standalone: true,
+  imports: [RouterModule , RegisterFormComponent],
   templateUrl: './user-register.component.html',
-  styleUrl: './user-register.component.css'
+  styleUrl: './user-register.component.css',
 })
-export class UserRegisterComponent {
-
-}
+export class UserRegisterComponent {}

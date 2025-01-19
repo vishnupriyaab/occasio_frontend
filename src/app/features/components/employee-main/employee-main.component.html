@@ -1,0 +1,11 @@
+<div class="min-h-screen w-screen bg-black flex">
+    <!-- <app-admin-menu [isDarkMode]="isDarkMode" [userRole]="'employee'"></app-admin-menu> -->
+    <app-menu-adm-emplo [isDarkMode]="isDarkMode" [userRole]="'employee'"></app-menu-adm-emplo>
+    <div class="flex-1 h-fit">
+        <app-admin-nav [Pagename]="'ods'"></app-admin-nav>
+        <div>
+          <router-outlet></router-outlet>
+        </div>
+    </div>
+  </div>
+  

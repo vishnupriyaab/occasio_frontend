@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{html,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        kaushan: ['Kaushan Script', 'serif'],
+        KayPhoDu: ['Kay Pho Du', 'serif'],
+        Roboto: ['Roboto', 'serif'],  
+      }
+    },
   },
   plugins: [],
 }

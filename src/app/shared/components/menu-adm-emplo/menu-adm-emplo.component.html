@@ -1,0 +1,110 @@
+<div class="flex min-h-screen flex-1 flex-col border border-r-1 h-full">
+  <div
+    class="w-64 "
+    [ngClass]="{ 'border-white': isDarkMode, 'border-gray-200': !isDarkMode }"
+  >
+    <div class="flex justify-center">
+      <div class="h-40 w-60 flex flex-col items-center justify-center">
+        <img src="logo.png" alt="logo" class="h-14 w-auto" />
+        <p
+          class="text-3xl"
+          [ngClass]="{ 'text-white': isDarkMode, 'text-black': !isDarkMode }"
+          style="
+            font-family: 'Kaushan Script', serif;
+            font-weight: 300;
+            font-style: normal;
+          "
+        >
+          Occasio
+        </p>
+        <p
+          [ngClass]="{ 'text-white': isDarkMode, 'text-black': !isDarkMode }"
+          class="text-xs font-semibold"
+        >
+          EVENTS
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="userRole === 'admin'">
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('admin/dashboard')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="dashboard.png" alt="dashboard" class="h-6 w-6" />
+          Dashboard
+        </button>
+      </div> 
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('admin/clients')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="users.png" alt="events" class="h-6 w-6" />
+          Clients
+        </button>
+      </div>
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('admin/employees')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="employee.png" alt="events" class="h-6 w-6" />
+          Employees
+        </button>
+      </div>
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('admin/event-management')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="events.png" alt="events" class="h-6 w-6" />
+          Events & Packages
+        </button>
+      </div>
+    </div>
+    <div *ngIf="userRole === 'employee'">
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('employee/dashboard')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="dashboard.png" alt="dashboard" class="h-6 w-6" />
+          Dashboard
+        </button>
+      </div>
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('employee/event')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="events.png" alt="events" class="h-6 w-6" />
+          Events & Packages
+        </button>
+      </div>
+      <div class="flex justify-center mb-3">
+        <button
+          (click)="navigateTo('employee/users-listing')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="users.png" alt="users" class="h-6 w-6" />
+          Clients
+        </button>
+      </div>
+    </div>
+    <!----------------Logout---------------->
+    <div class="flex justify-center mb-3">
+      <button
+        class="flex border justify-center items-center gap-1 h-9 w-28 rounded-lg shadow-lg"
+        [ngClass]="
+          isDarkMode
+            ? 'border-white bg-white text-black hover:bg-gray-200 hover:text-black'
+            : 'border-black bg-black text-white hover:bg-gray-500 hover:text-black'
+        "
+      >
+        Log out
+      </button>
+    </div>
+  </div>
+</div>

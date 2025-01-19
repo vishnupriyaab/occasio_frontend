@@ -1,0 +1,261 @@
+<!--------Add Event Button---------->
+<div class="flex item-center justify-end pr-12">
+  <button
+    (click)="toggleModal()"
+    class="w-[100px] h-[28px] mt-5 bg-black flex items-center justify-center rounded-md shadow-2xl text-white cursor-pointer"
+  >
+    Add Events
+  </button>
+</div>
+<!---------------------------------->
+
+<!-- Event Modal -->
+<div
+  *ngIf="isModalOpen"
+  class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="modal-content w-[500px] bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-center mb-4">
+      {{ modalMode === "add" ? "Add Event" : "Edit Event" }}
+    </h2>
+
+    <!---------loading spinnner------------>
+    <div *ngIf="isLoading" class="loading-overlay">
+      <app-loading></app-loading>
+    </div>
+    <!----------------------------------------->
+
+    <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+      <div class="mb-4">
+        <label for="eventName" class="block font-semibold mb-1"
+          >Name of Event</label
+        >
+        <input
+          type="text"
+          formControlName="eventName"
+          placeholder="Enter event name"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        @if(hasError('eventName', 'required') &&
+        (eventForm.get('eventName')?.dirty ||
+        eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Name of event is required
+        </p>
+        }@else if(hasError('eventName', 'allSpaces') &&
+        (eventForm.get('eventName')?.dirty ||
+        eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Event name cannot contain spaces
+        </p>
+        }@else if(hasError('eventName', 'minLength') &&
+        (eventForm.get('eventName')?.dirty ||
+        eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Event name must be longer than 3 characters
+        </p>
+        }
+      </div>
+      <div class="mb-4">
+        <label for="description" class="block font-semibold mb-1"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          placeholder="Enter event description"
+          formControlName="description"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        ></textarea>
+        @if(hasError('description', 'required') &&
+        (eventForm.get('description')?.dirty ||
+        eventForm.get('description')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Description is required
+        </p>
+        }
+      </div>
+      <div class="mb-4">
+        <label for="uploadImage" class="block font-semibold mb-1"
+          >Upload Image</label
+        >
+        <input
+          type="file"
+          id="uploadImage"
+          formControlName="img"
+          (change)="onFileSelect($event)"
+          accept="image/jpeg,image/png,image/jpg,image/gif"
+          class="w-full border border-gray-300 rounded-lg p-2"
+        />
+
+        <!-- Updated preview section with delete button -->
+        <div *ngIf="imagePreviewUrl" class="mt-2 relative">
+          <div class="relative inline-block">
+            <img
+              [src]="imagePreviewUrl"
+              alt="Preview"
+              class="max-h-40 rounded-lg shadow-sm border border-gray-200"
+            />
+            <button
+              type="button"
+              (click)="removePreview()"
+              class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 focus:outline-none"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        @if(hasError('img', 'required') && (eventForm.get('img')?.dirty ||
+        eventForm.get('img')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Image is required
+        </p>
+        }
+      </div>
+      <div class="flex justify-between">
+        <button
+          type="button"
+          (click)="toggleModal()"
+          class="px-4 py-2 bg-white border border-black rounded-lg shadow hover:bg-gray-100"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-black text-white rounded-lg shadow hover:bg-gray-900"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!------------Searching input-------------->
+<div class="flex items-center justify-center mt-7">
+  <div
+    class="w-[950px] h-[32px] flex items-center justify-between border border-gray-300 rounded-md shadow-md bg-white"
+  >
+    <input
+      type="text"
+      placeholder="Search..."
+      class="flex-grow ml-4 text-gray-600 font-Roboto text-sm outline-none bg-transparent"
+    />
+    <button class="mr-4 text-gray-500 hover:text-black">
+      <img src="/searchimg.png" alt="search" class="h-5 w-5" />
+    </button>
+  </div>
+</div>
+<!--------------------------------------->
+
+<!-----------Show Events------------>
+
+<div class="flex items-center justify-center mt-5">
+  <div
+    class="max-w-[950px] flex-1 m-5 bg-white border border-gray-300 rounded-lg shadow-lg overflow-y-auto"
+  >
+    <table class="table-auto w-full border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Sl no
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Image
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Event Name
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Packages
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Status
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Block/Unblock
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="hover:bg-gray-50"
+          *ngFor="let event of events; let i = index"
+        >
+          <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <img
+              [src]="event.image"
+              alt="event.eventName"
+              class="rounded-full h-10 w-10"
+            />
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            {{ event.eventName }}
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <button
+              (click)="packageVisibility(event._id)"
+              class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
+            >
+              Available packages
+            </button>
+            <!--------PACKAGE DIV---------->
+            <div
+              [ngClass]="{ hidden: selectedEventId !== event._id }"
+              class="flex items-center"
+            >
+              <app-package-management #packageManager></app-package-management>
+            </div>
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <div class="flex items-center justify-center gap-x-2">
+              <div
+                class="h-2 w-2 rounded-full"
+                [ngClass]="event.isActive ? 'bg-green-500' : 'bg-red-500'"
+              ></div>
+              <p>{{ event.isActive ? "Active" : "Inactive" }}</p>
+            </div>
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <div class="flex items-center justify-center">
+              <button
+                (click)="blockStatus(event._id, event.isBlocked)"
+                [disabled]="isLoading"
+                class="px-3 py-1 rounded"
+                [ngClass]="
+                  event.isBlocked
+                    ? 'bg-green-500 text-white'
+                    : 'bg-red-500 text-white'
+                "
+              >
+                {{ event.isBlocked ? "Unblock" : "Block" }}
+              </button>
+            </div>
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600 gap-x-2">
+            <div class="flex items-center justify-center">
+              <button
+                class="px-3 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                (click)="toggleModal(event)"
+              >
+                Edit
+              </button>
+              <button
+                class="px-3 py-1 text-white bg-red-500 rounded-md hover:bg-red-600 ml-2"
+                (click)="deleteEvent(event._id)"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!---------------------------------->
