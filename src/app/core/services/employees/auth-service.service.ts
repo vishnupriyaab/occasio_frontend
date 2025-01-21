@@ -17,19 +17,19 @@ export class AuthServiceService {
   employeeRegister(employeeData:IEmployeeregister):Observable<IAuthAPISucessfullResponse>{
     return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}employee/register`, employeeData);
   }
+  login(email:string,password:string):Observable<LoginResponse>{
+    return this.http.post<LoginResponse>(`${this.baseUrl}employee/login`, { email, password })
+  }
   verifyOtp(email:string,otp:string):Observable<OtpResponse>{
-      return this.http.post<OtpResponse>(`${this.baseUrl}employee/verifyEmployeeOtp`, { email, otp } )
-    }
-    login(email:string,password:string):Observable<LoginResponse>{
-      return this.http.post<LoginResponse>(`${this.baseUrl}employee/login`, { email, password })
-    }
+    return this.http.post<OtpResponse>(`${this.baseUrl}employee/verifyEmployeeOtp`, { email, otp } )
+  }
+  forgotPassword(email:string):Observable<{message:string}>{
+    return this.http.post<{message:string}>(`${this.baseUrl}employee/forgotPassword`,{ email })
+  }
+  resetPassword(newPassword:string,token:string):Observable<{message:string}>{
+    return this.http.post<{message:string}>(`${this.baseUrl}employee/resetPassword`,{ password: newPassword, token})
+  }
   setLoggedIn(status: string){
-      localStorage.setItem( 'isLoggedIn', status );
-    }
-    forgotPassword(email:string):Observable<{message:string}>{
-      return this.http.post<{message:string}>(`${this.baseUrl}employee/forgotPassword`,{ email })
-    }
-    resetPassword(newPassword:string,token:string):Observable<{message:string}>{
-      return this.http.post<{message:string}>(`${this.baseUrl}employee/resetPassword`,{ password: newPassword, token})
-    }
+    localStorage.setItem( 'isLoggedIn', status );
+  }
 }

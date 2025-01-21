@@ -31,7 +31,7 @@ export class EventManagementComponent implements OnInit {
   isModalOpen = false;
   isLoading = false;
   events: any[] = [];
-  packages: any[] = []; 
+  packages: any[] = [];
   isLoadingPackages = false;
   selectedEventId: string | null = null;
   eventForm!: FormGroup;
@@ -75,25 +75,50 @@ export class EventManagementComponent implements OnInit {
     this.imagePreviewUrl = null;
     this.selectedImg = null;
     this.eventForm.patchValue({
-      img: null
+      img: null,
     });
-    const fileInput = document.getElementById('uploadImage') as HTMLInputElement;
+    const fileInput = document.getElementById(
+      'uploadImage'
+    ) as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
     }
   }
 
+  async convertUrlToFile(imageUrl: string): Promise<File> {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      const filename = imageUrl.split('/').pop() || 'image.jpg';
+      const file = new File([blob], filename, { type: blob.type });
+      return file;
+    } catch (error) {
+      console.error('Error converting URL to File:', error);
+      throw error;
+    }
+  }
 
   async toggleModal(event: any = null) {
     this.isModalOpen = !this.isModalOpen;
     if (event) {
       this.modalMode = 'edit';
       this.selectedEvent = event;
-      this.imagePreviewUrl = event.image; // img Url
+      this.imagePreviewUrl = event.image;
       this.eventForm.patchValue({
         eventName: event.eventName,
         description: event.description,
+        // img: null,
       });
+
+      // if (event.image) {
+      //   // Fetch the existing image as a Blob
+      //   const imageFile = await this.convertUrlToFile(event.image);
+      //   this.imagePreviewUrl = event.image;
+      //   console.log('Converted file:', imageFile);
+      //   //here i got image file. i want to pass this into edit event patch value how?
+        
+      // }
       this.selectedEventId = event.id;
       console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
     } else {
@@ -128,7 +153,7 @@ export class EventManagementComponent implements OnInit {
           img: null,
         });
         this.selectedImg = null;
-        this.imagePreviewUrl = null; 
+        this.imagePreviewUrl = null;
         return;
       }
 
@@ -146,11 +171,11 @@ export class EventManagementComponent implements OnInit {
           img: null,
         });
         this.selectedImg = null;
-        this.imagePreviewUrl = null; 
+        this.imagePreviewUrl = null;
         return;
       }
 
-      this.imagePreviewUrl = URL.createObjectURL(file); 
+      this.imagePreviewUrl = URL.createObjectURL(file);
       this.selectedImg = file;
       this.eventForm.patchValue({
         img: file,
@@ -189,10 +214,10 @@ export class EventManagementComponent implements OnInit {
 
     if (this.selectedEventId) {
       //update Event
-      this.isLoading = true;
       this.eventAuthService
         .updateEvent(this.selectedEventId, formData)
         .subscribe((res) => {
+          this.isLoading = true;
           console.log(res, 'responseee');
           if (res.statusCode === 200) {
             const toastOption: IToastOption = {
@@ -203,14 +228,14 @@ export class EventManagementComponent implements OnInit {
             this.toastService.showToast(toastOption);
           }
           this.toggleModal();
-          this.fetchEvents(); 
+          this.fetchEvents();
         });
     } else {
       this.isLoading = true;
       this.eventAuthService.createEvent(formData).subscribe(
         (response) => {
           console.log(response, 'response');
-          // this.isLoading = false; 
+          // this.isLoading = false;
           if (response.statusCode === 201) {
             const toastOption: IToastOption = {
               severity: 'success-toast',
@@ -228,16 +253,19 @@ export class EventManagementComponent implements OnInit {
               detail: 'An unexpected error occurred while creating the event.',
             };
             this.toastService.showToast(toastOption);
+            this.toggleModal();
             console.error('Unexpected status code:', response?.status);
           }
         },
         (error) => {
+          console.log(error);
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
             detail: error.error?.message || 'Failed to create event.',
           };
           this.toastService.showToast(toastOption);
+          this.toggleModal();
           console.error('Error while creating event:', error);
         }
       );

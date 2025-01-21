@@ -1,5 +1,6 @@
 <!--------Add Event Button---------->
-<div class="flex item-center justify-end pr-12">
+<div class="flex item-center justify-between pr-12">
+  <p class="text-2xl text-yellow-600 p-5 KayPhoDu font-medium">Event & Package Management</p>
   <button
     (click)="toggleModal()"
     class="w-[100px] h-[28px] mt-5 bg-black flex items-center justify-center rounded-md shadow-2xl text-white cursor-pointer"
@@ -105,8 +106,7 @@
           </div>
         </div>
 
-        @if(hasError('img', 'required') && (eventForm.get('img')?.dirty ||
-        eventForm.get('img')?.touched)){
+        @if(hasError('img', 'required') && ( eventForm.get('img')?.touched)){
         <p class="mt-1 ml-5 text-sm font-light text-red-500">
           Image is required
         </p>

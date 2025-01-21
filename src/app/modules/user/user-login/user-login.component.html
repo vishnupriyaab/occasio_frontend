@@ -41,7 +41,9 @@
             >Sign in with Google</span>
     </button> -->
 
-      <p class="text-center text-sm text-red-600 pb-1" *ngIf="errorMessage">{{errorMessage}}</p>
+    @if(errorMessage){
+      <p class="text-center text-sm text-red-600 pb-1">{{errorMessage}}</p>
+    }
       <div class="flex items-center justify-center">
           <div id="google-btn">
         </div>

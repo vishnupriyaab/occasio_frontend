@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginFormComponent } from '../../../shared/components/login-form/login-form.component';
 import { AuthService } from '../../../core/services/users/auth.service';
@@ -15,12 +15,13 @@ declare var google: any;
   styleUrl: './user-login.component.css',
 })
 export class UserLoginComponent implements OnInit {
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
   constructor(
     private userAuthService: AuthService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {}
   ngOnInit(): void {
     google.accounts.id.initialize({
@@ -40,8 +41,8 @@ export class UserLoginComponent implements OnInit {
   }
 
   handleLogin(credential: any) {
-    this.userAuthService.googleLogin(credential).subscribe(
-      (response) => {
+    this.userAuthService.googleLogin(credential).subscribe({
+      next: (response) => {
         console.log(response);
         const toastOption: IToastOption = {
           severity: 'success-toast',
@@ -53,10 +54,13 @@ export class UserLoginComponent implements OnInit {
         this.router.navigate(['']);
         console.log('user registered successfully.');
       },
-      (error) => {
-        this.errorMessage = error.error.message || 'An error occurred during Google login';
-        console.log('google login failed', error.error.message); //here i got the error message but didnt see the toaster why?
+      error: (error) => {
+        console.log(error,"1234567890")
+        this.ngZone.run(()=>{
+          this.errorMessage = error.error.message || 'An error occurred during Google login';
+        })
+        console.log('google login failed', this.errorMessage); 
       }
-    );
+  });
   }
 }

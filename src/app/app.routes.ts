@@ -16,7 +16,6 @@ import { UsersListingComponent } from './modules/Employee/users-listing/users-li
 import { ClientListingComponent } from './modules/admin/client-listing/client-listing.component';
 import { EmployeeListingComponent } from './modules/admin/employee-listing/employee-listing.component';
 import { PackageMoreInfoComponent } from './modules/admin/package-more-info/package-more-info.component';
-import { userAuthGuard } from './core/guards/user-auth.guard';
 
 export const routes: Routes = [
   //User-Side
@@ -51,25 +50,30 @@ export const routes: Routes = [
         path: 'dashboard',
         data: { heading: 'Dashboard' },
         component: DashboardComponent,
+        // canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'clients',
         data: { heading: 'Clients' },
         component: ClientListingComponent,
+        // canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'employees',
         data: { heading: 'Employees' },
         component: EmployeeListingComponent,
+        // canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'event-management',
         data: { heading: 'Event' },
         component: EventManagementComponent,
+        // canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'event-management/features-moreInfo/:id',
         component: PackageMoreInfoComponent,
+        // canActivate:[adminAuthGuardGuard]
       }
     ],
   },
