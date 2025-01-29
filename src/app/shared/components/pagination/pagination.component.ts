@@ -13,7 +13,7 @@ export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 10;
 
-  @Output() pageChange = new EventEmitter<number>();
+  @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -29,5 +29,4 @@ export class PaginationComponent {
     return pageNumbers;
   }
 
-  
 }

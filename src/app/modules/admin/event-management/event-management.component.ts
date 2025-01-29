@@ -103,12 +103,10 @@ export class EventManagementComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response.data,"responeeseesese")
-          // this.ngZone.run(()=>{
             this.filteredEvents = response.data.events;
-          // })
           console.log(this.filteredEvents,"1234567890");
           
-          this.totalItems = response.totalCount;
+          this.totalItems = response.data.totalEvents;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
           this.isLoading = false;
           console.log("finishedddddddddddd");
@@ -381,7 +379,7 @@ export class EventManagementComponent implements OnInit {
           this.events = [];
           this.filteredEvents = [];
         }
-        this.totalItems = response.totalCount;
+        this.totalItems = response.data.totalEvents;
         this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.isLoading = false;
       },
