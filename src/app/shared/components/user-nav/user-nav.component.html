@@ -1,0 +1,94 @@
+<div class="relative">
+  <img
+    src="user-bg.jpg"
+    alt="user's background"
+    class="h-[490px] w-screen object-cover opacity-50"
+  />
+
+  <!-- Navigation Bar -->
+  <div
+    class="absolute top-0 left-0 w-full flex items-center justify-center py-4"
+  >
+    <div class="flex items-center justify-between w-full max-w-7xl px-20">
+      <!-- Left Menu -->
+      <div class="flex gap-24">
+        <a
+          href="/about"
+          class="text-black font-normal hover:underline font-KayPhoDu"
+          >ABOUT</a
+        >
+        <a
+          href="/services"
+          class="text-black font-medium hover:underline font-KayPhoDu"
+          >SERVICES</a
+        >
+        <a
+          href="/kindWords"
+          class="text-black font-medium hover:underline font-KayPhoDu"
+          >KIND WORDS</a
+        >
+      </div>
+
+      <!-- Logo and Title -->
+      <div class="flex flex-col items-center cursor-pointer" routerLink="/">
+        <img src="logo.png" alt="logo" class="h-12 w-auto mb-2" />
+        <p class="text-4xl font-semibold text-black font-kaushan">Occasio</p>
+        <p class="text-black text-sm font-semibold">EVENTS</p>
+      </div>
+
+      <!-- Right Menu -->
+      <div class="flex gap-24">
+        <a
+          href="#gallery"
+          class="text-black font-medium hover:underline font-KayPhoDu"
+          >GALLERY</a
+        >
+        <a
+          href="#contact"
+          class="text-black font-medium hover:underline font-KayPhoDu"
+          >CONTACT</a
+        >
+        <div
+          class="profile-dropdown relative"
+          *ngIf="isLoggedIn; else signupLink"
+        >
+          <div class="profile-container">
+            <a
+              href="#profile"
+              class="text-black font-medium hover:underline font-KayPhoDu profile-link"
+            >
+              PROFILE
+            </a>
+            <button
+              class="dropdown-button"
+              (click)="dropDown()"
+              aria-label="Toggle Dropdown"
+            >
+              ▼
+            </button>
+          </div>
+          <div
+            class="absolute dropdown-menu cursor-pointer pt-2"
+            *ngIf="isDropdownOpen"
+          >
+            <a
+              class="text-black font-medium hover:underline font-KayPhoDu"
+              (click)="logout()"
+            >
+              LOGOUT <i class="fa-solid fa-power-off"></i>
+            </a>
+          </div>
+        </div>
+        <ng-template #signupLink>
+          <a
+            routerLink="/user-register"
+            class="text-black font-medium hover:underline font-KayPhoDu"
+            >SIGN UP</a
+          >
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <!-- <app-user-head-content></app-user-head-content> -->
+
+</div>

@@ -27,7 +27,6 @@ export class AuthService {
   googleLogin(credential: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}user/google-login`, { credential });
   }
-
   logOut():Observable<LogOut>{
     return  this.http.post<LogOut>(`${this.baseUrl}user/logOut`,{});
   }
@@ -55,6 +54,10 @@ export class AuthService {
   }
   getUsers():Observable<any>{
     return this.http.get(`${this.baseUrl}user/getUsers`);
+  }
+  searchUser(searchTerm:string):Observable<{data:any[];message:string;statusCode:number}>{
+    console.log(searchTerm,"1234567890-")
+    return this.http.get<{data:any[];message:string;statusCode:number}>(`${this.baseUrl}user/searchUser`,{params:{searchTerm}});
   }
   setLoggedIn(status: string){
     localStorage.setItem('isLoggedIn',status);

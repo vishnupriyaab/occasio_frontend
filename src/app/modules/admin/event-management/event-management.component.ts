@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +13,8 @@ import { EventServiceService } from '../../../core/services/event-management/eve
 import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { PackageManagementComponent } from '../package-management/package-management.component';
+import { SearchComponent } from '../../../shared/components/search/search/search.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-event-management',
@@ -22,12 +24,15 @@ import { PackageManagementComponent } from '../package-management/package-manage
     ReactiveFormsModule,
     LoadingComponent,
     PackageManagementComponent,
+    SearchComponent,
+    PaginationComponent,
   ],
   templateUrl: './event-management.component.html',
   styleUrl: './event-management.component.css',
 })
 export class EventManagementComponent implements OnInit {
   @ViewChild('packageManager') packageManager!: PackageManagementComponent;
+  @ViewChild(SearchComponent) searchComponent!: SearchComponent;
   isModalOpen = false;
   isLoading = false;
   events: any[] = [];
@@ -38,8 +43,15 @@ export class EventManagementComponent implements OnInit {
   selectedImg: File | null = null;
   modalMode: 'add' | 'edit' = 'add';
   selectedEvent: any = null;
+  currentFilter: string = 'all';
+  imagePreviewUrl: string | null = null;
 
-  imagePreviewUrl: string | null = null; //new thiggg
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
+
+  filteredEvents: any[] = [];
 
   private allowedImageTypes = [
     'image/jpeg',
@@ -52,7 +64,7 @@ export class EventManagementComponent implements OnInit {
     private fb: FormBuilder,
     private toastService: ToastService,
     private eventAuthService: EventServiceService,
-    private sweetAlert: SweetAlertService
+    private sweetAlert: SweetAlertService,
   ) {
     this.eventForm = this.fb.group({
       eventName: [
@@ -69,6 +81,68 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
+  }
+
+  onSearch(searchTerm: string): void {
+    if (!searchTerm.trim()) {
+      this.filteredEvents = [...this.events];
+      this.totalItems = this.events.length;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+      this.currentPage = 1;
+      return;
+    }
+    this.isLoading = true;
+    console.log(this.currentFilter, '098765432');
+    this.eventAuthService
+      .searchandFilterEvent(
+        searchTerm,
+        this.currentFilter,
+        this.currentPage,
+        this.itemsPerPage
+      )
+      .subscribe({
+        next: (response) => {
+          console.log(response.data,"responeeseesese")
+          // this.ngZone.run(()=>{
+            this.filteredEvents = response.data.events;
+          // })
+          console.log(this.filteredEvents,"1234567890");
+          
+          this.totalItems = response.totalCount;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.isLoading = false;
+          console.log("finishedddddddddddd");
+          
+        },
+        error: (error) => {
+          const toastOption: IToastOption = {
+            severity: 'danger-toast',
+            summary: 'Error',
+            detail: 'Failed to search events',
+          };
+          this.toastService.showToast(toastOption);
+          this.isLoading = false;
+        },
+      });
+  }
+
+  onFilterChange(filterStatus: string): void {
+    console.log(filterStatus, 'filterStatus');
+    this.currentFilter = filterStatus;
+    this.currentPage = 1; 
+    this.onSearch(this.searchComponent.searchTerm);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    
+    if (this.searchComponent.searchTerm.trim()) {
+      this.onSearch(this.searchComponent.searchTerm);
+    }else if(this.currentFilter !== 'all'){
+      this.onFilterChange(this.currentFilter);
+    } else {
+      this.fetchEvents();
+    }
   }
 
   removePreview(): void {
@@ -117,7 +191,7 @@ export class EventManagementComponent implements OnInit {
       //   this.imagePreviewUrl = event.image;
       //   console.log('Converted file:', imageFile);
       //   //here i got image file. i want to pass this into edit event patch value how?
-        
+
       // }
       this.selectedEventId = event.id;
       console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
@@ -272,18 +346,56 @@ export class EventManagementComponent implements OnInit {
     }
   }
 
+  // fetchEvents(): void {
+  //   this.isLoading = true;
+  //   this.eventAuthService.searchandFilterEvent("", this.currentFilter, this.currentPage,
+  //     this.itemsPerPage).subscribe({
+  //     next:(response)=>{
+  //       this.events = response.data;
+  //       this.totalItems = response.totalCount; // Assuming backend returns total count
+  //       this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+  //         this.filteredEvents = [...this.events]; //initialize filtered events
+  //         this.isLoading = false;
+  //     },error:(error)=>{
+  //       console.error('Error fetching events:', error);
+  //         this.isLoading = false;
+  //     }
+  //   }
+  //   );
+  // }
+
   fetchEvents(): void {
     this.isLoading = true;
-    this.eventAuthService.getEvents().subscribe(
-      (response) => {
-        this.events = response.data;
+    // Use empty string for searchTerm when just fetching events
+    this.eventAuthService.searchandFilterEvent(
+      '', // empty search term for initial fetch
+      this.currentFilter,
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe({
+      next: (response) => {
+        if (response.data?.events) {
+          this.events = response.data.events;
+          this.filteredEvents = [...this.events];
+        } else {
+          this.events = [];
+          this.filteredEvents = [];
+        }
+        this.totalItems = response.totalCount;
+        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         this.isLoading = false;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching events:', error);
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: 'Failed to fetch events',
+        };
+        this.toastService.showToast(toastOption);
         this.isLoading = false;
       }
-    );
+    });
   }
 
   blockStatus(eventId: string, currentStatus: boolean): void {

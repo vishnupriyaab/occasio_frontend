@@ -9,6 +9,7 @@ export const adminAuthGuardGuard: CanActivateFn = (route, state) => {
 
   return adminService.isAuthenticated().pipe(
       switchMap((res) => {
+      // console.log(res,"qwertyuiop[asdfghjkl;zxcvbnm,.")
         if(res == true){
           return of(true);
         }else{

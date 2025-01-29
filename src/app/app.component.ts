@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-// import { UserLoginComponent } from "./modules/user/user-login/user-login.component";
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { ToastComponent } from './shared/components/toast/toast.component';
+// import { UserLoginComponent } from "./modules/user/user-login/user-login.component";
+// import { RouterModule, RouterOutlet } from '@angular/router';
+// import { ToastComponent } from './shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',

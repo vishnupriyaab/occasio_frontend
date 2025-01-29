@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { LoginFormComponent } from "../../../shared/components/login-form/login-form.component";
+import { LoginFormComponent } from '../../../shared/components/login-form/login-form.component';
+// import { LoginFormComponent } from "../../../shared/components/common/login-form/login-form.component";
 
 @Component({
   selector: 'app-admin-login',

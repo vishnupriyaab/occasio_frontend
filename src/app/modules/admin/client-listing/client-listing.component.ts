@@ -5,15 +5,18 @@ import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/toaster/toast.service';
+import { SearchComponent } from "../../../shared/components/search/search/search.component";
 
 @Component({
   selector: 'app-client-listing',
-  imports: [CommonModule],
+  imports: [CommonModule, SearchComponent],
   templateUrl: './client-listing.component.html',
   styleUrl: './client-listing.component.css',
 })
 export class ClientListingComponent implements OnInit {
   users: any[] = [];
+  filteredUsers:any[] = [];
+  searchTerm:string = '';
   constructor(
     private userAuthService: AuthService,
     private adminAuthService: AdminService,
@@ -24,12 +27,37 @@ export class ClientListingComponent implements OnInit {
     this.fetchUsers();
   }
 
+  onSearch(searchTerm: string):void{
+    if (!searchTerm.trim()) {
+          this.filteredUsers = [...this.users];
+          return;
+        }
+        // this.isLoading = true;
+        this.userAuthService.searchUser(searchTerm).subscribe({
+          next: (response) => {
+            this.filteredUsers = response.data;
+          },
+          error: (error) => {
+            console.log(error);
+            const toastOption: IToastOption = {
+              severity: 'danger-toast',
+              summary: 'Error',
+              detail: 'Failed to search users'
+            };
+            this.toastService.showToast(toastOption);
+          },
+        });
+  }
+
+
+
   fetchUsers(): void {
     // this.isLoading = true;
     this.userAuthService.getUsers().subscribe(
       (response) => {
         console.log(response, 'dertyuio');
         this.users = response.data;
+        this.filteredUsers = [...this.users];
         console.log(this.users, 'wertyuixcvbnm,');
         // this.isLoading = false;
       },

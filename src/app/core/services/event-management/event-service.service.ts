@@ -13,8 +13,13 @@ export class EventServiceService {
   constructor(private http: HttpClient) { }
 
   //event
-  getEvents(): Observable<any> {
-    return this.http.get(`${this.baseUrl}event/getEvents`);
+  getEvents(page:number = 1, limit:number = 10): Observable<{data:any;totalCount:number;message:string;statusCode:number}> {
+    return this.http.get<{data:any;totalCount:number;message:string;statusCode:number}>(`${this.baseUrl}event/getEvents`, { 
+      params: { 
+        page: page.toString(), 
+        limit: limit.toString() 
+      } 
+    });
   }
   createEvent(eventData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}event/addEvent`, eventData);
@@ -27,6 +32,14 @@ export class EventServiceService {
   }
   deleteEvent(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}event/deleteEvent/${id}`, {});
+  }
+  searchandFilterEvent(searchTerm:string, filterStatus?:string, page:number =1, limit:number =10):Observable<{data:any;totalCount:number;message:string;statusCode:number}>{
+    console.log( searchTerm, filterStatus, page, limit, "1234567890----" );
+    let params:{[key:string]:string} = { searchTerm, page:page.toString(), limit: limit.toString() }
+    if(filterStatus && filterStatus !== 'all'){
+      params = { ...params, filterStatus };
+    }
+    return this.http.get<{data:any;totalCount:number;message:string;statusCode:number}>(`${this.baseUrl}event/searchEvent`,{ params });
   }
 
   //package

@@ -16,6 +16,9 @@ import { UsersListingComponent } from './modules/Employee/users-listing/users-li
 import { ClientListingComponent } from './modules/admin/client-listing/client-listing.component';
 import { EmployeeListingComponent } from './modules/admin/employee-listing/employee-listing.component';
 import { PackageMoreInfoComponent } from './modules/admin/package-more-info/package-more-info.component';
+import { adminAuthGuardGuard } from './core/guards/adminAuthGuard/admin-auth-guard.guard';
+import { AboutComponent } from './modules/user/about/about.component';
+import { ServicesComponent } from './modules/user/user_services/services.component';
 
 export const routes: Routes = [
   //User-Side
@@ -28,13 +31,21 @@ export const routes: Routes = [
     component: UserRegisterComponent,
   },
   {
+    path: 'reset-password',
+    component:ResetPasswordComponent
+  },
+  {
     path: '',
     component:HomeComponent,
     // canActivate:[userAuthGuard]
   },
   {
-    path: 'reset-password',
-    component:ResetPasswordComponent
+    path:'about',
+    component: AboutComponent
+  },
+  {
+    path:'services',
+    component: ServicesComponent
   },
 
   //Admin-Side
@@ -50,30 +61,30 @@ export const routes: Routes = [
         path: 'dashboard',
         data: { heading: 'Dashboard' },
         component: DashboardComponent,
-        // canActivate: [adminAuthGuardGuard]
+        canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'clients',
         data: { heading: 'Clients' },
         component: ClientListingComponent,
-        // canActivate: [adminAuthGuardGuard]
+        canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'employees',
         data: { heading: 'Employees' },
         component: EmployeeListingComponent,
-        // canActivate: [adminAuthGuardGuard]
+        canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'event-management',
         data: { heading: 'Event' },
         component: EventManagementComponent,
-        // canActivate: [adminAuthGuardGuard]
+        canActivate: [adminAuthGuardGuard]
       },
       {
         path: 'event-management/features-moreInfo/:id',
         component: PackageMoreInfoComponent,
-        // canActivate:[adminAuthGuardGuard]
+        canActivate:[adminAuthGuardGuard]
       }
     ],
   },

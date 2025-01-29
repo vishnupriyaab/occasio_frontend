@@ -1,0 +1,87 @@
+<div
+  *ngIf="isModalOpen"
+  class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="modal-content w-[500px] bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-center mb-4">
+      {{ modalMode === "add" ? "Add Event" : "Edit Event" }}
+    </h2>
+
+    <div *ngIf="isLoading" class="loading-overlay">
+      <app-loading></app-loading>
+    </div>
+
+    <form [formGroup]="eventForm" (ngSubmit)="handleSubmit()">
+      <div class="mb-4">
+        <label for="eventName" class="block font-semibold mb-1">Name of Event</label>
+        <input
+          type="text"
+          formControlName="eventName"
+          placeholder="Enter event name"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        @if(hasError('eventName', 'required') && (eventForm.get('eventName')?.dirty || eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Name of event is required
+        </p>
+        }@else if(hasError('eventName', 'allSpaces') && (eventForm.get('eventName')?.dirty || eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Event name cannot contain spaces
+        </p>
+        }@else if(hasError('eventName', 'minLength') && (eventForm.get('eventName')?.dirty || eventForm.get('eventName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Event name must be longer than 3 characters
+        </p>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label for="description" class="block font-semibold mb-1">Description</label>
+        <textarea
+          id="description"
+          placeholder="Enter event description"
+          formControlName="description"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        ></textarea>
+        @if(hasError('description', 'required') && (eventForm.get('description')?.dirty || eventForm.get('description')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Description is required
+        </p>
+        }
+      </div>
+
+      <div class="mb-4">
+        <label for="uploadImage" class="block font-semibold mb-1">Upload Image</label>
+        <input
+          type="file"
+          id="uploadImage"
+          formControlName="img"
+          (change)="onFileSelect($event)"
+          accept="image/jpeg,image/png,image/jpg,image/gif"
+          class="w-full border border-gray-300 rounded-lg p-2"
+        />
+        @if(hasError('img', 'required') && (eventForm.get('img')?.dirty || eventForm.get('img')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Image is required
+        </p>
+        }
+      </div>
+
+      <div class="flex justify-between">
+        <button
+          type="button"
+          (click)="handleClose()"
+          class="px-4 py-2 bg-white border border-black rounded-lg shadow hover:bg-gray-100"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-black text-white rounded-lg shadow hover:bg-gray-900"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

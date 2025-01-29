@@ -154,6 +154,7 @@
     <div class="flex justify-center mt-8">
       <button
         type="submit"
+        [disabled]="!registerForm.valid || isFormSubmited"
         class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-8 mb-[20px] rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-300"
       >
         Sign Up

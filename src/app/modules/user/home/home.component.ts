@@ -4,45 +4,14 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/users/auth.service';
 import { ToastService } from '../../../core/services/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
+import { UserNavComponent } from "../../../shared/components/user-nav/user-nav.component";
+import { FooterComponent } from "../../../shared/components/user/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, UserNavComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  isLoggedIn: boolean = false;
-  isDropdownOpen = false;
-
-  constructor(
-    private userAuthService: AuthService,
-    private router: Router,
-    private toastService: ToastService
-  ) {
-    this.isLoggedIn = Boolean(localStorage.getItem('isLoggedIn'));
-    console.log(this.isLoggedIn);
-  }
-
-  dropDown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  logout() {
-    this.userAuthService.logOut().subscribe({
-      next: (response) => {
-        console.log(response);
-        const toastOption: IToastOption = {
-          severity: 'success-toast',
-          summary: 'Success',
-          detail: 'Logout successful',
-        };
-        this.toastService.showToast(toastOption);
-        localStorage.removeItem('isLoggedIn');
-        this.router.navigate(['/user-login']) //particular roles
-      },
-      error: (error) => {},
-    });
-  }
-}
+export class HomeComponent {}

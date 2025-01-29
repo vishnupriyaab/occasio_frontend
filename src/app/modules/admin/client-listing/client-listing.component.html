@@ -1,17 +1,7 @@
+<p class="text-2xl text-yellow-600 p-5 KayPhoDu font-medium">Clients & Management</p>
 <!------------Searching input-------------->
-<div class="flex items-center justify-center mt-7">
-  <div
-    class="w-[950px] h-[32px] flex items-center justify-between border border-gray-300 rounded-md shadow-md bg-white"
-  >
-    <input
-      type="text"
-      placeholder="Search..."
-      class="flex-grow ml-4 text-gray-600 font-Roboto text-sm outline-none bg-transparent"
-    />
-    <button class="mr-4 text-gray-500 hover:text-black">
-      <img src="/searchimg.png" alt="search" class="h-5 w-5" />
-    </button>
-  </div>
+<div class="container">
+  <app-search placeholder="Search client..." (searchQuery)="onSearch($event)"></app-search>
 </div>
 <!--------------------------------------->
 
@@ -45,9 +35,14 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="filteredUsers.length === 0">
+          <td colspan="6" class="text-center text-gray-600 py-4">
+            No users found.
+          </td>
+        </tr>
         <tr
           class="hover:bg-gray-50 cursor-pointer"
-          *ngFor="let user of users; let i = index"
+          *ngFor="let user of filteredUsers; let i = index"
         >
           <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
           @if(user.imageUrl){

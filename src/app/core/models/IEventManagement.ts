@@ -4,3 +4,4 @@ interface EventData {
     description: string;
     image: File | null;
   }
+// export interface IApi

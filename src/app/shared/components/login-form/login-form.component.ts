@@ -247,6 +247,7 @@ import { AdminService } from '../../../core/services/admin/admin.service';
 
 @Component({
   selector: 'app-login-form',
+  standalone: true,
   imports: [
     RouterModule,
     ReactiveFormsModule,
@@ -294,8 +295,14 @@ export class LoginFormComponent {
     const authService = this.authServices[this.formType];
 
     authService?.login(email, password).subscribe(
-      (response: any) => this.handleSuccess(response),
-      (error: any) => this.handleError(error)
+      (response: any) => {
+        console.log(response.data,"wertyuiop")
+        this.handleSuccess(response);
+      },
+      (error: any) => {
+        console.log(error,"1234567890")
+        this.handleError(error)
+      }
     );
   }
 
