@@ -1,6 +1,8 @@
 <!--------Add Event Button---------->
 <div class="flex item-center justify-between pr-12">
-  <p class="text-2xl text-yellow-600 p-5 KayPhoDu font-medium">Event & Package Management</p>
+  <p class="text-2xl text-yellow-600 p-5 KayPhoDu font-medium">
+    Event & Package Management
+  </p>
   <button
     (click)="toggleModal()"
     class="w-[100px] h-[28px] mt-5 bg-black flex items-center justify-center rounded-md shadow-2xl text-white cursor-pointer"
@@ -133,7 +135,11 @@
 
 <!------------Searching input-------------->
 <div class="container">
-  <app-search placeholder="Search events..." (searchQuery)="onSearch($event)" (filterChange)="onFilterChange($event)"></app-search>
+  <app-search
+    placeholder="Search events..."
+    (searchQuery)="onSearch($event)"
+    (filterChange)="onFilterChange($event)"
+  ></app-search>
 </div>
 <!---------------------------------------->
 
@@ -187,6 +193,21 @@
           <td class="px-4 py-2 text-center text-gray-600">
             {{ event.eventName }}
           </td>
+          <!------------------------PACKAGE DIV------------------------>
+          <!-- <td class="px-4 py-2 text-center text-gray-600">
+            <button
+            (click)="packageVisibility(event._id)"
+            class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
+            >
+            Available packages
+          </button>
+            <div
+              [ngClass]="{ hidden: selectedEventId !== event._id }"
+              class="flex items-center"
+            >
+              <app-package-management #packageManager></app-package-management>
+            </div>
+          </td> -->
           <td class="px-4 py-2 text-center text-gray-600">
             <button
               (click)="packageVisibility(event._id)"
@@ -194,23 +215,45 @@
             >
               Available packages
             </button>
-            <!--------PACKAGE DIV---------->
-            <div
-              [ngClass]="{ hidden: selectedEventId !== event._id }"
-              class="flex items-center"
-            >
-              <app-package-management #packageManager></app-package-management>
-            </div>
           </td>
-          <!-- <td class="px-4 py-2 text-center text-gray-600">
-            <div class="flex items-center justify-center gap-x-2">
-              <div
-                class="h-2 w-2 rounded-full"
-                [ngClass]="event.isActive ? 'bg-green-500' : 'bg-red-500'"
-              ></div>
-              <p>{{ event.isActive ? "Active" : "Inactive" }}</p>
+
+          <div
+            *ngIf="selectedEventId === event._id"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          >
+            <div
+              class="bg-white rounded-lg shadow-lg p-6 w-[900px] max-h-[80vh]"
+            >
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Available Packages</h2>
+                <button
+                  (click)="closePackageModal()"
+                  class="text-gray-600 hover:text-gray-800"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="overflow-y-auto max-h-[calc(80vh-100px)]">
+                <app-package-management
+                ></app-package-management>
+              </div>
             </div>
-          </td> -->
+          </div>
+          <!------------------------------------------------------------->
+
           <td class="px-4 py-2 text-center text-gray-600">
             <div class="flex items-center justify-center">
               <button
@@ -252,10 +295,10 @@
 <!---------------------------------->
 <div class="flex justify-center pb-7">
   <app-pagination
-  [currentPage]="currentPage"
-  [totalPages]="totalPages"
-  [totalItems]="totalItems"
-  [itemsPerPage]="itemsPerPage"
-  (pageChange)="onPageChange($event)"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
   ></app-pagination>
 </div>

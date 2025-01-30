@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -66,6 +66,7 @@ export class PackageManagementComponent {
     console.log('Toggle modal called', this.isModalOpen);
     this.isModalOpen = !this.isModalOpen;
     if (packages) {
+      console.log(packages,"Vishnupriya")
       this.modalMode = 'edit';
       this.packageForm.patchValue({
         packageName: packages.packageName,
@@ -88,10 +89,15 @@ export class PackageManagementComponent {
     this.currentEventId = eventId;
   }
 
+
   showPackages(eventId: string) {
+    console.log("dfghjklcvbnm,./");
     console.log(eventId, 'eventIddddddddddd');
     this.currentEventId = eventId;
     this.isLoadingPackages = true;
+    if(!eventId){
+      return;
+    }
 
     this.packageAuthService.getPackages(eventId).subscribe({
       next: (response) => {
@@ -194,6 +200,7 @@ export class PackageManagementComponent {
     }
 
     if (this.currentEventId) {
+      console.log(this.currentEventId,"currentEventId")
       formData.append('eventId', this.currentEventId);
     }
 
@@ -230,6 +237,7 @@ export class PackageManagementComponent {
     } else {
       //AddPackge
       this.isLoading = true;
+      console.log(formData)
       this.packageAuthService.addPackage(formData).subscribe(
         (response) => {
           console.log(response, 'responsseeeeeeeee');

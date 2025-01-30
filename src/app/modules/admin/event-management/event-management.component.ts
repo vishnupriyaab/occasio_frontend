@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,16 +23,17 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
     CommonModule,
     ReactiveFormsModule,
     LoadingComponent,
-    PackageManagementComponent,
     SearchComponent,
     PaginationComponent,
-  ],
+    PackageManagementComponent
+],
   templateUrl: './event-management.component.html',
   styleUrl: './event-management.component.css',
 })
 export class EventManagementComponent implements OnInit {
-  @ViewChild('packageManager') packageManager!: PackageManagementComponent;
   @ViewChild(SearchComponent) searchComponent!: SearchComponent;
+  @ViewChild(PackageManagementComponent) packageManager!: PackageManagementComponent;
+  
   isModalOpen = false;
   isLoading = false;
   events: any[] = [];
@@ -81,6 +82,7 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
+    console.log(this.packageManager,"qwertyuiop[");
   }
 
   onSearch(searchTerm: string): void {
@@ -180,17 +182,8 @@ export class EventManagementComponent implements OnInit {
       this.eventForm.patchValue({
         eventName: event.eventName,
         description: event.description,
-        // img: null,
       });
 
-      // if (event.image) {
-      //   // Fetch the existing image as a Blob
-      //   const imageFile = await this.convertUrlToFile(event.image);
-      //   this.imagePreviewUrl = event.image;
-      //   console.log('Converted file:', imageFile);
-      //   //here i got image file. i want to pass this into edit event patch value how?
-
-      // }
       this.selectedEventId = event.id;
       console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
     } else {
@@ -344,29 +337,10 @@ export class EventManagementComponent implements OnInit {
     }
   }
 
-  // fetchEvents(): void {
-  //   this.isLoading = true;
-  //   this.eventAuthService.searchandFilterEvent("", this.currentFilter, this.currentPage,
-  //     this.itemsPerPage).subscribe({
-  //     next:(response)=>{
-  //       this.events = response.data;
-  //       this.totalItems = response.totalCount; // Assuming backend returns total count
-  //       this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-  //         this.filteredEvents = [...this.events]; //initialize filtered events
-  //         this.isLoading = false;
-  //     },error:(error)=>{
-  //       console.error('Error fetching events:', error);
-  //         this.isLoading = false;
-  //     }
-  //   }
-  //   );
-  // }
-
   fetchEvents(): void {
     this.isLoading = true;
-    // Use empty string for searchTerm when just fetching events
     this.eventAuthService.searchandFilterEvent(
-      '', // empty search term for initial fetch
+      '', 
       this.currentFilter,
       this.currentPage,
       this.itemsPerPage
@@ -409,7 +383,7 @@ export class EventManagementComponent implements OnInit {
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          this.fetchEvents(); // Refresh the events list
+          this.fetchEvents(); 
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
@@ -472,10 +446,16 @@ export class EventManagementComponent implements OnInit {
   }
 
   packageVisibility(eventId: string): void {
+    console.log(this.packageManager,"qwertyuiopo000000")
     this.selectedEventId = this.selectedEventId === eventId ? null : eventId;
     if (this.selectedEventId) {
+      console.log(this.packageManager,"11111");
       this.packageManager.showPackages(eventId);
     }
+  }
+
+  closePackageModal(): void {
+    this.selectedEventId = null;
   }
 
   hasError(controlName: string, errorName: string) {
