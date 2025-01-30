@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,6 +32,7 @@ import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert
   styleUrl: './package-management.component.css',
 })
 export class PackageManagementComponent {
+  @Output() closeEvent:EventEmitter<void> = new EventEmitter()
   packageForm!: FormGroup;
   isLoading = false;
   isModalOpen = false;
@@ -110,6 +111,11 @@ export class PackageManagementComponent {
         this.isLoadingPackages = false;
       },
     });
+  }
+
+  closePackageModal(): void {
+    this.closeEvent.emit()
+    this.currentEventId = null;
   }
 
   private allowedImageTypes = [
