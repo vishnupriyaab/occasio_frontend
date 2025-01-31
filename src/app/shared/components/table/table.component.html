@@ -1,0 +1,59 @@
+<div class="flex items-center justify-center mt-5">
+    <div class="max-w-[950px] flex-1 m-5 bg-white border border-gray-300 rounded-lg shadow-lg overflow-y-auto">
+      <table class="table-auto w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th *ngIf="showIndex" class="px-4 py-2 text-center text-gray-700 font-semibold">
+              Sl no
+            </th>
+            <th *ngFor="let col of columns" class="px-4 py-2 text-center text-gray-700 font-semibold">
+              {{ col.header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="data.length === 0">
+            <td [colSpan]="columns.length + (showIndex ? 1 : 0)" class="text-center text-gray-600 py-4">
+              {{ emptyMessage }}
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50" *ngFor="let item of data; let i = index">
+            <td *ngIf="showIndex" class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
+            <td *ngFor="let col of columns" class="px-4 py-2 text-center text-gray-600">
+              <!-- Text content -->
+              <ng-container *ngIf="col.type === 'text' || !col.type">
+                {{ item[col.field] }}
+              </ng-container>
+
+              <!-- Image content -->
+              <ng-container *ngIf="col.type === 'image'">
+                <img [src]="item[col.field]" [alt]="item.name || 'image'" class="rounded-full h-10 w-10">
+              </ng-container>
+
+              <!-- Button content -->
+              <ng-container *ngIf="col.type === 'button'">
+                <button 
+                  *ngFor="let btn of col.buttons"
+                  (click)="onAction.emit({ action: btn.action, item: item })"
+                  [class]="btn.class">
+                  {{ btn.text }}
+                </button>
+              </ng-container>
+
+              <!-- Actions content -->
+              <ng-container *ngIf="col.type === 'actions'">
+                <div class="flex items-center justify-center gap-x-2">
+                  <button 
+                    *ngFor="let btn of col.buttons"
+                    (click)="onAction.emit({ action: btn.action, item: item })"
+                    [class]="btn.class">
+                    {{ btn.text }}
+                  </button>
+                </div>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -92,8 +92,6 @@ export class PackageManagementComponent {
 
 
   showPackages(eventId: string) {
-    console.log("dfghjklcvbnm,./");
-    console.log(eventId, 'eventIddddddddddd');
     this.currentEventId = eventId;
     this.isLoadingPackages = true;
     if(!eventId){
@@ -103,7 +101,7 @@ export class PackageManagementComponent {
     this.packageAuthService.getPackages(eventId).subscribe({
       next: (response) => {
         this.packages = response.data;
-        console.log(this.packages, 'res.data');
+        console.log(this.packages.length, 'res.data');
         this.isLoadingPackages = false;
       },
       error: (error) => {

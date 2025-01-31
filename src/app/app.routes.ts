@@ -19,7 +19,6 @@ import { PackageMoreInfoComponent } from './modules/admin/package-more-info/pack
 import { adminAuthGuardGuard } from './core/guards/adminAuthGuard/admin-auth-guard.guard';
 import { AboutComponent } from './modules/user/about/about.component';
 import { ServicesComponent } from './modules/user/user_services/services.component';
-import { EventManagementAdminComponent } from './modules/admin/event-management-admin/event-management-admin.component';
 
 export const routes: Routes = [
   //User-Side

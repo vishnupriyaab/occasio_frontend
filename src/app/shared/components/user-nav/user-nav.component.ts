@@ -1,17 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { AuthService } from '../../../core/services/users/auth.service';
 import { ToastService } from '../../../core/services/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { Router, RouterModule } from '@angular/router';
+import { UserHeadContentComponent } from "../user-head-content/user-head-content.component";
 
 @Component({
   selector: 'app-user-nav',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, UserHeadContentComponent],
   templateUrl: './user-nav.component.html',
   styleUrl: './user-nav.component.css',
 })
 export class UserNavComponent {
+
+  @Input() title: string | null = null;
+  @Input() content: string | null = null;
+
   isLoggedIn: boolean = false;
   isDropdownOpen = false;
 

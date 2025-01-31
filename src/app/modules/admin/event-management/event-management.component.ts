@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -15,6 +15,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 import { PackageManagementComponent } from '../package-management/package-management.component';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { TableComponent } from "../../../shared/components/table/table.component";
 
 @Component({
   selector: 'app-event-management',
@@ -25,7 +26,8 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
     LoadingComponent,
     SearchComponent,
     PaginationComponent,
-    PackageManagementComponent
+    PackageManagementComponent,
+    TableComponent
 ],
   templateUrl: './event-management.component.html',
   styleUrl: './event-management.component.css',
@@ -84,6 +86,9 @@ export class EventManagementComponent implements OnInit {
     this.fetchEvents();
     console.log(this.packageManager,"qwertyuiop[");
   }
+
+
+  
 
   onSearch(searchTerm: string): void {
     if (!searchTerm.trim()) {

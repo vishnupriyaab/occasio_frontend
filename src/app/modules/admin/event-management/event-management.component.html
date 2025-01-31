@@ -194,20 +194,6 @@
             {{ event.eventName }}
           </td>
           <!------------------------PACKAGE DIV------------------------>
-          <!-- <td class="px-4 py-2 text-center text-gray-600">
-            <button
-            (click)="packageVisibility(event._id)"
-            class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
-            >
-            Available packages
-          </button>
-            <div
-              [ngClass]="{ hidden: selectedEventId !== event._id }"
-              class="flex items-center"
-            >
-              <app-package-management #packageManager></app-package-management>
-            </div>
-          </td> -->
           <td class="px-4 py-2 text-center text-gray-600">
             <button
               (click)="packageVisibility(event._id)"
@@ -216,8 +202,6 @@
               Available packages
             </button>
           </td>
-
-          
           <!------------------------------------------------------------->
 
           <td class="px-4 py-2 text-center text-gray-600">
@@ -269,6 +253,4 @@
   ></app-pagination>
 </div>
 
-<!-- @if(selectedEventId){ -->
   <app-package-management (closeEvent)="closePackageModal()"></app-package-management>
-<!-- } -->
