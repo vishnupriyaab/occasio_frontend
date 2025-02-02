@@ -18,6 +18,7 @@ import { PackageMoreInfoComponent } from './modules/admin/package-more-info/pack
 import { adminAuthGuardGuard } from './core/guards/adminAuthGuard/admin-auth-guard.guard';
 import { AboutComponent } from './modules/user/about/about.component';
 import { ServicesComponent } from './modules/user/user_services/services.component';
+import { employeeAuthGuardGuard } from './core/guards/employeeAuthGuard/employee-auth-guard.guard';
 
 export const routes: Routes = [
   //User-Side
@@ -105,11 +106,13 @@ export const routes: Routes = [
         path: 'dashboard',
         data: { heading: 'Dashboard' },
         component: EDashboardComponent,
+        canActivate: [employeeAuthGuardGuard]
       },
       {
         path: 'users-listing',
         data: { heading: 'Client' },
         component: UsersListingComponent,
+        canActivate: [employeeAuthGuardGuard]
       },
     ],
   }

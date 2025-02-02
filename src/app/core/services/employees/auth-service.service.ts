@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
 import { IEmployeeregister, LoginResponse } from '../../models/employeeModel';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { OtpResponse } from '../../models/otpModel';
+import IToastOption from '../../models/IToastOptions';
+import { ToastService } from '../toaster/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ import { OtpResponse } from '../../models/otpModel';
 export class AuthServiceService {
   private baseUrl = environment.baseUrl;
   
-  constructor(private http:HttpClient) {}
+  constructor(private http:HttpClient, private toastService:ToastService) {}
 
   employeeRegister(employeeData:IEmployeeregister):Observable<IAuthAPISucessfullResponse>{
     return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}employee/register`, employeeData);
@@ -32,4 +34,17 @@ export class AuthServiceService {
   setLoggedIn(status: string){
     localStorage.setItem( 'isLoggedIn', status );
   }
+  isAuthenticated():Observable<boolean>{
+        return this.http.get(`${this.baseUrl}employee/isAuthenticate`).pipe(map(()=>true),catchError((error)=>{
+          if(error.error?.message){
+            const toastOption: IToastOption = {
+              severity: 'danger-toast',
+              summary: 'Error',
+              detail: error.error.message,
+            };
+            this.toastService.showToast(toastOption);
+          }
+          return of(false)
+        }))
+      }
 }
