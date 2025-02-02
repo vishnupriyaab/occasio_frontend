@@ -10,7 +10,6 @@ import { HomeComponent } from './modules/user/home/home.component';
 import { ResetPasswordComponent } from './modules/user/reset-password/reset-password.component';
 import { EmployeeMainComponent } from './features/components/employee-main/employee-main.component';
 import { EventManagementComponent } from './modules/admin/event-management/event-management.component';
-import { EventListingComponent } from './modules/Employee/event-listing/event-listing.component';
 import { EDashboardComponent } from './modules/Employee/e-dashboard/e-dashboard.component';
 import { UsersListingComponent } from './modules/Employee/users-listing/users-listing.component';
 import { ClientListingComponent } from './modules/admin/client-listing/client-listing.component';
@@ -106,11 +105,6 @@ export const routes: Routes = [
         path: 'dashboard',
         data: { heading: 'Dashboard' },
         component: EDashboardComponent,
-      },
-      {
-        path: 'event',
-        data: { heading: 'Event' },
-        component: EventListingComponent,
       },
       {
         path: 'users-listing',

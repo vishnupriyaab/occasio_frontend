@@ -1,27 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-interface TableColumn {
-  header: string;
-  field: string;
-  type?: 'text' | 'image' | 'button' | 'actions';
-  buttons?: {
-    text: string;
-    class: string;
-    action: string;
-  }[];
+
+interface BlockStatusEvent {
+  eventId: string;
+  currentStatus: boolean;
 }
 
 @Component({
   selector: 'app-table',
   imports: [CommonModule],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css'
+  styleUrl: './table.component.css',
 })
 export class TableComponent {
-  @Input() columns: TableColumn[] = [];
   @Input() data: any[] = [];
-  @Input() showIndex: boolean = true;
-  @Input() emptyMessage: string = 'No data found.';
-  @Output() onAction = new EventEmitter<{ action: string; item: any }>();
+  @Output() packageVisibilityEvent: EventEmitter<string> =
+    new EventEmitter<string>();
+  @Output() blockStatusEvent: EventEmitter<BlockStatusEvent> = new EventEmitter<BlockStatusEvent>();
+  @Output() toggleModalEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteEventEvent: EventEmitter<string> = new EventEmitter<string>();
+
+  packageVisibility(eventId: string) {
+    this.packageVisibilityEvent.emit(eventId);
+  }
+
+  blockStatus(eventId: string, currentStatus: boolean) {
+    this.blockStatusEvent.emit({eventId, currentStatus});
+  }
+
+  toggleModal(event: any = null) {
+    this.toggleModalEvent.emit(event);
+  }
+  deleteEvent(eventId: string) {
+    this.deleteEventEvent.emit(eventId)
+  }
 }

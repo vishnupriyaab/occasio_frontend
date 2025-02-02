@@ -34,8 +34,10 @@ import { TableComponent } from "../../../shared/components/table/table.component
 })
 export class EventManagementComponent implements OnInit {
   @ViewChild(SearchComponent) searchComponent!: SearchComponent;
-  @ViewChild(PackageManagementComponent) packageManager!: PackageManagementComponent;
-  
+  @ViewChild(PackageManagementComponent)
+  packageManager!: PackageManagementComponent;
+
+
   isModalOpen = false;
   isLoading = false;
   events: any[] = [];
@@ -67,7 +69,7 @@ export class EventManagementComponent implements OnInit {
     private fb: FormBuilder,
     private toastService: ToastService,
     private eventAuthService: EventServiceService,
-    private sweetAlert: SweetAlertService,
+    private sweetAlert: SweetAlertService
   ) {
     this.eventForm = this.fb.group({
       eventName: [
@@ -84,11 +86,8 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
-    console.log(this.packageManager,"qwertyuiop[");
+    console.log(this.packageManager, 'qwertyuiop[');
   }
-
-
-  
 
   onSearch(searchTerm: string): void {
     if (!searchTerm.trim()) {
@@ -109,15 +108,12 @@ export class EventManagementComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          console.log(response.data,"responeeseesese")
-            this.filteredEvents = response.data.events;
-          console.log(this.filteredEvents,"1234567890");
-          
+          console.log(response.data, 'responeeseesese');
+          this.filteredEvents = response.data.events;
           this.totalItems = response.data.totalEvents;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
           this.isLoading = false;
-          console.log("finishedddddddddddd");
-          
+          console.log('finishedddddddddddd');
         },
         error: (error) => {
           const toastOption: IToastOption = {
@@ -134,16 +130,16 @@ export class EventManagementComponent implements OnInit {
   onFilterChange(filterStatus: string): void {
     console.log(filterStatus, 'filterStatus');
     this.currentFilter = filterStatus;
-    this.currentPage = 1; 
+    this.currentPage = 1;
     this.onSearch(this.searchComponent.searchTerm);
   }
 
-  onPageChange(page: number): void {
+  onPageChange(page: number): void {  
     this.currentPage = page;
-    
+
     if (this.searchComponent.searchTerm.trim()) {
       this.onSearch(this.searchComponent.searchTerm);
-    }else if(this.currentFilter !== 'all'){
+    } else if (this.currentFilter !== 'all') {
       this.onFilterChange(this.currentFilter);
     } else {
       this.fetchEvents();
@@ -183,14 +179,16 @@ export class EventManagementComponent implements OnInit {
     if (event) {
       this.modalMode = 'edit';
       this.selectedEvent = event;
+      this.selectedEventId = event._id;
+      console.log(this.selectedEventId, '0987654321');
       this.imagePreviewUrl = event.image;
       this.eventForm.patchValue({
         eventName: event.eventName,
         description: event.description,
       });
 
-      this.selectedEventId = event.id;
-      console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
+      // this.selectedEventId = event.id;
+      // console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
     } else {
       this.modalMode = 'add';
       this.eventForm.reset();
@@ -281,14 +279,16 @@ export class EventManagementComponent implements OnInit {
     }
 
     console.log(formData, 'formData');
+    console.log(this.selectedEventId, 'selectedEventId');
 
     if (this.selectedEventId) {
       //update Event
+      console.log('edit');
       this.eventAuthService
         .updateEvent(this.selectedEventId, formData)
         .subscribe((res) => {
           this.isLoading = true;
-          console.log(res, 'responseee');
+          console.log(res, 'responseee------------');
           if (res.statusCode === 200) {
             const toastOption: IToastOption = {
               severity: 'success-toast',
@@ -324,7 +324,7 @@ export class EventManagementComponent implements OnInit {
             };
             this.toastService.showToast(toastOption);
             this.toggleModal();
-            console.error('Unexpected status code:', response?.status);
+            console.error('Unexpected status code:', response?.statusCode);
           }
         },
         (error) => {
@@ -344,51 +344,54 @@ export class EventManagementComponent implements OnInit {
 
   fetchEvents(): void {
     this.isLoading = true;
-    this.eventAuthService.searchandFilterEvent(
-      '', 
-      this.currentFilter,
-      this.currentPage,
-      this.itemsPerPage
-    ).subscribe({
-      next: (response) => {
-        if (response.data?.events) {
-          this.events = response.data.events;
-          this.filteredEvents = [...this.events];
-        } else {
-          this.events = [];
-          this.filteredEvents = [];
-        }
-        this.totalItems = response.data.totalEvents;
-        this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching events:', error);
-        const toastOption: IToastOption = {
-          severity: 'danger-toast',
-          summary: 'Error',
-          detail: 'Failed to fetch events',
-        };
-        this.toastService.showToast(toastOption);
-        this.isLoading = false;
-      }
-    });
+    this.eventAuthService
+      .searchandFilterEvent(
+        '',
+        this.currentFilter,
+        this.currentPage,
+        this.itemsPerPage
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.data?.events) {
+            this.events = response.data.events;
+            this.filteredEvents = [...this.events];
+          } else {
+            this.events = [];
+            this.filteredEvents = [];
+          }
+          this.totalItems = response.data.totalEvents;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error fetching events:', error);
+          const toastOption: IToastOption = {
+            severity: 'danger-toast',
+            summary: 'Error',
+            detail: 'Failed to fetch events',
+          };
+          this.toastService.showToast(toastOption);
+          this.isLoading = false;
+        },
+      });
   }
 
-  blockStatus(eventId: string, currentStatus: boolean): void {
+  blockStatus(event:{eventId: string, currentStatus: boolean}): void {
     this.isLoading = true;
-    this.eventAuthService.blockEvent(eventId).subscribe(
+    this.eventAuthService.blockEvent(event.eventId).subscribe(
       (response) => {
+        console.log(response, 'resssssssssss');
         if (response.statusCode === 200) {
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
             detail: `Event ${
-              currentStatus ? 'unblocked' : 'blocked'
+              event.currentStatus ? 'unblocked' : 'blocked'
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          this.fetchEvents(); 
+          this.fetchEvents();
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
@@ -451,10 +454,10 @@ export class EventManagementComponent implements OnInit {
   }
 
   packageVisibility(eventId: string): void {
-    console.log(this.packageManager,"qwertyuiopo000000")
+    console.log(this.packageManager, 'qwertyuiopo000000');
     this.selectedEventId = this.selectedEventId === eventId ? null : eventId;
     if (this.selectedEventId) {
-      console.log(this.packageManager,"11111");
+      console.log(this.packageManager, '11111');
       this.packageManager.showPackages(eventId);
     }
   }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -18,6 +19,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
 import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
+import { TableComponent } from "../../../shared/components/table/table.component";
 
 @Component({
   selector: 'app-package-management',
@@ -27,7 +29,8 @@ import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert
     ReactiveFormsModule,
     LoadingComponent,
     FontAwesomeModule,
-  ],
+    // TableComponent
+],
   templateUrl: './package-management.component.html',
   styleUrl: './package-management.component.css',
 })
@@ -60,7 +63,37 @@ export class PackageManagementComponent {
         [Validators.required, noAllSpacesValidator(), onlyNumbersValidator()],
       ],
       img: [null, [Validators.required]],
+      features: this.fb.array([
+        this.createFeature(true)
+      ])
     });
+  }
+   createFeature(isRequired: boolean = false) {
+    return this.fb.group({
+      name: ['', isRequired ? [Validators.required, noAllSpacesValidator()] : []],
+      // amount: ['', isRequired ? [Validators.required, onlyNumbersValidator()] : []]
+    });
+  }
+
+  get features() {
+    return this.packageForm.get('features') as FormArray;
+  }
+  
+  addFeature() {
+    this.features.push(this.createFeature());
+  }
+
+  removeFeature(index: number) {
+    if (index === 0 && this.features.length === 1) {
+      const toastOption: IToastOption = {
+        severity: 'warning-toast',
+        summary: 'Warning',
+        detail: 'At least one feature is required',
+      };
+      this.toastService.showToast(toastOption);
+      return;
+    }
+    this.features.removeAt(index);
   }
 
   togglePackageModal(packages: any = null) {
@@ -193,11 +226,13 @@ export class PackageManagementComponent {
 
     console.log('Package submitted!');
     const formData = new FormData();
-    formData.append('packageName', this.packageForm.get('packageName')?.value);
-    formData.append(
-      'startingAmnt',
-      this.packageForm.get('startingAmnt')?.value
-    );
+    formData.append('packageName', this.packageForm.get('packageName')?.value );
+    formData.append( 'startingAmnt', this.packageForm.get('startingAmnt')?.value );
+
+     const features = this.features.value.filter(
+      (feature: { name: string }) => feature.name.trim() !== '')
+
+    formData.append('items', JSON.stringify(features));
 
     if (this.selectedImg) {
       formData.append('img', this.selectedImg, this.selectedImg.name);
@@ -216,7 +251,7 @@ export class PackageManagementComponent {
 
     //EditPackage
     if (this.selectedPackageId) {
-      this.isLoading = true;
+      // this.isLoading = true;
       console.log("hey i'm vishnu");
       this.packageAuthService
         .editPackage(this.selectedPackageId, formData)
@@ -240,10 +275,10 @@ export class PackageManagementComponent {
         });
     } else {
       //AddPackge
-      this.isLoading = true;
       console.log(formData)
       this.packageAuthService.addPackage(formData).subscribe(
         (response) => {
+          // this.isLoading = true;
           console.log(response, 'responsseeeeeeeee');
           if (response.statusCode === 201) {
             const toastOption: IToastOption = {
@@ -267,7 +302,7 @@ export class PackageManagementComponent {
             };
             this.toastService.showToast(toastOption);
             this.togglePackageModal();
-            console.error('Unexpected status code:', response?.status);
+            console.error('Unexpected status code:', response?.statusCode);
           }
         },
         (error) => {
@@ -371,13 +406,14 @@ export class PackageManagementComponent {
 
 
   moreInfo(packageId: string): void {
-    console.log(packageId, 'packageId');
+    // console.log(packageId, 'packageId');
     // Navigate to the features-moreInfo route with the package ID
     this.router.navigate([
       'admin/event-management/features-moreInfo',
       packageId,
     ]);
   }
+
 
   hasError(controlName: string, errorName: string) {
     return this.packageForm.controls[controlName].hasError(errorName);

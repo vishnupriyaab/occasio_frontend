@@ -3,60 +3,140 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
+import { EventResponse } from '../../models/IEventManagement';
+import { PackageResponse } from '../../models/IPackageManagement';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventServiceService {
   private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   //event
-  getEvents(page:number = 1, limit:number = 10): Observable<{data:any;totalCount:number;message:string;statusCode:number}> {
-    return this.http.get<{data:any;totalCount:number;message:string;statusCode:number}>(`${this.baseUrl}event/getEvents`, { 
-      params: { 
-        page: page.toString(), 
-        limit: limit.toString() 
-      } 
-    });
+  createEvent(eventData: FormData): Observable<EventResponse> {
+    return this.http.post<EventResponse>(
+      `${this.baseUrl}event/addEvent`,
+      eventData
+    );
   }
-  createEvent(eventData: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}event/addEvent`, eventData);
+  updateEvent(id: string, eventData: FormData): Observable<EventResponse> {
+    return this.http.put<EventResponse>(
+      `${this.baseUrl}event/updateEvent/${id}`,
+      eventData
+    );
   }
-  updateEvent(id:string, eventData: FormData): Observable<any> {
-    return this.http.put(`${this.baseUrl}event/updateEvent/${id}`, eventData);
+  blockEvent(id: string): Observable<EventResponse> {
+    return this.http.patch<EventResponse>(
+      `${this.baseUrl}event/blockEvent/${id}`,
+      {}
+    );
   }
-  blockEvent(id: string): Observable<any> {
-    return this.http.patch(`${this.baseUrl}event/blockEvent/${id}`, {});
+  deleteEvent(id: string): Observable<EventResponse> {
+    return this.http.delete<EventResponse>(
+      `${this.baseUrl}event/deleteEvent/${id}`,
+      {}
+    );
   }
-  deleteEvent(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}event/deleteEvent/${id}`, {});
-  }
-  searchandFilterEvent(searchTerm:string, filterStatus?:string, page:number =1, limit:number =10):Observable<{data:any;totalCount:number;message:string;statusCode:number}>{
-    console.log( searchTerm, filterStatus, page, limit, "1234567890----" );
-    let params:{[key:string]:string} = { searchTerm, page:page.toString(), limit: limit.toString() }
-    if(filterStatus && filterStatus !== 'all'){
+  searchandFilterEvent(
+    searchTerm: string,
+    filterStatus?: string,
+    page: number = 1,
+    limit: number = 10
+  ): Observable<{
+    data: any;
+    totalCount: number;
+    message: string;
+    statusCode: number;
+  }> {
+    console.log(searchTerm, filterStatus, page, limit, '1234567890----');
+    let params: { [key: string]: string } = {
+      searchTerm,
+      page: page.toString(),
+      limit: limit.toString(),
+    };
+    if (filterStatus && filterStatus !== 'all') {
       params = { ...params, filterStatus };
     }
-    return this.http.get<{data:any;totalCount:number;message:string;statusCode:number}>(`${this.baseUrl}event/searchEvent`,{ params });
+    return this.http.get<{
+      data: any;
+      totalCount: number;
+      message: string;
+      statusCode: number;
+    }>(`${this.baseUrl}event/searchEvent`, { params });
   }
 
   //package
-  getPackages(eventId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}event/getPackages/${eventId}`, {});
+  getPackages(eventId: string): Observable<PackageResponse> {
+    return this.http.get<PackageResponse>(
+      `${this.baseUrl}event/getPackages/${eventId}`,
+      {}
+    );
   }
-  addPackage(packageData:FormData):Observable<any>{
-    return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}event/addPackage`,packageData);
+  addPackage(packageData: FormData): Observable<PackageResponse> {
+    return this.http.post<PackageResponse>(
+      `${this.baseUrl}event/addPackage`,
+      packageData
+    );
   }
-  editPackage(packageId:string, packageData: FormData): Observable<any> {
-    return this.http.put(`${this.baseUrl}event/updatePackage/${packageId}`, packageData);
+  editPackage(
+    packageId: string,
+    packageData: FormData
+  ): Observable<PackageResponse> {
+    return this.http.put<PackageResponse>(
+      `${this.baseUrl}event/updatePackage/${packageId}`,
+      packageData
+    );
   }
-  blockPackage(id: string): Observable<any> {
-    return this.http.patch(`${this.baseUrl}event/blockPackage/${id}`, {});
+  blockPackage(id: string): Observable<PackageResponse> {
+    return this.http.patch<PackageResponse>(
+      `${this.baseUrl}event/blockPackage/${id}`,
+      {}
+    );
   }
-  deletePackage(packageId:string):Observable<any>{
-    return this.http.delete(`${this.baseUrl}event/deletePackage/${packageId}`,{});
+  deletePackage(packageId: string): Observable<PackageResponse> {
+    return this.http.delete<PackageResponse>(
+      `${this.baseUrl}event/deletePackage/${packageId}`,
+      {}
+    );
   }
   
+  //features
+  getPackageDetails(
+    packageId: string,
+    searchTerm: string,
+    filterStatus?: string,
+    page: number = 1,
+    limit: number = 10
+  ): Observable<{
+    data: any;
+    totalCount: number;
+    message: string;
+    statusCode: number;
+  }> {
+    console.log(searchTerm, filterStatus, page, limit, '1234567890----');
+    let params: { [key: string]: string } = {
+      searchTerm,
+      page: page.toString(),
+      limit: limit.toString(),
+    };
+    if (filterStatus && filterStatus !== 'all') {
+      params = { ...params, filterStatus };
+    }
+    return this.http.get<{
+      data: any;
+      totalCount: number;
+      message: string;
+      statusCode: number;
+    }>(`${this.baseUrl}event/getPackageDetails/${packageId}`, { params });
+  }
+  blockFeature(featureId: string, packageId: string): Observable<PackageResponse> {
+    console.log('wehbrtyu', featureId, packageId);
+    return this.http.patch<PackageResponse>(`${this.baseUrl}event/blockFeature/${packageId}?featureId=${featureId}`, {});
+  }
+  deleteFeature(featureId:string, packageId: string): Observable<PackageResponse> {
+    return this.http.delete<PackageResponse>(
+      `${this.baseUrl}event/deleteFeature/${packageId}?featureId=${featureId}`, {} );
+  }
 }

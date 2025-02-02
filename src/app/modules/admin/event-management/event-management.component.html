@@ -144,105 +144,15 @@
 <!---------------------------------------->
 
 <!--------------Show Events--------------->
+<app-table
+  [data]="filteredEvents"
+  (packageVisibilityEvent)="packageVisibility($event)"
+  (blockStatusEvent)="blockStatus($event)"
+  (toggleModalEvent)="toggleModal($event)"
+  (deleteEventEvent)="deleteEvent($event)"
+></app-table>
 
-<div class="flex items-center justify-center mt-5">
-  <div
-    class="max-w-[950px] flex-1 m-5 bg-white border border-gray-300 rounded-lg shadow-lg overflow-y-auto"
-  >
-    <table class="table-auto w-full border-collapse">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Sl no
-          </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Image
-          </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Event Name
-          </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Packages
-          </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Status
-          </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="filteredEvents.length === 0">
-          <td colspan="6" class="text-center text-gray-600 py-4">
-            No events found.
-          </td>
-        </tr>
-        <tr
-          class="hover:bg-gray-50"
-          *ngFor="let event of filteredEvents; let i = index"
-        >
-          <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
-          <td class="px-4 py-2 text-center text-gray-600">
-            <img
-              [src]="event.image"
-              alt="event.eventName"
-              class="rounded-full h-10 w-10"
-            />
-          </td>
-          <td class="px-4 py-2 text-center text-gray-600">
-            {{ event.eventName }}
-          </td>
-          <!------------------------PACKAGE DIV------------------------>
-          <td class="px-4 py-2 text-center text-gray-600">
-            <button
-              (click)="packageVisibility(event._id)"
-              class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
-            >
-              Available packages
-            </button>
-          </td>
-          <!------------------------------------------------------------->
-
-          <td class="px-4 py-2 text-center text-gray-600">
-            <div class="flex items-center justify-center">
-              <button
-                (click)="blockStatus(event._id, event.isBlocked)"
-                [disabled]="isLoading"
-                class="px-3 py-1 rounded w-20"
-                [ngClass]="
-                  event.isBlocked
-                    ? 'bg-green-500 text-white'
-                    : 'bg-red-500 text-white'
-                "
-              >
-                {{ event.isBlocked ? "Unblock" : "Block" }}
-              </button>
-            </div>
-          </td>
-          <td class="px-4 py-2 text-center text-gray-600 gap-x-2">
-            <div class="flex items-center justify-center">
-              <button
-                class="px-3 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                (click)="toggleModal(event)"
-              >
-                Edit
-              </button>
-              <button
-                class="px-3 py-1 text-white bg-red-500 rounded-md hover:bg-red-600 ml-2"
-                (click)="deleteEvent(event._id)"
-              >
-                Delete
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!---------------------------------->
+<!---------------Pagination------------------->
 <div class="flex justify-center pb-7">
   <app-pagination
     [currentPage]="currentPage"
@@ -253,4 +163,7 @@
   ></app-pagination>
 </div>
 
-  <app-package-management (closeEvent)="closePackageModal()"></app-package-management>
+<!--------Package Management Modal------->
+<app-package-management
+  (closeEvent)="closePackageModal()"
+></app-package-management>
