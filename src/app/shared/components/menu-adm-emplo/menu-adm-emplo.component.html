@@ -7,14 +7,9 @@
       <div class="h-40 w-60 flex flex-col items-center justify-center">
         <img src="logo.png" alt="logo" class="h-14 w-auto" />
         <p
-          class="text-3xl"
+          class="text-3xl font-kaushan"
           [ngClass]="{ 'text-white': isDarkMode, 'text-black': !isDarkMode }"
-          style="
-            font-family: 'Kaushan Script', serif;
-            font-weight: 300;
-            font-style: normal;
-          "
-        >
+          >
           Occasio
         </p>
         <p
@@ -38,7 +33,7 @@
       </div> 
       <div class="flex justify-center mb-3">
         <button
-          (click)="navigateTo('admin/clients')"
+          
           class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
         >
           <img src="users.png" alt="events" class="h-6 w-6" />

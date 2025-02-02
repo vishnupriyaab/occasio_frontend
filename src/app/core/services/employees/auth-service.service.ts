@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { OtpResponse } from '../../models/otpModel';
 import IToastOption from '../../models/IToastOptions';
 import { ToastService } from '../toaster/toast.service';
+import { LogOut } from '../../models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,9 @@ export class AuthServiceService {
   resetPassword(newPassword:string,token:string):Observable<{message:string}>{
     return this.http.post<{message:string}>(`${this.baseUrl}employee/resetPassword`,{ password: newPassword, token})
   }
+    logOut():Observable<LogOut>{
+      return this.http.post<LogOut>(`${this.baseUrl}employee/logOut`,{});
+    }
   setLoggedIn(status: string){
     localStorage.setItem( 'isLoggedIn', status );
   }

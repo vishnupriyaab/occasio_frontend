@@ -8,7 +8,8 @@ module.exports = {
       fontFamily: {
         kaushan: ['Kaushan Script', 'serif'],
         KayPhoDu: ['Kay Pho Du', 'serif'],
-        Roboto: ['Roboto', 'serif'],  
+        Roboto: ['Roboto', 'serif'],
+        Katibeh: ['Katibeh', 'serif']  ,
       }
     },
   },
