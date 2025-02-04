@@ -7,6 +7,7 @@ export interface IAuthAPISucessfullResponse {
   };
 }
 
+// this is from 
 // export interface IAuthAPISucessfullResponse<T> {
 //   statusCode: number;
 //   message: string;
