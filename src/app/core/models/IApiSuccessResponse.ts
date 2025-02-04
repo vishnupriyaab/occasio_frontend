@@ -6,3 +6,11 @@ export interface IAuthAPISucessfullResponse {
     email: string;
   };
 }
+
+// export interface IAuthAPISucessfullResponse<T> {
+//   statusCode: number;
+//   message: string;
+//   data: T;
+// }
+
+// const demo: IAuthAPISucessfullResponse<{_id:string, email:string}>

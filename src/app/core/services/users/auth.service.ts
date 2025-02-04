@@ -40,7 +40,7 @@ export class AuthService {
     return this.http.post<OtpResponse>(`${this.baseUrl}user/verifyOtp`, {email,otp} )
   }
   isAuthenticated():Observable<boolean>{
-    return this.http.get(`${this.baseUrl}user/isAuthenticate`).pipe(map(()=>true),catchError((error)=>{
+    return this.http.get(`${this.baseUrl}user/isAuthenticate`,{withCredentials:true}).pipe(map(()=>true),catchError((error)=>{
       if(error.error?.message){
         const toastOption: IToastOption = {
           severity: 'danger-toast',

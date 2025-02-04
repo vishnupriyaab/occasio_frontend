@@ -19,6 +19,8 @@ import { adminAuthGuardGuard } from './core/guards/adminAuthGuard/admin-auth-gua
 import { AboutComponent } from './modules/user/about/about.component';
 import { ServicesComponent } from './modules/user/user_services/services.component';
 import { employeeAuthGuardGuard } from './core/guards/employeeAuthGuard/employee-auth-guard.guard';
+import { userAuthGuard } from './core/guards/userAuthGuard/user-auth.guard';
+import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
 
 export const routes: Routes = [
   //User-Side
@@ -37,15 +39,21 @@ export const routes: Routes = [
   {
     path: '',
     component:HomeComponent,
-    // canActivate:[userAuthGuard]
   },
   {
     path:'about',
-    component: AboutComponent
+    component: AboutComponent,
+    canActivate: [userAuthGuard]
   },
   {
     path:'services',
-    component: ServicesComponent
+    component: ServicesComponent,
+    canActivate:[userAuthGuard]
+  },
+  {
+    path:'user-profile',
+    component: UserProfileComponent,
+    canActivate:[userAuthGuard]
   },
 
   //Admin-Side
