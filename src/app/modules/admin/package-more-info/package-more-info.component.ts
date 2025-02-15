@@ -7,7 +7,6 @@ import { ToastService } from '../../../core/services/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { Feature, Package } from '../../../core/models/IPackageManagement';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { response } from 'express';
 import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
 
 @Component({
@@ -30,7 +29,7 @@ export class PackageMoreInfoComponent implements OnInit {
   searchTerm: string = '';
   filteredFeatures: Feature[] = [];
   filterStatus: string = 'all';
-  private packageId: string = '';
+  packageId: string = '';
 
   constructor(
     private route: ActivatedRoute,

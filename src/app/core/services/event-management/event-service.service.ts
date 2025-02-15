@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
 import { EventResponse } from '../../models/IEventManagement';
 import { PackageResponse } from '../../models/IPackageManagement';
 
@@ -39,6 +38,7 @@ export class EventServiceService {
       {}
     );
   }
+  //getEvent with S,F,P
   searchandFilterEvent(
     searchTerm: string,
     filterStatus?: string,
@@ -65,6 +65,11 @@ export class EventServiceService {
       message: string;
       statusCode: number;
     }>(`${this.baseUrl}event/searchEvent`, { params });
+  }
+
+  //getEvent
+  getEvents(): Observable<EventResponse> {
+    return this.http.get<EventResponse>(`${this.baseUrl}event/getEvent`, {});
   }
 
   //package
@@ -101,7 +106,7 @@ export class EventServiceService {
       {}
     );
   }
-  
+
   //features
   getPackageDetails(
     packageId: string,
@@ -131,12 +136,23 @@ export class EventServiceService {
       statusCode: number;
     }>(`${this.baseUrl}event/getPackageDetails/${packageId}`, { params });
   }
-  blockFeature(featureId: string, packageId: string): Observable<PackageResponse> {
+  blockFeature(
+    featureId: string,
+    packageId: string
+  ): Observable<PackageResponse> {
     console.log('wehbrtyu', featureId, packageId);
-    return this.http.patch<PackageResponse>(`${this.baseUrl}event/blockFeature/${packageId}?featureId=${featureId}`, {});
+    return this.http.patch<PackageResponse>(
+      `${this.baseUrl}event/blockFeature/${packageId}?featureId=${featureId}`,
+      {}
+    );
   }
-  deleteFeature(featureId:string, packageId: string): Observable<PackageResponse> {
+  deleteFeature(
+    featureId: string,
+    packageId: string
+  ): Observable<PackageResponse> {
     return this.http.delete<PackageResponse>(
-      `${this.baseUrl}event/deleteFeature/${packageId}?featureId=${featureId}`, {} );
+      `${this.baseUrl}event/deleteFeature/${packageId}?featureId=${featureId}`,
+      {}
+    );
   }
 }

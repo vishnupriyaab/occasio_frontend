@@ -46,10 +46,11 @@
           <td class="px-4 py-2 text-center text-gray-600">
             {{ event.eventName }}
           </td>
+          
           <!------------------------PACKAGE DIV------------------------>
           <td class="px-4 py-2 text-center text-gray-600">
             <button
-              
+              (click)="packageVisibility(event._id)"
               class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
             >
               Available packages

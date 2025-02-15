@@ -13,7 +13,6 @@ import { UserHeadContentComponent } from "../user-head-content/user-head-content
   styleUrl: './user-nav.component.css',
 })
 export class UserNavComponent {
-
   @Input() title: string | null = null;
   @Input() content: string | null = null;
 
@@ -42,7 +41,7 @@ export class UserNavComponent {
         };
         this.toastService.showToast(toastOption);
         localStorage.removeItem('isLoggedIn');
-        this.router.navigate(['/user-login']); //particular roles
+        this.router.navigate(['/user-login']);
       },
       error: (error) => {
         console.log(error);

@@ -1,22 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../../core/models/userModel';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../../core/services/users/auth.service';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/toaster/toast.service';
-import { SearchComponent } from "../../../shared/components/search/search/search.component";
+import { SearchComponent } from '../../../shared/components/search/search/search.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { ReTableComponent } from "../../../shared/components/re-table/re-table.component";
 
 @Component({
   selector: 'app-client-listing',
-  imports: [CommonModule, SearchComponent],
+  imports: [CommonModule, SearchComponent, PaginationComponent, ReTableComponent],
   templateUrl: './client-listing.component.html',
   styleUrl: './client-listing.component.css',
 })
 export class ClientListingComponent implements OnInit {
+  @ViewChild(SearchComponent) searchComponent!: SearchComponent;
+
   users: any[] = [];
-  filteredUsers:any[] = [];
-  searchTerm:string = '';
+  filteredUsers: any[] = [];
+  searchTerm: string = '';
+  currentFilter: string = 'all';
+
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
   constructor(
     private userAuthService: AuthService,
     private adminAuthService: AdminService,
@@ -27,45 +36,73 @@ export class ClientListingComponent implements OnInit {
     this.fetchUsers();
   }
 
-  onSearch(searchTerm: string):void{
+  onSearch(searchTerm: string): void {
     if (!searchTerm.trim()) {
-          this.filteredUsers = [...this.users];
-          return;
-        }
-        // this.isLoading = true;
-        this.userAuthService.searchUser(searchTerm).subscribe({
-          next: (response) => {
-            this.filteredUsers = response.data;
-          },
-          error: (error) => {
-            console.log(error);
-            const toastOption: IToastOption = {
-              severity: 'danger-toast',
-              summary: 'Error',
-              detail: 'Failed to search users'
-            };
-            this.toastService.showToast(toastOption);
-          },
-        });
+      this.filteredUsers = [...this.users];
+      this.totalItems = this.users.length;
+      this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+      this.currentPage = 1;
+      return;
+    }
+    // this.isLoading = true;
+    this.userAuthService
+      .searchandFilterUser(
+        searchTerm,
+        this.currentFilter,
+        this.currentPage,
+        this.itemsPerPage
+      )
+      .subscribe({
+        next: (response) => {
+          console.log(response.data, 'qwertyuiopsdfghjkcvbnm,');
+          this.filteredUsers = response.data.users;
+          this.totalItems = response.data.totalUsers;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+          console.log('finisheddddddddddddd');
+        },
+        error: (error) => {
+          console.log(error);
+          const toastOption: IToastOption = {
+            severity: 'danger-toast',
+            summary: 'Error',
+            detail: 'Failed to search users',
+          };
+          this.toastService.showToast(toastOption);
+        },
+      });
   }
-
-
 
   fetchUsers(): void {
     // this.isLoading = true;
-    this.userAuthService.getUsers().subscribe(
-      (response) => {
-        console.log(response, 'dertyuio');
-        this.users = response.data;
-        this.filteredUsers = [...this.users];
-        console.log(this.users, 'wertyuixcvbnm,');
-        // this.isLoading = false;
-      },
-      (error) => {
-        console.error('Error fetching events:', error);
-        // this.isLoading = false;
-      }
-    );
+    this.userAuthService
+      .searchandFilterUser(
+        '',
+        this.currentFilter,
+        this.currentPage,
+        this.itemsPerPage
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.data.users) {
+            this.users = response.data.users;
+            this.filteredUsers = [...this.users];
+          } else {
+            this.users = [];
+            this.filteredUsers = [];
+          }
+          this.totalItems = response.data.totalUsers;
+          this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        },
+        error: (error) => {
+          console.log(error, 'error');
+          const toastOption: IToastOption = {
+            severity: 'danger-toast',
+            summary: 'Error',
+            detail: 'Failed to fetch users',
+          };
+          this.toastService.showToast(toastOption);
+        },
+      });
   }
 
   toggleBlockStatus(userId: string, currentStatus: boolean): void {
@@ -86,7 +123,7 @@ export class ClientListingComponent implements OnInit {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
-            detail: 'Failed to update event status.',
+            detail: 'Failed to update user status.',
           };
           this.toastService.showToast(toastOption);
         }
@@ -95,11 +132,29 @@ export class ClientListingComponent implements OnInit {
         const toastOption: IToastOption = {
           severity: 'danger-toast',
           summary: 'Error',
-          detail: error.error?.message || 'Failed to update event status.',
+          detail: error.error?.message || 'Failed to update user status.',
         };
         this.toastService.showToast(toastOption);
-        // this.fetchUsers()
+        this.fetchUsers()
       }
     );
+  }
+
+  onFilterChange(filterStatus: string):void{
+    console.log(filterStatus,"filterStatus");
+    this.currentFilter = filterStatus;
+    this.currentPage = 1;
+    this.onSearch(this.searchComponent.searchTerm);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    if(this.searchComponent.searchTerm.trim()){
+      this.onSearch(this.searchComponent.searchTerm);
+    }else if(this.currentFilter !== 'all'){
+      this.onFilterChange(this.currentFilter);
+    }else{
+      this.fetchUsers();
+    }
   }
 }

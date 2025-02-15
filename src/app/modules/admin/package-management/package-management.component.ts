@@ -19,7 +19,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
 import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
-import { TableComponent } from "../../../shared/components/table/table.component";
+import { TableComponent } from '../../../shared/components/table/table.component';
 
 @Component({
   selector: 'app-package-management',
@@ -30,12 +30,12 @@ import { TableComponent } from "../../../shared/components/table/table.component
     LoadingComponent,
     FontAwesomeModule,
     // TableComponent
-],
+  ],
   templateUrl: './package-management.component.html',
   styleUrl: './package-management.component.css',
 })
 export class PackageManagementComponent {
-  @Output() closeEvent:EventEmitter<void> = new EventEmitter()
+  @Output() closeEvent: EventEmitter<void> = new EventEmitter();
   packageForm!: FormGroup;
   isLoading = false;
   isModalOpen = false;
@@ -63,14 +63,15 @@ export class PackageManagementComponent {
         [Validators.required, noAllSpacesValidator(), onlyNumbersValidator()],
       ],
       img: [null, [Validators.required]],
-      features: this.fb.array([
-        this.createFeature(true)
-      ])
+      features: this.fb.array([this.createFeature(true)]),
     });
   }
-   createFeature(isRequired: boolean = false) {
+  createFeature(isRequired: boolean = false) {
     return this.fb.group({
-      name: ['', isRequired ? [Validators.required, noAllSpacesValidator()] : []],
+      name: [
+        '',
+        isRequired ? [Validators.required, noAllSpacesValidator()] : [],
+      ],
       // amount: ['', isRequired ? [Validators.required, onlyNumbersValidator()] : []]
     });
   }
@@ -78,7 +79,7 @@ export class PackageManagementComponent {
   get features() {
     return this.packageForm.get('features') as FormArray;
   }
-  
+
   addFeature() {
     this.features.push(this.createFeature());
   }
@@ -100,7 +101,7 @@ export class PackageManagementComponent {
     console.log('Toggle modal called', this.isModalOpen);
     this.isModalOpen = !this.isModalOpen;
     if (packages) {
-      console.log(packages,"Vishnupriya")
+      console.log(packages, 'Vishnupriya');
       this.modalMode = 'edit';
       this.packageForm.patchValue({
         packageName: packages.packageName,
@@ -123,11 +124,10 @@ export class PackageManagementComponent {
     this.currentEventId = eventId;
   }
 
-
   showPackages(eventId: string) {
     this.currentEventId = eventId;
     this.isLoadingPackages = true;
-    if(!eventId){
+    if (!eventId) {
       return;
     }
 
@@ -145,7 +145,7 @@ export class PackageManagementComponent {
   }
 
   closePackageModal(): void {
-    this.closeEvent.emit()
+    this.closeEvent.emit();
     this.currentEventId = null;
   }
 
@@ -205,7 +205,6 @@ export class PackageManagementComponent {
     }
   }
 
-  
   addPackage() {
     if (!this.packageForm.valid || !this.selectedImg) {
       Object.keys(this.packageForm.controls).forEach((key) => {
@@ -226,11 +225,15 @@ export class PackageManagementComponent {
 
     console.log('Package submitted!');
     const formData = new FormData();
-    formData.append('packageName', this.packageForm.get('packageName')?.value );
-    formData.append( 'startingAmnt', this.packageForm.get('startingAmnt')?.value );
+    formData.append('packageName', this.packageForm.get('packageName')?.value);
+    formData.append(
+      'startingAmnt',
+      this.packageForm.get('startingAmnt')?.value
+    );
 
-     const features = this.features.value.filter(
-      (feature: { name: string }) => feature.name.trim() !== '')
+    const features = this.features.value.filter(
+      (feature: { name: string }) => feature.name.trim() !== ''
+    );
 
     formData.append('items', JSON.stringify(features));
 
@@ -239,7 +242,7 @@ export class PackageManagementComponent {
     }
 
     if (this.currentEventId) {
-      console.log(this.currentEventId,"currentEventId")
+      console.log(this.currentEventId, 'currentEventId');
       formData.append('eventId', this.currentEventId);
     }
 
@@ -275,7 +278,7 @@ export class PackageManagementComponent {
         });
     } else {
       //AddPackge
-      console.log(formData)
+      console.log(formData);
       this.packageAuthService.addPackage(formData).subscribe(
         (response) => {
           // this.isLoading = true;
@@ -365,55 +368,48 @@ export class PackageManagementComponent {
 
   //Block - Unblock
   blockStatus(packageId: string, currentStatus: boolean): void {
-      this.isLoading = true;
-      this.packageAuthService.blockPackage(packageId).subscribe(
-        (response) => {
-          if (response.statusCode === 200) {
-            const toastOption: IToastOption = {
-              severity: 'success-toast',
-              summary: 'Success',
-              detail: `Package ${
-                currentStatus ? 'unblocked' : 'blocked'
-              } successfully!`,
-            };
-            this.toastService.showToast(toastOption);
-            setTimeout(() => {
-              if (this.currentEventId) {
-                this.showPackages(this.currentEventId);
-              }
-            }, 500);
-          } else {
-            const toastOption: IToastOption = {
-              severity: 'danger-toast',
-              summary: 'Error',
-              detail: 'Failed to update package status.',
-            };
-            this.toastService.showToast(toastOption);
-          }
-          this.isLoading = false;
-        },
-        (error) => {
+    this.isLoading = true;
+    this.packageAuthService.blockPackage(packageId).subscribe(
+      (response) => {
+        if (response.statusCode === 200) {
+          const toastOption: IToastOption = {
+            severity: 'success-toast',
+            summary: 'Success',
+            detail: `Package ${
+              currentStatus ? 'unblocked' : 'blocked'
+            } successfully!`,
+          };
+          this.toastService.showToast(toastOption);
+          setTimeout(() => {
+            if (this.currentEventId) {
+              this.showPackages(this.currentEventId);
+            }
+          }, 500);
+        } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
             summary: 'Error',
-            detail: error.error?.message || 'Failed to update package status.',
+            detail: 'Failed to update package status.',
           };
           this.toastService.showToast(toastOption);
-          this.isLoading = false;
         }
-      );
-    }
-
-
-  moreInfo(packageId: string): void {
-    // console.log(packageId, 'packageId');
-    // Navigate to the features-moreInfo route with the package ID
-    this.router.navigate([
-      'admin/event-management/features-moreInfo',
-      packageId,
-    ]);
+        this.isLoading = false;
+      },
+      (error) => {
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: error.error?.message || 'Failed to update package status.',
+        };
+        this.toastService.showToast(toastOption);
+        this.isLoading = false;
+      }
+    );
   }
 
+  moreInfo(packageId: string): void {
+    this.router.navigate([ 'admin/event-management/features-moreInfo', packageId ]);
+  }
 
   hasError(controlName: string, errorName: string) {
     return this.packageForm.controls[controlName].hasError(errorName);

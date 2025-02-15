@@ -3,106 +3,47 @@
   [content]="'At Occasio Events, we offer tailored services designed to fit your needs and budget through our four exclusive packages: Silver, Gold, Platinum, and Diamond. Each package is thoughtfully curated to provide a seamless event planning experience, from intimate gatherings to grand celebrations. Whether you’re looking for essential support or a fully immersive experience, our packages make it easy to select the perfect fit for your vision and budget. With a commitment to excellence and customer satisfaction, we take pride in crafting unforgettable events that leave our clients truly happy.'"
 ></app-user-nav>
 </div>
-<div class="container mx-auto px-24 py-8 pt-20 pb-16">
-  <!-- Wedding Events Section -->
-  <div class="relative mb-24">
-    <div class="flex flex-col md:flex-row items-center gap-8">
-      <div class="w-full md:w-1/2 space-y-4">
+
+<div class="container mx-auto px-24 py-8 pt-20">
+  <!-- Loop through events -->
+  <div
+    class="relative mb-24"
+    *ngFor="let event of events; let i = index"
+    
+  >
+    <div class="flex flex-col md:flex-row items-center gap-10"
+    [ngClass]="{ 'md:flex-row-reverse': i % 2 !== 0 }">
+      <div class="w-full md:w-3/4 space-y-4">
         <div class="flex justify-center">
-            <h2 class="text-3xl text-yellow-600 font-kaushan">Wedding Events</h2>
+          <h2 class="text-3xl text-yellow-600 font-kaushan">
+            {{ event.eventName }}
+          </h2>
         </div>
         <p class="text-gray-600 text-center font-KayPhoDu">
-          Our wedding event management team is dedicated to turning dreams into
-          reality. With meticulous attention to detail, seamless coordination,
-          and a passion for perfection, we ensure every moment of your special
-          day is unforgettable. From venue selection and decor to timeline
-          vision and style, Trust us to handle every aspect with care, leaving
-          you more time to cherish each magical moment with your loved ones.
+          {{ event.description }}
         </p>
-        <div class="flex justify-center">
+          <div class="flex justify-center">
             <button
               class="px-6 py-2 bg-yellow-100 text-yellow-800 rounded-full hover:bg-yellow-200 transition-colors"
+              (click)="showPackage(event._id)"
             >
               Read More
             </button>
-        </div>
+          </div>
       </div>
-      <div class="w-full md:w-1/2">
+      <div class="w-full md:w-2/4">
         <img
-          src="wedding-image.jpg"
-          alt="Wedding couple walking on beach"
-          class="rounded-lg shadow-lg w-full h-64 object-cover"
+          [src]="event.image"
+          [alt]="event.eventName"
+          class="rounded-t-full w-[350px] h-[450px] rounded-b-none shadow-lg  object-cover"
         />
       </div>
-    </div>
-  </div>
-
-  <!-- Live Event Section -->
-  <div class="relative mb-24">
-    <div class="flex flex-col md:flex-row-reverse items-center gap-8">
-      <div class="w-full md:w-1/2 space-y-4">
-        <div class="flex justify-center">
-          <h2 class="text-3xl text-yellow-600 font-kaushan">Live Event</h2>
-        </div>
-        <p class="text-gray-600 text-center font-KayPhoDu">
-          Our stage show management team excels in delivering captivating
-          performances and unforgettable experiences. From set design and
-          lighting to sound and resources coordination, we handle every detail
-          to bring your vision to life. Whether it's a concert, corporate event,
-          or theatrical production, we have the expertise and creative vision to
-          create a dynamic and engaging environment.
-        </p>
-        <div class="flex justify-center">
-          <button
-            class="px-6 py-2 bg-yellow-100 text-yellow-800 rounded-full hover:bg-yellow-200 transition-colors"
-          >
-            Read More
-          </button>
-        </div>
-      </div>
-      <div class="w-full md:w-1/2">
-        <img
-          src="live-event-image.jpg"
-          alt="Stage with dramatic lighting"
-          class="rounded-lg shadow-lg w-full h-64 object-cover"
-        />
-      </div>
-    </div>
-  </div>
-
-  <!-- Birthday Events Section -->
-  <div class="relative pb-5">
-    <div class="flex flex-col md:flex-row items-center gap-8">
-      <div class="w-full md:w-1/2 space-y-4">
-        <div class="flex justify-center">
-          <h2 class="text-3xl text-yellow-600 font-kaushan">Birthday Events</h2>
-        </div>
-        <p class="text-gray-600 text-center font-KayPhoDu">
-          Our birthday event management team is dedicated to turning dreams into
-          reality. With meticulous attention to detail, seamless coordination,
-          and a passion for perfection, we ensure every moment of your special
-          day is unforgettable. From venue selection and decor to timeline
-          vision and style, Trust us to handle every aspect with care, leaving
-          you more time to cherish each magical moment.
-        </p>
-        <div class="flex justify-center">
-          <button
-            class="px-6 py-2 bg-yellow-100 text-yellow-800 rounded-full hover:bg-yellow-200 transition-colors"
-          >
-            Read More
-          </button>
-        </div>
-      </div>
-      <div class="w-full md:w-1/2">
-        <img
-          src="birthday-image.jpg"
-          alt="Decorated birthday table setting"
-          class="rounded-lg shadow-lg w-full h-64 object-cover"
-        />
-      </div>
+      
     </div>
   </div>
 </div>
+
+
 <div>
     <div class="relative h-[200px] flex flex-col justify-center items-center gap-4">
         <div class="absolute top-0 left-0 right-0 h-[180px] bg-yellow-100 blur-lg"></div>

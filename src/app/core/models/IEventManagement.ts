@@ -5,7 +5,7 @@ export interface EventData {
   imageUrl?: string;
   isBlocked: boolean; 
   createdAt: string;
-  updatedAt?: string; 
+  updatedAt?: string
 }
 
 export interface EventResponse {

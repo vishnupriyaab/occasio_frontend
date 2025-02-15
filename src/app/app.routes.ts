@@ -21,6 +21,8 @@ import { ServicesComponent } from './modules/user/user_services/services.compone
 import { employeeAuthGuardGuard } from './core/guards/employeeAuthGuard/employee-auth-guard.guard';
 import { userAuthGuard } from './core/guards/userAuthGuard/user-auth.guard';
 import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
+import { PackageListingComponent } from './modules/user/package-listing/package-listing.component';
+import { PackageComponent } from './modules/user/package/package.component';
 
 export const routes: Routes = [
   //User-Side
@@ -48,6 +50,16 @@ export const routes: Routes = [
   {
     path:'services',
     component: ServicesComponent,
+    canActivate:[userAuthGuard],
+  },
+  {
+    path:'services/packages/:id',
+    component: PackageListingComponent,
+    canActivate:[userAuthGuard]
+  },
+  {
+    path:'services/packages/:id/features',
+    component: PackageComponent,
     canActivate:[userAuthGuard]
   },
   {

@@ -12,7 +12,7 @@
 </div>
 <!---------------------------------->
 
-<!-- Event Modal -->
+<!---- Event Modal ---->
 <div
   *ngIf="isModalOpen"
   class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -22,11 +22,11 @@
       {{ modalMode === "add" ? "Add Event" : "Edit Event" }}
     </h2>
 
-    <!---------loading spinnner------------>
+    <!--------------loading spinnner---------------->
     <div *ngIf="isLoading" class="loading-overlay">
       <app-loading></app-loading>
     </div>
-    <!----------------------------------------->
+    <!---------------------------------------------->
 
     <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
       <div class="mb-4">
