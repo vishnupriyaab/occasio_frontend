@@ -23,12 +23,13 @@ import { AuthServiceService } from '../../../core/services/employees/auth-servic
 })
 export class OtpComponent implements OnInit {
   otpForm: FormGroup;
-  timer: number = 60;
+  timer: number = 10;
   timerInterval: any;
   isTimerDisabled: boolean = false;
+  isResendDisabled: boolean = true;
 
   @Input() showOtpModal:boolean = false;
-  @Input() formType: 'user' | 'employee'  = 'user'; // Define the input property
+  @Input() formType: 'user' | 'employee'  = 'user';
   @Output() cancel = new EventEmitter<void>()
 
   private toastService: ToastService = inject(ToastService);
@@ -47,18 +48,86 @@ export class OtpComponent implements OnInit {
     this.startTimer();
   }
 
+  ngOnDestroy() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+  }
+
+  // startTimer() {
+  //   console.log("enetered startTimer")
+  //   this.timer = 10;
+  //   this.isTimerDisabled = true;
+  //   const interval = setInterval(() => {
+  //     this.timer--;
+  //     if (this.timer <= 0) {
+  //       clearInterval(interval);
+  //       this.isTimerDisabled = false;
+  //     }
+  //   }, 1000);
+  // }
+
   startTimer() {
-    console.log("enetered startTimer")
-    this.timer = 60;
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+    
+    this.timer = 30;
     this.isTimerDisabled = true;
-    const interval = setInterval(() => {
+    this.isResendDisabled = true;
+
+    this.timerInterval = setInterval(() => {
       this.timer--;
       if (this.timer <= 0) {
-        clearInterval(interval);
+        clearInterval(this.timerInterval);
         this.isTimerDisabled = false;
+        this.isResendDisabled = false;
       }
     }, 1000);
   }
+
+
+  resendOtp(){
+    if (this.isResendDisabled) return;
+
+    const email = localStorage.getItem('Email');
+    if (!email) {
+      const toastOption: IToastOption = {
+        severity: 'danger-toast',
+        summary: 'Error',
+        detail: 'Email not found'
+      };
+      this.toastService.showToast(toastOption);
+      return;
+    }
+
+    const service = this.formType === 'user' 
+      ? this.userAuthService 
+      : this.employeeAuthService;
+
+    service.resendOtp(email).subscribe({
+      next: (response) => {
+        console.log(response,"responseqwerty")
+        const toastOption: IToastOption = {
+          severity: 'success-toast',
+          summary: 'Success',
+          detail: 'OTP has been resent to your email'
+        };
+        this.toastService.showToast(toastOption);
+        this.startTimer();
+      },
+      error: (error) => {
+        console.log(error,"1234567890")
+        const toastOption: IToastOption = {
+          severity: 'danger-toast',
+          summary: 'Error',
+          detail: error.error.message || 'Failed to resend OTP'
+        };
+        this.toastService.showToast(toastOption);
+      }
+    });
+  }
+
 
   onSubmit(): void {
     console.log(this.otpForm.valid, 'true or false');

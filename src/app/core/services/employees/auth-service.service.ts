@@ -74,6 +74,11 @@ export class AuthServiceService {
       })
     );
   }
+
+  resendOtp(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/resendOtp`, { email });
+  }
+
   searchandFilterEmployee(
     searchTerm: string,
     filterStatus: string,

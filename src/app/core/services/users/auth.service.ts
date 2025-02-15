@@ -1,11 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import {
-  IUserregister,
-  LoginResponse,
-  LogOut,
-} from '../../models/userModel';
+import { IUserregister, LoginResponse, LogOut } from '../../models/userModel';
 import { catchError, map, Observable, of } from 'rxjs';
 import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
 import { OtpResponse } from '../../models/otpModel';
@@ -47,6 +43,9 @@ export class AuthService {
       `${this.baseUrl}user/forgotPassword`,
       { email }
     );
+  }
+  resendOtp(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}user/resendOtp`, { email });
   }
   resetPassword(
     newPassword: string,
@@ -95,13 +94,13 @@ export class AuthService {
     message: string;
     statusCode: number;
   }> {
-    console.log(searchTerm,filterStatus,page,limit, '1234567890-');
-    let params: { [key:string]:string } = {
+    console.log(searchTerm, filterStatus, page, limit, '1234567890-');
+    let params: { [key: string]: string } = {
       searchTerm,
       page: page.toString(),
       limit: limit.toString(),
-    }
-    if(filterStatus && filterStatus !== 'all'){
+    };
+    if (filterStatus && filterStatus !== 'all') {
       params = { ...params, filterStatus };
     }
     return this.http.get<{

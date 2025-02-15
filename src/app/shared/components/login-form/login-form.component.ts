@@ -26,7 +26,6 @@ import { AdminService } from '../../../core/services/admin/admin.service';
     RouterModule,
     ReactiveFormsModule,
     CommonModule,
-    OtpComponent,
     ForgotPasswordComponent,
   ],
   templateUrl: './login-form.component.html',
@@ -137,9 +136,9 @@ export class LoginFormComponent {
     this.showForgotPasswordModal = false;
   }
 
-  onOtpCancel(): void {
-    this.showOtpModal = false;
-  }
+  // onOtpCancel(): void {
+  //   this.showOtpModal = false;
+  // }
 
   hasError(controlName: string, errorName: string) {
     return this.loginForm.controls[controlName].hasError(errorName);
