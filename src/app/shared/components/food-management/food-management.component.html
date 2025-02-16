@@ -1,0 +1,217 @@
+<div class="flex item-center justify-between pr-12">
+  <p class="text-2xl text-yellow-600 p-5 KayPhoDu font-medium">
+    Food Management
+  </p>
+  <button
+    (click)="toggleModal()"
+    class="w-[100px] h-[28px] mt-5 bg-black flex items-center justify-center rounded-md shadow-2xl text-white cursor-pointer"
+  >
+    Add Foods
+  </button>
+</div>
+<!----------Search----------->
+<div class="container">
+  <app-search></app-search>
+</div>
+
+<!----------------Food listing------------------->
+<div class="flex items-center justify-center mt-5">
+  <div
+    class="flex-1 m-5 bg-white border border-gray-300 rounded-lg shadow-lg overflow-y-auto"
+  >
+    <table class="table-auto w-full border-collapse">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Sl no
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Name
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            food category
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Price
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Section
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Status
+          </th>
+          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngIf="foodList.length === 0">
+            <td colspan="7" class="text-center text-gray-600 py-4">No food items found.</td>
+          </tr> -->
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2 text-center text-gray-600">1</td>
+          <td class="px-4 py-2 text-center text-gray-600">food.name</td>
+          <td class="px-4 py-2 text-center text-gray-600">food.category</td>
+          <td class="px-4 py-2 text-center text-gray-600">food.price</td>
+          <td class="px-4 py-2 text-center text-gray-600">food.section</td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <div class="flex items-center justify-center">
+              <button class="px-3 py-1 rounded w-24">food.status</button>
+            </div>
+          </td>
+          <td class="px-4 py-2 text-center text-gray-600">
+            <div class="flex items-center justify-center">
+              <button
+                class="px-3 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              >
+                Edit
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!---------Add-Edit-Modal--------->
+<div
+  *ngIf="isModalOpen"
+  class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div
+    class="modal-content w-[500px] bg-white rounded-lg shadow-lg p-6 relative"
+  >
+    <div
+      (click)="toggleModal()"
+      class="absolute top-2 right-8 text-gray-600 hover:text-black text-2xl font-bold focus:outline-none cursor-pointer"
+    >
+      &times;
+    </div>
+    <h2 class="text-2xl font-bold text-center mb-4">
+      {{ modalMode === "add" ? "Add Food" : "Edit Food" }}
+    </h2>
+
+    <!--------------loading spinnner---------------->
+    <div *ngIf="isLoading" class="loading-overlay">
+      <app-loading></app-loading>
+    </div>
+    <!---------------------------------------------->
+
+    <form [formGroup]="foodForm" (ngSubmit)="addFood()">
+      <div class="mb-2">
+        <label for="foodName" class="block font-semibold mb-1">Food name</label>
+        <input
+          type="text"
+          formControlName="foodName"
+          placeholder="food name"
+          class="w-full border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        @if(hasError('foodName', 'required') && (foodForm.get('foodName')?.dirty
+        || foodForm.get('foodName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food name is required
+        </p>
+        }@else if(hasError('foodName', 'allSpaces') &&
+        (foodForm.get('foodName')?.dirty || foodForm.get('foodName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food name cannot contain spaces
+        </p>
+        }@else if(hasError('foodName', 'minlength') &&
+        (foodForm.get('foodName')?.dirty || foodForm.get('foodName')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food name must be longer than 3 characters
+        </p>
+        }
+      </div>
+      <div class="mb-2">
+        <label for="category" class="block font-semibold mb-1">Category</label>
+        <select
+          id="category"
+          formControlName="category"
+          class="w-full border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="" disabled selected>Select a category</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Non-vegetarian">Non-vegetarian</option>
+        </select>
+        @if(hasError('category', 'required') && (foodForm.get('category')?.dirty
+        || foodForm.get('category')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food category is required
+        </p>
+        }
+      </div>
+      <div class="mb-2">
+        <label for="price" class="block font-semibold mb-1"
+          >Price (per plate)</label
+        >
+        <input
+          type="number"
+          formControlName="price"
+          placeholder="price per plate"
+          class="w-full border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          min="1"
+        />
+        @if(hasError('price', 'required') && (foodForm.get('price')?.dirty ||
+        foodForm.get('price')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food name is required
+        </p>
+        }@else if(hasError('price','min') && foodForm.get('price')?.touched){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Price mustbe greater than 0
+        </p>
+        }
+      </div>
+      <div class="mb-2">
+        <label for="foodSection" class="block font-semibold mb-1"
+          >Food Section</label
+        >
+        <select
+          id="foodSection"
+          formControlName="foodSection"
+          class="w-full border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="" disabled selected>Select a food section</option>
+          <option value="Welcome Drink">Welcome Drink</option>
+          <option value="Main Food">Main Food</option>
+          <option value="Dessert">Dessert</option>
+        </select>
+        @if(hasError('foodSection', 'required') && (foodForm.get('foodSection')?.dirty
+        || foodForm.get('foodSection')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food section is required
+        </p>
+        }
+      </div>
+      <div class="mb-3">
+        <label for="status" class="block font-semibold mb-1">Status</label>
+        <select
+          id="status"
+          formControlName="status"
+          class="w-full border border-gray-300 rounded-lg p-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="" disabled selected>Select status</option>
+          <option value="Available">Available</option>
+          <option value="Not Available">Not Available</option>
+        </select>
+        @if(hasError('status', 'required') && (foodForm.get('status')?.dirty
+        || foodForm.get('status')?.touched)){
+        <p class="mt-1 ml-5 text-sm font-light text-red-500">
+          Food status is required
+        </p>
+        }
+      </div>
+      <div class="flex justify-center">
+        <button
+          type="submit"
+          class="px-8 py-2 bg-black text-white rounded-lg shadow hover:bg-gray-900"
+        >
+          Done
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

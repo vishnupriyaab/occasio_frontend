@@ -86,7 +86,7 @@ export class EventManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
-    console.log(this.packageManager, 'qwertyuiop[');
+    console.log(this.packageManager, 'qwertyuiop');
   }
 
   onSearch(searchTerm: string): void {
@@ -186,7 +186,6 @@ export class EventManagementComponent implements OnInit {
         eventName: event.eventName,
         description: event.description,
       });
-
       // this.selectedEventId = event.id;
       // console.log(this.selectedEventId, 'qwertyuiertyuiopdfghjkl;');
     } else {
