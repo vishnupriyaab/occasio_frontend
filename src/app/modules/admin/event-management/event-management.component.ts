@@ -160,19 +160,19 @@ export class EventManagementComponent implements OnInit {
     }
   }
 
-  async convertUrlToFile(imageUrl: string): Promise<File> {
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
+  // async convertUrlToFile(imageUrl: string): Promise<File> {
+  //   try {
+  //     const response = await fetch(imageUrl);
+  //     const blob = await response.blob();
 
-      const filename = imageUrl.split('/').pop() || 'image.jpg';
-      const file = new File([blob], filename, { type: blob.type });
-      return file;
-    } catch (error) {
-      console.error('Error converting URL to File:', error);
-      throw error;
-    }
-  }
+  //     const filename = imageUrl.split('/').pop() || 'image.jpg';
+  //     const file = new File([blob], filename, { type: blob.type });
+  //     return file;
+  //   } catch (error) {
+  //     console.error('Error converting URL to File:', error);
+  //     throw error;
+  //   }
+  // }
 
   async toggleModal(event: any = null) {
     this.isModalOpen = !this.isModalOpen;
@@ -284,7 +284,7 @@ export class EventManagementComponent implements OnInit {
       //update Event
       console.log('edit');
       this.eventAuthService
-        .updateEvent(this.selectedEventId, formData)
+        .updateEvent(this.selectedEventId, formData)  
         .subscribe((res) => {
           this.isLoading = true;
           console.log(res, 'responseee------------');

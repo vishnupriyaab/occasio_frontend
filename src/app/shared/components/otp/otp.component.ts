@@ -53,20 +53,7 @@ export class OtpComponent implements OnInit {
       clearInterval(this.timerInterval);
     }
   }
-
-  // startTimer() {
-  //   console.log("enetered startTimer")
-  //   this.timer = 10;
-  //   this.isTimerDisabled = true;
-  //   const interval = setInterval(() => {
-  //     this.timer--;
-  //     if (this.timer <= 0) {
-  //       clearInterval(interval);
-  //       this.isTimerDisabled = false;
-  //     }
-  //   }, 1000);
-  // }
-
+  
   startTimer() {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);

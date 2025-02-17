@@ -74,39 +74,17 @@ export class AuthServiceService {
       })
     );
   }
-
   resendOtp(email: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/resendOtp`, { email });
   }
-
-  searchandFilterEmployee(
-    searchTerm: string,
-    filterStatus: string,
-    page: number = 1,
-    limit: number = 10
-  ): Observable<{
-    data: any;
-    totalCount: number;
-    message: string;
-    statusCode: number;
-  }> {
-    console.log(searchTerm, filterStatus, page, limit, '1234567890-');
-    let params: { [key: string]: string } = {
-      searchTerm,
-      page: page.toString(),
-      limit: limit.toString(),
-    };
-    if (filterStatus && filterStatus !== 'all') {
-      params = { ...params, filterStatus };
-    }
-    return this.http.get<{
-      data: any;
-      totalCount: number;
-      message: string;
-      statusCode: number;
-    }>(`${this.baseUrl}employee/searchEmployee`, { params });
+  showProfile(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}employee/showProfile`, {});
   }
-  blockEmployee(employeeId:string):Observable<IAuthAPISucessfullResponse>{
-    return this.http.patch<IAuthAPISucessfullResponse>(`${this.baseUrl}employee/blockEmployee/${employeeId}`,{});
+  updateProfile(formData: FormData):Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}employee/updateProfile`, formData);
+  }
+  updateProfileImage(formData: FormData): Observable<any> {
+    console.log(formData,"qwertyuio")
+    return this.http.put(`${this.baseUrl}employee/profileImage`, formData);
   }
 }

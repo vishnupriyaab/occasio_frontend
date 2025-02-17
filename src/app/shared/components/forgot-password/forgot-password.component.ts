@@ -26,6 +26,7 @@ export class ForgotPasswordComponent {
   @Input() formType: 'user' | 'employee' | 'admin' = 'user';
   @Input() showForgotPasswordModal: boolean = false;
   @Output() cancel = new EventEmitter<void>();
+  @Output() otpTrigger = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,

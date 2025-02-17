@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../../../core/services/users/auth.service';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../../core/services/admin/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
@@ -27,7 +26,6 @@ export class ClientListingComponent implements OnInit {
   totalItems: number = 0;
   totalPages: number = 0;
   constructor(
-    private userAuthService: AuthService,
     private adminAuthService: AdminService,
     private toastService: ToastService
   ) {}
@@ -45,7 +43,7 @@ export class ClientListingComponent implements OnInit {
       return;
     }
     // this.isLoading = true;
-    this.userAuthService
+    this.adminAuthService
       .searchandFilterUser(
         searchTerm,
         this.currentFilter,
@@ -74,7 +72,7 @@ export class ClientListingComponent implements OnInit {
 
   fetchUsers(): void {
     // this.isLoading = true;
-    this.userAuthService
+    this.adminAuthService
       .searchandFilterUser(
         '',
         this.currentFilter,

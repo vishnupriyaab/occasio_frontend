@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { ReTableComponent } from '../../../shared/components/re-table/re-table.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
 import { AdminService } from '../../../core/services/admin/admin.service';
 import { ToastService } from '../../../core/services/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
@@ -26,7 +25,6 @@ export class EmployeeListingComponent implements OnInit {
   totalItems: number = 0;
   totalPages: number = 0;
   constructor(
-    private employeeAuthService: AuthServiceService,
     private adminAuthService: AdminService,
     private toastService: ToastService
   ) {}
@@ -43,7 +41,7 @@ export class EmployeeListingComponent implements OnInit {
       this.currentPage = 1;
       return;
     }
-    this.employeeAuthService
+    this.adminAuthService
       .searchandFilterEmployee(
         searchTerm,
         this.currentFilter,
@@ -70,7 +68,7 @@ export class EmployeeListingComponent implements OnInit {
       });
   }
   fetchEmployee(): void {
-    this.employeeAuthService
+    this.adminAuthService
       .searchandFilterEmployee(
         '',
         this.currentFilter,
@@ -118,7 +116,7 @@ export class EmployeeListingComponent implements OnInit {
     }
   }
   toggleBlockStatus(userId: string, currentStatus: boolean): void {
-    this.employeeAuthService.blockEmployee(userId).subscribe({
+    this.adminAuthService.blockEmployee(userId).subscribe({
       next: (response) => {
         console.log(response, 'response');
         if (response.statusCode === 200) {

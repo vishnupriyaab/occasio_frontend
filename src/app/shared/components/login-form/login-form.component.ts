@@ -27,7 +27,8 @@ import { AdminService } from '../../../core/services/admin/admin.service';
     ReactiveFormsModule,
     CommonModule,
     ForgotPasswordComponent,
-  ],
+    OtpComponent
+],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css',
 })
@@ -109,7 +110,7 @@ export class LoginFormComponent {
         detail: 'Account not verified. Please verify your account.',
       };
       this.toastService.showToast(toastOption);
-      // this.showOtpModal = true;
+      this.showOtpModal = true;
     } else {
       const toastDetail =
         error.status === 401
@@ -136,9 +137,9 @@ export class LoginFormComponent {
     this.showForgotPasswordModal = false;
   }
 
-  // onOtpCancel(): void {
-  //   this.showOtpModal = false;
-  // }
+  onOtpCancel(): void {
+    this.showOtpModal = false;
+  }
 
   hasError(controlName: string, errorName: string) {
     return this.loginForm.controls[controlName].hasError(errorName);

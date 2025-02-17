@@ -48,7 +48,7 @@ export class RegisterFormComponent {
             Validators.minLength(3),
             alphabetsOnlyValidator(),
             noAllSpacesValidator(),
-            repeatedCharacterValidator(),
+            // repeatedCharacterValidator(),
           ],
         ],
         email: [

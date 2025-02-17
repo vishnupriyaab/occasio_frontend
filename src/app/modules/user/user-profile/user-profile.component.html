@@ -5,96 +5,247 @@
   </div>
 
   <!-- Main Content -->
-    <div class="w-full px-[30px] py-8 flex justify-center">
-      <div class="flex flex-col lg:flex-row items-start gap-6 max-w-7xl mx-auto">
-        
-        <!-- Profile Card -->
-        <div class="bg-white shadow-lg rounded-2xl p-6 w-full md:w-80 text-center mx-auto lg:mx-0 mt-10">
-          <div class="relative">
-            <img src="https://via.placeholder.com/100" alt="Profile" class="w-24 h-24 mx-auto rounded-full border-4 border-white shadow-md">
-            <a href="#" class="absolute top-0 right-0 bg-white p-2 rounded-full shadow-md">
-              <i class="fa-solid fa-pen-to-square"></i>
-            </a>
-          </div>
-          <h2 class="text-xl font-semibold mt-4">Ann Emmanuel</h2>
-          <p class="text-gray-500 text-sm">annemmanuelgmail.com</p>
-          <p class="text-gray-500 text-sm">+12 5678363672</p>
-
-          <div class="mt-4 space-y-2">
-            <button class="w-full bg-gray-200 hover:bg-gray-300 text-black font-semibold py-2 px-4 rounded-lg">Log Out</button>
-            <button class="w-full bg-black text-white hover:bg-gray-800 font-semibold py-2 px-4 rounded-lg">Edit Profile</button>
-            <button class="w-full bg-gray-800 text-white hover:bg-black font-semibold py-2 px-4 rounded-lg">Change Password</button>
-          </div>
+  <div class="w-full px-[30px] py-8 flex justify-center">
+    <div class="flex flex-col lg:flex-row items-start gap-6 max-w-7xl mx-auto">
+      <!-- Profile Card -->
+      <div
+        class="bg-white shadow-lg rounded-2xl p-6 w-full md:w-80 text-center mx-auto lg:mx-0 mt-10"
+      >
+        <div class="relative">
+          <img
+            [src]="userProfile?.imageUrl"
+            alt="Profile"
+            class="w-24 h-24 mx-auto rounded-full border-4 border-white shadow-md"
+          />
         </div>
+        <h2 class="text-xl font-semibold mt-4">{{ userProfile?.name }}</h2>
+        <p class="text-gray-500 text-sm">{{ userProfile?.email }}</p>
+        <p class="text-gray-500 text-sm">{{ userProfile?.mobile }}</p>
 
-        <!-- Booking Section -->
-        <div class="bg-white shadow-lg rounded-2xl p-6 w-full lg:w-3/4">
-          <h2 class="text-xl font-semibold text-center mb-4">Your Bookings..</h2>
+        <div class="mt-4 space-y-2 space-x-5">
+          <button
+            (click)="logOut()"
+            class="bg-blue-100 shadow-lg hover:bg-gray-300 text-black font-semibold py-1 px-4 rounded-lg"
+          >
+          <i class="fa-solid fa-power-off text-red-500"></i>
+          </button>
+          <button
+          class="bg-black shadow-lg hover:bg-gray-700 text-white font-semibold py-1 px-4 rounded-lg"
+          (click)="isProfileModal()"
+          >
+            Edit Profile
+          </button>
+        </div>
+      </div>
 
-          <!-- Booking Cards -->
-          <div class="space-y-4">
-            
-            <!-- First Booking -->
-            <div class="bg-gray-100 shadow-lg rounded-xl p-4 flex flex-col sm:flex-row items-center">
-              <img src="https://via.placeholder.com/150" alt="Event" class="w-32 h-24 rounded-lg object-cover">
-              <div class="flex-1 sm:ml-4 w-full">
-                
-                <!-- Title and Payment Status on Same Line -->
-                <div class="flex justify-between items-center">
-                  <h3 class="text-lg font-semibold pb-1">Wedding</h3>
-                  <p class="text-green-500 font-semibold text-sm">Payment Successful</p>
-                </div>
+      <!-- Booking Section -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 w-full lg:w-3/4">
+        <h2 class="text-xl font-semibold text-center mb-4">Your Bookings..</h2>
 
-                <!-- Booking Details Grid -->
-                <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-2">
-                  <p class="flex items-center"><span>📅</span> Dec 19, 2024</p>
-                  <p class="flex items-center"><span>🏷️</span> Silver package</p>
-                  <p class="flex items-center"><span>💰</span> Total: ₹1,00,000</p>
-                  <p class="flex items-center"><span>💳</span> Balance: ₹0.00</p>
-                </div>
+        <!-- Booking Cards -->
+        <div class="space-y-4">
+          <!-- First Booking -->
+          <div
+            class="bg-gray-100 shadow-lg rounded-xl p-4 flex flex-col sm:flex-row items-center"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Event"
+              class="w-32 h-24 rounded-lg object-cover"
+            />
+            <div class="flex-1 sm:ml-4 w-full">
+              <!-- Title and Payment Status on Same Line -->
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold pb-1">Wedding</h3>
+                <p class="text-green-500 font-semibold text-sm">
+                  Payment Successful
+                </p>
+              </div>
 
-                <div class="text-center mt-4">
-                  <button class="bg-blue-600 text-white font-semibold py-1 px-6 rounded-lg hover:bg-blue-700">
-                    Chat with employee
-                  </button>
-                </div>
+              <!-- Booking Details Grid -->
+              <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-2">
+                <p class="flex items-center"><span>📅</span> Dec 19, 2024</p>
+                <p class="flex items-center"><span>🏷️</span> Silver package</p>
+                <p class="flex items-center">
+                  <span>💰</span> Total: ₹1,00,000
+                </p>
+                <p class="flex items-center"><span>💳</span> Balance: ₹0.00</p>
+              </div>
+
+              <div class="text-center mt-4">
+                <button
+                  class="bg-blue-600 text-white font-semibold py-1 px-6 rounded-lg hover:bg-blue-700"
+                >
+                  Chat with employee
+                </button>
               </div>
             </div>
+          </div>
 
-            <!-- Second Booking -->
-            <div class="bg-gray-100 shadow-lg rounded-xl p-4 flex flex-col sm:flex-row items-center">
-              <img src="https://via.placeholder.com/150" alt="Event" class="w-32 h-24 rounded-lg object-cover">
-              <div class="flex-1 sm:ml-4 w-full">
-                
-                <!-- Title and Payment Status on Same Line -->
-                <div class="flex justify-between items-center">
-                  <h3 class="text-lg font-semibold">Wedding</h3>
-                  <p class="text-yellow-500 font-semibold text-sm">Payment Pending</p>
-                </div>
+          <!-- Second Booking -->
+          <div
+            class="bg-gray-100 shadow-lg rounded-xl p-4 flex flex-col sm:flex-row items-center"
+          >
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Event"
+              class="w-32 h-24 rounded-lg object-cover"
+            />
+            <div class="flex-1 sm:ml-4 w-full">
+              <!-- Title and Payment Status on Same Line -->
+              <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Wedding</h3>
+                <p class="text-yellow-500 font-semibold text-sm">
+                  Payment Pending
+                </p>
+              </div>
 
-                <!-- Booking Details Grid -->
-                <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-2">
-                  <p class="flex items-center"><span>📅</span> Jan 24, 2028</p>
-                  <p class="flex items-center"><span>🏷️</span> Silver package</p>
-                  <p class="flex items-center"><span>💰</span> Total: ₹1,00,000</p>
-                  <p class="flex items-center"><span>💳</span> Balance: ₹0.00</p>
-                </div>
+              <!-- Booking Details Grid -->
+              <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-2">
+                <p class="flex items-center"><span>📅</span> Jan 24, 2028</p>
+                <p class="flex items-center"><span>🏷️</span> Silver package</p>
+                <p class="flex items-center">
+                  <span>💰</span> Total: ₹1,00,000
+                </p>
+                <p class="flex items-center"><span>💳</span> Balance: ₹0.00</p>
+              </div>
 
-                <div class="text-center mt-2">
-                  <button class="bg-blue-600 text-white font-semibold py-1 px-6 rounded-lg hover:bg-blue-700">
-                    Chat with employee
-                  </button>
-                </div>
+              <div class="text-center mt-2">
+                <button
+                  class="bg-blue-600 text-white font-semibold py-1 px-6 rounded-lg hover:bg-blue-700"
+                >
+                  Chat with employee
+                </button>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Footer -->
-  <div class="w-full">
-    <app-footer></app-footer>
+<!------------Modal-------------->
+<div class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center min-h-screen z-50" *ngIf="isProfileModalOpen">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+    <button
+    (click)="isProfileModalOpen = false" 
+    class="absolute top-3 right-3 text-gray-700 hover:text-red-500 text-xl"
+    >&times;</button>
+    <form [formGroup]="editForm" class="space-y-4">
+      <!-- Profile Picture -->
+      <div class="flex flex-col items-center">
+        <img [src]="imagePreview "  class="rounded-full w-24 h-24 object-cover">
+        <button type="button" class="text-black mt-2 hover:underline" (click)="imgModal()">
+          Change Picture
+        </button>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="space-y-4">
+        <div class="flex flex-col">
+          <label for="name" class="text-gray-700">Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            class="mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          >
+          <div *ngIf="editForm.get('name')?.touched && editForm.get('name')?.invalid" 
+               class="text-red-500 text-sm mt-1">
+            <span *ngIf="editForm.get('name')?.errors?.['required']">Name is required</span>
+            <span *ngIf="editForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="email" class="text-gray-700">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            class="mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          >
+          <div *ngIf="editForm.get('email')?.touched && editForm.get('email')?.invalid" 
+               class="text-red-500 text-sm mt-1">
+            <span *ngIf="editForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="editForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="password" class="text-gray-700">New password</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password"
+            class="mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          >
+          <div *ngIf="editForm.get('password')?.touched && editForm.get('password')?.invalid" 
+               class="text-red-500 text-sm mt-1">
+            <span *ngIf="editForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="editForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="confirmPassword" class="text-gray-700">Confirm Password</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword"
+            class="mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+          >
+          <div *ngIf="editForm.get('confirmPassword')?.touched && editForm.errors?.['mismatch']" 
+               class="text-red-500 text-sm mt-1">
+            Passwords do not match
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-6">
+        <button 
+          type="button"
+          (click)="updateProfile()"
+          [disabled]="!editForm.valid"
+          class="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
   </div>
+</div>
+
+<!-- Image Upload Modal -->
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" *ngIf="isImgModalOpen">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+    <div class="flex justify-end">
+      <button type="button" (click)="imgModal()" class="text-black hover:text-red-500">&times;</button>
+    </div>
+    <div class="flex flex-col items-center">
+      <img [src]="imagePreview" alt="Image Preview" class="rounded-full w-24 h-24 mb-4 object-cover">
+      <input 
+        type="file" 
+        (change)="previewImage($event)" 
+        accept="image/*"
+        class="mb-4 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+      >
+    </div>
+    <div class="flex justify-center">
+      <button 
+        type="button"
+        (click)="updateProfileImage()"
+        class="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-700"
+      >
+        Save Image
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="w-full">
+  <app-footer></app-footer>
+</div>
