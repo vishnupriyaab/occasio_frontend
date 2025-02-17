@@ -80,6 +80,15 @@
       </div>
       <div class="flex justify-center mb-3">
         <button
+          (click)="navigateTo('employee/users-listing')"
+          class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
+        >
+          <img src="users.png" alt="users" class="h-6 w-6" />
+          Clients
+        </button>
+      </div>
+      <div class="flex justify-center mb-3">
+        <button
           (click)="navigateTo('employee/event')"
           class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
         >
@@ -89,11 +98,11 @@
       </div>
       <div class="flex justify-center mb-3">
         <button
-          (click)="navigateTo('employee/users-listing')"
+          (click)="navigateTo('employee/food-management')"
           class="flex border justify-center items-center gap-2 h-9 w-52 rounded-lg shadow-lg active:bg-gray-400 border-gray-400 bg-white text-black hover:bg-gray-200"
         >
-          <img src="users.png" alt="users" class="h-6 w-6" />
-          Clients
+          <img src="food.png" alt="events" class="h-6 w-6" />
+          Food management
         </button>
       </div>
     </div>

@@ -1,7 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
+
+export interface FoodFilters {
+  status: string;
+  price: string;
+  category: string;
+  session: string;
+  // searchTerm: string;
+}
 
 @Component({
   selector: 'app-search',
@@ -15,7 +29,15 @@ export class SearchComponent implements OnDestroy {
   @Output() searchQuery = new EventEmitter<string>();
   @Output() filterChange = new EventEmitter<string>();
   @Input() placeholder: string = 'Search...';
+  @Input() isFoodManagement: boolean = false;
+
   searchTerm: string = '';
+  filters: FoodFilters = {
+    status: 'all',
+    price: 'all',
+    category: 'all',
+    session: 'all',
+  };
 
   constructor() {
     this.searchSubject.pipe(debounceTime(300)).subscribe((value) => {
@@ -23,9 +45,10 @@ export class SearchComponent implements OnDestroy {
     });
   }
 
-  onFilterChange(event: Event): void {
+  onFilterChange(filterType: keyof FoodFilters, event: Event): void {
     if (event?.target instanceof HTMLSelectElement) {
-      this.filterChange.emit(event.target.value);
+      this.filters = { ...this.filters, [filterType]: event.target.value };
+      this.filterChange.emit(JSON.stringify(this.filters));
     }
   }
 

@@ -140,6 +140,11 @@ export const routes: Routes = [
         component: UsersListingComponent,
         canActivate: [employeeAuthGuardGuard]
       },
+      {
+        path: 'food-management',
+        component: FoodManagementComponent,
+        canActivate:[employeeAuthGuardGuard]
+      }
     ],
   }
 ];

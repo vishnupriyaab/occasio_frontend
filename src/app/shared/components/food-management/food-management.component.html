@@ -11,7 +11,12 @@
 </div>
 <!----------Search----------->
 <div class="container">
-  <app-search></app-search>
+  <app-search
+    [isFoodManagement]="true"
+    [placeholder]="'Search foods...'"
+    (searchQuery)="onSearch($event)"
+    (filterChange)="onFilterChange($event)"
+  ></app-search>
 </div>
 
 <!----------------Food listing------------------->
@@ -46,24 +51,32 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngIf="foodList.length === 0">
-            <td colspan="7" class="text-center text-gray-600 py-4">No food items found.</td>
-          </tr> -->
-        <tr class="hover:bg-gray-50">
-          <td class="px-4 py-2 text-center text-gray-600">1</td>
-          <td class="px-4 py-2 text-center text-gray-600">food.name</td>
-          <td class="px-4 py-2 text-center text-gray-600">food.category</td>
-          <td class="px-4 py-2 text-center text-gray-600">food.price</td>
-          <td class="px-4 py-2 text-center text-gray-600">food.section</td>
+        <tr *ngIf="filteredFoods.length === 0">
+          <td colspan="7" class="text-center text-gray-600 py-4">
+            No food items found.
+          </td>
+        </tr>
+        <tr
+          class="hover:bg-gray-50"
+          *ngFor="let food of filteredFoods; let i = index"
+        >
+          <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
+          <td class="px-4 py-2 text-center text-gray-600">{{food.foodName}}</td>
+          <td class="px-4 py-2 text-center text-gray-600">{{food.category}}</td>
+          <td class="px-4 py-2 text-center text-gray-600">{{food.price}}</td>
+          <td class="px-4 py-2 text-center text-gray-600">{{food.foodSection}}</td>
           <td class="px-4 py-2 text-center text-gray-600">
             <div class="flex items-center justify-center">
-              <button class="px-3 py-1 rounded w-24">food.status</button>
+              <button class="px-3 py-1 rounded w-24"
+              [ngClass]="{'text-green-500':food.status ==='Available', 'text-red-500': food.status === 'Not Available'}"
+              >{{food.status}}</button>
             </div>
           </td>
           <td class="px-4 py-2 text-center text-gray-600">
             <div class="flex items-center justify-center">
               <button
                 class="px-3 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                (click)="editFood(food)"
               >
                 Edit
               </button>
@@ -179,8 +192,9 @@
           <option value="Main Food">Main Food</option>
           <option value="Dessert">Dessert</option>
         </select>
-        @if(hasError('foodSection', 'required') && (foodForm.get('foodSection')?.dirty
-        || foodForm.get('foodSection')?.touched)){
+        @if(hasError('foodSection', 'required') &&
+        (foodForm.get('foodSection')?.dirty ||
+        foodForm.get('foodSection')?.touched)){
         <p class="mt-1 ml-5 text-sm font-light text-red-500">
           Food section is required
         </p>
@@ -197,8 +211,8 @@
           <option value="Available">Available</option>
           <option value="Not Available">Not Available</option>
         </select>
-        @if(hasError('status', 'required') && (foodForm.get('status')?.dirty
-        || foodForm.get('status')?.touched)){
+        @if(hasError('status', 'required') && (foodForm.get('status')?.dirty ||
+        foodForm.get('status')?.touched)){
         <p class="mt-1 ml-5 text-sm font-light text-red-500">
           Food status is required
         </p>
@@ -214,4 +228,15 @@
       </div>
     </form>
   </div>
+</div>
+
+<!------------Pagination------------->
+<div class="flex justify-center pb-7">
+  <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [totalItems]="totalItems"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
 </div>
