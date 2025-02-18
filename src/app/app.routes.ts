@@ -22,7 +22,6 @@ import { employeeAuthGuardGuard } from './core/guards/employeeAuthGuard/employee
 import { userAuthGuard } from './core/guards/userAuthGuard/user-auth.guard';
 import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
 import { PackageListingComponent } from './modules/user/package-listing/package-listing.component';
-import { PackageComponent } from './modules/user/package/package.component';
 import { FoodManagementComponent } from './shared/components/food-management/food-management.component';
 
 export const routes: Routes = [
@@ -60,7 +59,7 @@ export const routes: Routes = [
   },
   {
     path:'services/packages/:id/features',
-    component: PackageComponent,
+    component: PackageMoreInfoComponent,
     canActivate:[userAuthGuard]
   },
   {

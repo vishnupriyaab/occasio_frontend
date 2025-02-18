@@ -10,6 +10,7 @@ import { ToastService } from '../toaster/toast.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class AdminService {
   private baseUrl = environment.baseUrl;
 

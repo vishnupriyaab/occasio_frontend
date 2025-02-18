@@ -16,7 +16,6 @@ export const errorHandlingInterceptor: HttpInterceptorFn = (req, next) => {
           catchError((err) => throwError(err))
         );
       }
-
       return throwError(() => err);
     })
   );

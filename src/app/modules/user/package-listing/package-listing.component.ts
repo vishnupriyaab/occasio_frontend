@@ -18,9 +18,10 @@ export class PackageListingComponent implements OnInit {
   ngOnInit(): void {
     console.log('1234567890');
     this.route.params.subscribe((params) => {
-      const id = params['id'];
-      if (id) {
-        this.eventId = id;
+      const eventId = params['id'];
+      if (eventId) {
+        this.eventId = eventId;
+        console.log(this.eventId,"121212121")
       }
     });
   }

@@ -8,11 +8,12 @@ import IToastOption from '../../../core/models/IToastOptions';
 import { Feature, Package } from '../../../core/models/IPackageManagement';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-package-more-info',
   standalone: true,
-  imports: [CommonModule, SearchComponent, PaginationComponent],
+  imports: [CommonModule, SearchComponent, PaginationComponent, FormsModule],
   templateUrl: './package-more-info.component.html',
   styleUrls: ['./package-more-info.component.css'],
 })
@@ -30,6 +31,12 @@ export class PackageMoreInfoComponent implements OnInit {
   filteredFeatures: Feature[] = [];
   filterStatus: string = 'all';
   packageId: string = '';
+
+  editFeatureModal: boolean = false;
+  selectedFeatureId: string | null = null;
+  featureName: string = ''; // Store feature name input
+  featureAmount: number | null = null;
+  isEditMode: boolean = false; // Determines if we are adding or editing
 
   constructor(
     private route: ActivatedRoute,
@@ -146,37 +153,130 @@ export class PackageMoreInfoComponent implements OnInit {
     });
   }
 
+  openFeatureModal(feature?: Feature) {
+    this.editFeatureModal = true;
+    if (feature) {
+      // Edit Mode
+      this.isEditMode = true;
+      this.selectedFeatureId = feature._id;
+      this.featureName = feature.name;
+      this.featureAmount = feature.amount;
+    } else {
+      // Add Mode
+      this.isEditMode = false;
+      this.selectedFeatureId = null;
+      this.featureName = '';
+      this.featureAmount = null;
+    }
+  }
+  
+  closeFeatureModal() {
+    this.editFeatureModal = false;
+    this.selectedFeatureId = null;
+    this.featureName = '';
+    this.featureAmount = null;
+  }
+  
+
   deleteFeature(featureId: string): void {
-    console.log(this.packageId, featureId, 'packageId');
-    this.sweetAlert.confirmationAlert('Are you sure?', "You won't be able to revert this!").then((result)=>{
-      if(result.isConfirmed){
-        this.packageService.deleteFeature(featureId, this.packageId).subscribe({
-          next: (response) => {
-            console.log(response, 'response');
-            this.sweetAlert.successAlert(
-              'Deleted!',
-              'Your feature has been deleted.'
-            );
+    this.sweetAlert
+      .confirmationAlert('Are you sure?', "You won't be able to revert this!")
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.packageService
+            .deleteFeature(featureId, this.packageId)
+            .subscribe({
+              next: (response) => {
+                console.log(response, 'response');
+                this.sweetAlert.successAlert(
+                  'Deleted!',
+                  'Your feature has been deleted.'
+                );
+                this.fetchPackageDetails(this.packageId);
+              },
+              error: (error) => {
+                console.log(error);
+                console.error('Error deleting feature:', error);
+                const toastOption: IToastOption = {
+                  severity: 'danger-toast',
+                  summary: 'Error',
+                  detail:
+                    error.error?.message ||
+                    'There was a problem deleting the feature.',
+                };
+                this.toastService.showToast(toastOption);
+              },
+            });
+        } else {
+          this.sweetAlert.successAlert(
+            'Cancelled',
+            'Your event deletion has been cancelled.'
+          );
+        }
+      });
+  }
+
+  addFeature(packageId: string) {
+    this.openFeatureModal();  
+  }
+  
+
+  saveFeature() {
+    if (!this.featureName.trim() || this.featureAmount == null || this.featureAmount <= 0) {
+      this.toastService.showToast({
+        severity: 'danger-toast',
+        summary: 'Error',
+        detail: 'Feature name cannot be empty.',
+      });
+      return;
+    }
+  
+    const featureData = { name: this.featureName, amount: this.featureAmount, packageId:this.packageId };
+    if (this.isEditMode && this.selectedFeatureId) {
+      // Edit Feature
+      this.packageService.updateFeature(this.selectedFeatureId, featureData)
+        .subscribe({
+          next: () => {
+            this.toastService.showToast({
+              severity: 'success-toast',
+              summary: 'Success',
+              detail: 'Feature updated successfully!',
+            });
             this.fetchPackageDetails(this.packageId);
+            this.closeFeatureModal();
           },
           error: (error) => {
-            console.log(error);
-            console.error('Error deleting feature:', error);
-            const toastOption: IToastOption = {
+            console.error(error);
+            this.toastService.showToast({
               severity: 'danger-toast',
               summary: 'Error',
-              detail:
-                error.error?.message || 'There was a problem deleting the feature.',
-            };
-            this.toastService.showToast(toastOption);
+              detail: error.error?.message || 'Failed to update feature.',
+            });
           },
         });
-      }else{
-        this.sweetAlert.successAlert(
-          'Cancelled',
-          'Your event deletion has been cancelled.'
-        );
-      }
-    })
+    } else {
+      // Add Feature
+      this.packageService.addFeature(this.packageId, featureData)
+        .subscribe({
+          next: () => {
+            this.toastService.showToast({
+              severity: 'success-toast',
+              summary: 'Success',
+              detail: 'Feature added successfully!',
+            });
+            this.fetchPackageDetails(this.packageId);
+            this.closeFeatureModal();
+          },
+          error: (error) => {
+            console.error(error);
+            this.toastService.showToast({
+              severity: 'danger-toast',
+              summary: 'Error',
+              detail: error.error?.message || 'Failed to add feature.',
+            });
+          },
+        });
+    }
   }
+  
 }

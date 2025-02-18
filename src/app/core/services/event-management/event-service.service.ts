@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { EventResponse } from '../../models/IEventManagement';
 import { PackageResponse } from '../../models/IPackageManagement';
+import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -155,4 +156,21 @@ export class EventServiceService {
       {}
     );
   }
+
+  addFeature(packageId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
+    console.log(packageId,featureData,"111111111111")
+    return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}event/addFeature`, {
+      packageId,
+      ...featureData 
+    });
+  }
+  
+  updateFeature(featureId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
+    console.log(featureId,featureData,"22222222222222222")
+    return this.http.put<IAuthAPISucessfullResponse>(`${this.baseUrl}event/updateFeature/${featureId}`, {
+      ...featureData 
+    });
+  }
+  
+  
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PackageComponent } from './package.component';
+import { PackageMoreInfoComponent } from './package-more-info.component';
 
-describe('PackageComponent', () => {
-  let component: PackageComponent;
-  let fixture: ComponentFixture<PackageComponent>;
+describe('PackageMoreInfoComponent', () => {
+  let component: PackageMoreInfoComponent;
+  let fixture: ComponentFixture<PackageMoreInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PackageComponent]
+      imports: [PackageMoreInfoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PackageComponent);
+    fixture = TestBed.createComponent(PackageMoreInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
