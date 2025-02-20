@@ -50,7 +50,7 @@ export class EmployeeListingComponent implements OnInit {
       )
       .subscribe({
         next: (response) => {
-          console.log(response.data.employee, 'response');
+          console.log(response, 'response');
           this.filteredEmployees = response.data.employee;
           this.totalItems = response.data.totalEmployees;
           this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
@@ -120,6 +120,18 @@ export class EmployeeListingComponent implements OnInit {
       next: (response) => {
         console.log(response, 'response');
         if (response.statusCode === 200) {
+          this.employees = this.employees.map(emp => {
+            if (emp._id === userId) {
+              return { ...emp, isBlocked: !currentStatus };
+            }
+            return emp;
+          });
+          this.filteredEmployees = this.filteredEmployees.map(emp => {
+            if (emp._id === userId) {
+              return { ...emp, isBlocked: !currentStatus };
+            }
+            return emp;
+          });
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
@@ -128,7 +140,7 @@ export class EmployeeListingComponent implements OnInit {
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          this.fetchEmployee();
+          // this.fetchEmployee();
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',

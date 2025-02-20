@@ -108,6 +108,18 @@ export class ClientListingComponent implements OnInit {
       (response) => {
         console.log(response, 'sdfgioyvb');
         if (response.statusCode === 200) {
+          this.users = this.users.map((user)=>{
+            if(user._id === userId){
+              return {...user, isBlocked: !currentStatus}
+            }
+            return user
+          })
+          this.filteredUsers = this.filteredUsers.map((user)=>{
+            if(user._id === userId){
+              return {...user, isBlocked: !currentStatus}
+            }
+            return user;
+          })
           const toastOption: IToastOption = {
             severity: 'success-toast',
             summary: 'Success',
@@ -116,7 +128,7 @@ export class ClientListingComponent implements OnInit {
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          this.fetchUsers();
+          // this.fetchUsers();
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
