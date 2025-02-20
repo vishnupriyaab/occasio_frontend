@@ -140,7 +140,6 @@ export class EmployeeListingComponent implements OnInit {
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          // this.fetchEmployee();
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',

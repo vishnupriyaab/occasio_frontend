@@ -128,7 +128,6 @@ export class ClientListingComponent implements OnInit {
             } successfully!`,
           };
           this.toastService.showToast(toastOption);
-          // this.fetchUsers();
         } else {
           const toastOption: IToastOption = {
             severity: 'danger-toast',
