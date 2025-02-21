@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { AdminService } from '../../../core/services/admin/admin.service';
+import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
 
 @Component({

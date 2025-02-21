@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminService } from '../../../core/services/admin/admin.service';
+import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { ReTableComponent } from "../../../shared/components/re-table/re-table.component";

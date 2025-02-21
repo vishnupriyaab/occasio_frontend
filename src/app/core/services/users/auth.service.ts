@@ -5,7 +5,7 @@ import { IUserregister, LoginResponse, LogOut } from '../../models/userModel';
 import { catchError, map, Observable, of } from 'rxjs';
 import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
 import { OtpResponse } from '../../models/otpModel';
-import { ToastService } from '../toaster/toast.service';
+import { ToastService } from '../common/toaster/toast.service';
 import IToastOption from '../../models/IToastOptions';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import IToastOption from '../../models/IToastOptions';
+import IToastOption from '../../../models/IToastOptions';
 import { Observable, Subject } from 'rxjs';
 
 export const TOAST_STATE = {

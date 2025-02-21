@@ -151,7 +151,7 @@ import { FooterComponent } from '../../../shared/components/user/footer/footer.c
 import { UserScndNavComponent } from '../../../shared/components/user-scnd-nav/user-scnd-nav.component';
 import { AuthService } from '../../../core/services/users/auth.service';
 import { User } from '../../../core/models/userModel';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {

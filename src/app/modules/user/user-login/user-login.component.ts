@@ -3,7 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 // import { LoginFormComponent } from '../../../shared/components/common/login-form/login-form.component';
 import { AuthService } from '../../../core/services/users/auth.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { CommonModule } from '@angular/common';
 import { LoginFormComponent } from '../../../shared/components/login-form/login-form.component';
 

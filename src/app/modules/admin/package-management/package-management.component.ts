@@ -14,11 +14,11 @@ import {
   onlyNumbersValidator,
 } from '../../../shared/validator/formValidator';
 import IToastOption from '../../../core/models/IToastOptions';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
-import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
+import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 import { TableComponent } from '../../../shared/components/table/table.component';
 
 @Component({

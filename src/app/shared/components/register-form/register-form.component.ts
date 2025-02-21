@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OtpComponent } from '../otp/otp.component';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { AuthService } from '../../../core/services/users/auth.service';
 import {
   alphabetsOnlyValidator,

@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { RefreshTokenService } from '../services/refreshToken/refresh-token.service';
+import { RefreshTokenService } from '../services/common/refreshToken/refresh-token.service';
 import { inject } from '@angular/core';
 
 export const errorHandlingInterceptor: HttpInterceptorFn = (req, next) => {

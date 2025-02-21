@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastService } from '../../../core/services/toaster/toast.service';
-import { EventServiceService } from '../../../core/services/event-management/event-service.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { noAllSpacesValidator } from '../../validator/formValidator';
 import IToastOption from '../../../core/models/IToastOptions';
 import { LoadingComponent } from "../loading/loading.component";
+import { EventServiceService } from '../../../core/services/admin/eventService/event-service.service';
 
 @Component({
   selector: 'app-event-add-edit',
@@ -35,7 +35,7 @@ export class EventAddEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
-    private eventAuthService: EventServiceService
+    private adminService: EventServiceService
   ) {}
   ngOnInit(): void {
     this.initForm();
@@ -136,7 +136,7 @@ export class EventAddEditComponent implements OnInit {
   }
 
   private createEvent(formData: FormData): void {
-    this.eventAuthService.createEvent(formData).subscribe({
+    this.adminService.createEvent(formData).subscribe({
       next: (response) => {
         if (response.statusCode === 201) {
           const toastOption: IToastOption = {
@@ -162,7 +162,7 @@ export class EventAddEditComponent implements OnInit {
   }
 
   private updateEvent(formData: FormData): void {
-    this.eventAuthService.updateEvent(this.eventData._id, formData).subscribe({
+    this.adminService.updateEvent(this.eventData._id, formData).subscribe({
       next: (response) => {
         if (response.statusCode === 200) {
           const toastOption: IToastOption = {

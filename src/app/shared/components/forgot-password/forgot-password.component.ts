@@ -11,7 +11,7 @@ import {
   noAllSpacesValidator,
 } from '../../validator/formValidator';
 import { AuthService } from '../../../core/services/users/auth.service';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
 

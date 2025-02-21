@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { noAllSpacesValidator } from '../../validator/formValidator';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { FoodServiceService } from '../../../core/services/food/food-service.service';
 import { PaginationComponent } from '../pagination/pagination.component';

@@ -7,15 +7,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { noAllSpacesValidator } from '../../../shared/validator/formValidator';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { EventServiceService } from '../../../core/services/event-management/event-service.service';
-import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
+import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { PackageManagementComponent } from '../package-management/package-management.component';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { TableComponent } from "../../../shared/components/table/table.component";
+import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
+import { EventServiceService } from '../../../core/services/admin/eventService/event-service.service';
 
 @Component({
   selector: 'app-event-management',
@@ -68,7 +69,7 @@ export class EventManagementComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
-    private eventAuthService: EventServiceService,
+    private adminService: EventServiceService,
     private sweetAlert: SweetAlertService
   ) {
     this.eventForm = this.fb.group({
@@ -99,7 +100,7 @@ export class EventManagementComponent implements OnInit {
     }
     this.isLoading = true;
     console.log(this.currentFilter, '098765432');
-    this.eventAuthService
+    this.adminService
       .searchandFilterEvent(
         searchTerm,
         this.currentFilter,
@@ -283,7 +284,7 @@ export class EventManagementComponent implements OnInit {
     if (this.selectedEventId) {
       //update Event
       console.log('edit');
-      this.eventAuthService
+      this.adminService
         .updateEvent(this.selectedEventId, formData)  
         .subscribe((res) => {
           this.isLoading = true;
@@ -301,7 +302,7 @@ export class EventManagementComponent implements OnInit {
         });
     } else {
       this.isLoading = true;
-      this.eventAuthService.createEvent(formData).subscribe(
+      this.adminService.createEvent(formData).subscribe(
         (response) => {
           console.log(response, 'response');
           // this.isLoading = false;
@@ -343,7 +344,7 @@ export class EventManagementComponent implements OnInit {
 
   fetchEvents(): void {
     this.isLoading = true;
-    this.eventAuthService
+    this.adminService
       .searchandFilterEvent(
         '',
         this.currentFilter,
@@ -378,7 +379,7 @@ export class EventManagementComponent implements OnInit {
 
   blockStatus(event:{eventId: string, currentStatus: boolean}): void {
     this.isLoading = true;
-    this.eventAuthService.blockEvent(event.eventId).subscribe(
+    this.adminService.blockEvent(event.eventId).subscribe(
       (response) => {
         console.log(response, 'resssssssssss');
         if (response.statusCode === 200) {
@@ -419,7 +420,7 @@ export class EventManagementComponent implements OnInit {
       .confirmationAlert('Are you sure?', "You won't be able to revert this!")
       .then((result) => {
         if (result.isConfirmed) {
-          this.eventAuthService.deleteEvent(eventId).subscribe(
+          this.adminService.deleteEvent(eventId).subscribe(
             (response) => {
               this.isLoading = false;
               console.log(response, 'Event deleted successfully');

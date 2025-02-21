@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { EventServiceService } from '../../../core/services/event-management/event-service.service';
 import { CommonModule } from '@angular/common';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { Feature, Package } from '../../../core/models/IPackageManagement';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { SweetAlertService } from '../../../core/services/sweetAlert/sweet-alert.service';
+import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({

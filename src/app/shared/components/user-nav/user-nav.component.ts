@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { AuthService } from '../../../core/services/users/auth.service';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { Router, RouterModule } from '@angular/router';
 import { UserHeadContentComponent } from "../user-head-content/user-head-content.component";

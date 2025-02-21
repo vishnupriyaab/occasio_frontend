@@ -1,5 +1,5 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { AdminService } from '../../services/admin/admin.service';
+import { AdminService } from '../../services/admin/AuthService/admin.service';
 import { inject } from '@angular/core';
 import { catchError, of, switchMap } from 'rxjs';
 

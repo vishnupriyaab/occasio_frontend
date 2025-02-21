@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { OtpResponse } from '../../models/otpModel';
 import IToastOption from '../../models/IToastOptions';
-import { ToastService } from '../toaster/toast.service';
+import { ToastService } from '../common/toaster/toast.service';
 import { LogOut } from '../../models/userModel';
 
 @Injectable({

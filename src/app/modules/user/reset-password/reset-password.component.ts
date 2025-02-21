@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { passwordMatchValidator } from '../../../shared/validator/formValidator';
 import { AuthService } from '../../../core/services/users/auth.service';

@@ -10,7 +10,7 @@ import {
 import { otpPattern } from '../../validator/formValidator';
 import { AuthService } from '../../../core/services/users/auth.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
 

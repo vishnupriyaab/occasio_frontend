@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/users/auth.service';
-import { ToastService } from '../../../core/services/toaster/toast.service';
+import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import {
   emailFormatValidator,
   noAllSpacesValidator,
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { OtpComponent } from '../otp/otp.component';
 import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
-import { AdminService } from '../../../core/services/admin/admin.service';
+import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
 
 @Component({
   selector: 'app-login-form',
