@@ -19,7 +19,7 @@ import {
   repeatedCharacterValidator,
   strongPasswordValidator,
 } from '../../validator/formValidator';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
 
 @Component({
   selector: 'app-register-form',

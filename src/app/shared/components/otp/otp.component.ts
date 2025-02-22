@@ -12,7 +12,7 @@ import { AuthService } from '../../../core/services/users/auth.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
 
 @Component({
   selector: 'app-otp',

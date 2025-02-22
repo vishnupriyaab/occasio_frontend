@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { IAuthAPISucessfullResponse } from '../../models/IApiSuccessResponse';
-import { IEmployeeregister, LoginResponse } from '../../models/employeeModel';
-import { environment } from '../../../environments/environment';
+import { IAuthAPISucessfullResponse } from '../../../models/IApiSuccessResponse';
+import { IEmployeeregister, LoginResponse } from '../../../models/employeeModel';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { OtpResponse } from '../../models/otpModel';
-import IToastOption from '../../models/IToastOptions';
-import { ToastService } from '../common/toaster/toast.service';
-import { LogOut } from '../../models/userModel';
+import { OtpResponse } from '../../../models/otpModel';
+import IToastOption from '../../../models/IToastOptions';
+import { ToastService } from '../../common/toaster/toast.service';
+import { LogOut } from '../../../models/userModel';
 
 @Injectable({
   providedIn: 'root',

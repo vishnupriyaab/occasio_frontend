@@ -44,104 +44,104 @@ export class EventServiceService {
 
   //getEvent - user
   getEvents(): Observable<EventResponse> {
-    return this.http.get<EventResponse>(`${this.baseUrl}event/getEvent`, {});
+    return this.http.get<EventResponse>(`${this.baseUrl}user/getEvent`, {});
   }
 
-  //package
-  getPackages(eventId: string): Observable<PackageResponse> {
-    return this.http.get<PackageResponse>( `${this.baseUrl}event/getPackages/${eventId}`, {} );
-  }
-  addPackage(packageData: FormData): Observable<PackageResponse> {
-    return this.http.post<PackageResponse>(
-      `${this.baseUrl}event/addPackage`,
-      packageData
-    );
-  }
-  editPackage(
-    packageId: string,
-    packageData: FormData
-  ): Observable<PackageResponse> {
-    return this.http.put<PackageResponse>(
-      `${this.baseUrl}event/updatePackage/${packageId}`,
-      packageData
-    );
-  }
-  blockPackage(id: string): Observable<PackageResponse> {
-    return this.http.patch<PackageResponse>(
-      `${this.baseUrl}event/blockPackage/${id}`,
-      {}
-    );
-  }
-  deletePackage(packageId: string): Observable<PackageResponse> {
-    return this.http.delete<PackageResponse>(
-      `${this.baseUrl}event/deletePackage/${packageId}`,
-      {}
-    );
-  }
+  // //package
+  // getPackages(eventId: string): Observable<PackageResponse> {
+  //   return this.http.get<PackageResponse>( `${this.baseUrl}admin/getPackages/${eventId}`, {} );
+  // }
+  // addPackage(packageData: FormData): Observable<PackageResponse> {
+  //   return this.http.post<PackageResponse>(
+  //     `${this.baseUrl}admin/addPackage`,
+  //     packageData
+  //   );
+  // }
+  // editPackage(
+  //   packageId: string,
+  //   packageData: FormData
+  // ): Observable<PackageResponse> {
+  //   return this.http.put<PackageResponse>(
+  //     `${this.baseUrl}event/updatePackage/${packageId}`,
+  //     packageData
+  //   );
+  // }
+  // blockPackage(id: string): Observable<PackageResponse> {
+  //   return this.http.patch<PackageResponse>(
+  //     `${this.baseUrl}event/blockPackage/${id}`,
+  //     {}
+  //   );
+  // }
+  // deletePackage(packageId: string): Observable<PackageResponse> {
+  //   return this.http.delete<PackageResponse>(
+  //     `${this.baseUrl}event/deletePackage/${packageId}`,
+  //     {}
+  //   );
+  // }
 
-  //features
-  getPackageDetails(
-    packageId: string,
-    searchTerm: string,
-    filterStatus?: string,
-    page: number = 1,
-    limit: number = 10
-  ): Observable<{
-    data: any;
-    totalCount: number;
-    message: string;
-    statusCode: number;
-  }> {
-    console.log(searchTerm, filterStatus, page, limit, '1234567890----');
-    let params: { [key: string]: string } = {
-      searchTerm,
-      page: page.toString(),
-      limit: limit.toString(),
-    };
-    if (filterStatus && filterStatus !== 'all') {
-      params = { ...params, filterStatus };
-    }
-    return this.http.get<{
-      data: any;
-      totalCount: number;
-      message: string;
-      statusCode: number;
-    }>(`${this.baseUrl}event/getPackageDetails/${packageId}`, { params });
-  }
-  blockFeature(
-    featureId: string,
-    packageId: string
-  ): Observable<PackageResponse> {
-    console.log('wehbrtyu', featureId, packageId);
-    return this.http.patch<PackageResponse>(
-      `${this.baseUrl}event/blockFeature/${packageId}?featureId=${featureId}`,
-      {}
-    );
-  }
-  deleteFeature(
-    featureId: string,
-    packageId: string
-  ): Observable<PackageResponse> {
-    return this.http.delete<PackageResponse>(
-      `${this.baseUrl}event/deleteFeature/${packageId}?featureId=${featureId}`,
-      {}
-    );
-  }
+  // //features
+  // getPackageDetails(
+  //   packageId: string,
+  //   searchTerm: string,
+  //   filterStatus?: string,
+  //   page: number = 1,
+  //   limit: number = 10
+  // ): Observable<{
+  //   data: any;
+  //   totalCount: number;
+  //   message: string;
+  //   statusCode: number;
+  // }> {
+  //   console.log(searchTerm, filterStatus, page, limit, '1234567890----');
+  //   let params: { [key: string]: string } = {
+  //     searchTerm,
+  //     page: page.toString(),
+  //     limit: limit.toString(),
+  //   };
+  //   if (filterStatus && filterStatus !== 'all') {
+  //     params = { ...params, filterStatus };
+  //   }
+  //   return this.http.get<{
+  //     data: any;
+  //     totalCount: number;
+  //     message: string;
+  //     statusCode: number;
+  //   }>(`${this.baseUrl}event/getPackageDetails/${packageId}`, { params });
+  // }
+  // blockFeature(
+  //   featureId: string,
+  //   packageId: string
+  // ): Observable<PackageResponse> {
+  //   console.log('wehbrtyu', featureId, packageId);
+  //   return this.http.patch<PackageResponse>(
+  //     `${this.baseUrl}event/blockFeature/${packageId}?featureId=${featureId}`,
+  //     {}
+  //   );
+  // }
+  // deleteFeature(
+  //   featureId: string,
+  //   packageId: string
+  // ): Observable<PackageResponse> {
+  //   return this.http.delete<PackageResponse>(
+  //     `${this.baseUrl}event/deleteFeature/${packageId}?featureId=${featureId}`,
+  //     {}
+  //   );
+  // }
 
-  addFeature(packageId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
-    console.log(packageId,featureData,"111111111111")
-    return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}event/addFeature`, {
-      packageId,
-      ...featureData 
-    });
-  }
+  // addFeature(packageId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
+  //   console.log(packageId,featureData,"111111111111")
+  //   return this.http.post<IAuthAPISucessfullResponse>(`${this.baseUrl}event/addFeature`, {
+  //     packageId,
+  //     ...featureData 
+  //   });
+  // }
   
-  updateFeature(featureId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
-    console.log(featureId,featureData,"22222222222222222")
-    return this.http.put<IAuthAPISucessfullResponse>(`${this.baseUrl}event/updateFeature/${featureId}`, {
-      ...featureData 
-    });
-  }
+  // updateFeature(featureId: string, featureData: { name: string; amount: number }): Observable<IAuthAPISucessfullResponse> {
+  //   console.log(featureId,featureData,"22222222222222222")
+  //   return this.http.put<IAuthAPISucessfullResponse>(`${this.baseUrl}event/updateFeature/${featureId}`, {
+  //     ...featureData 
+  //   });
+  // }
   
   
 }

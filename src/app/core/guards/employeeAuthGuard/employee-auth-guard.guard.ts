@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthServiceService } from '../../services/employees/auth-service.service';
+import { AuthServiceService } from '../../services/employees/authService/auth-service.service';
 import { catchError, of, switchMap } from 'rxjs';
 
 export const employeeAuthGuardGuard: CanActivateFn = (route, state) => {

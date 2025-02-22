@@ -4,7 +4,7 @@
   </p>
   <button
     (click)="toggleModal()"
-    class="w-[100px] h-[28px] mt-5 bg-black flex items-center justify-center rounded-md shadow-2xl text-white cursor-pointer"
+    class="w-[100px] h-[28px] mt-5 bg-yellow-600 border border-gray-600 flex items-center justify-center rounded-md shadow-white text-white cursor-pointer"
   >
     Add Foods
   </button>
@@ -22,30 +22,30 @@
 <!----------------Food listing------------------->
 <div class="flex items-center justify-center mt-5">
   <div
-    class="flex-1 m-5 bg-white border border-gray-300 rounded-lg shadow-lg overflow-y-auto"
+    class="w-[950px] bg-black border border-gray-300 rounded-lg shadow-lg overflow-hidden"
   >
     <table class="table-auto w-full border-collapse">
-      <thead class="bg-gray-100">
+      <thead class="bg-gray-800">
         <tr>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Sl no
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Name
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             food category
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Price
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Section
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Status
           </th>
-          <th class="px-4 py-2 text-center text-gray-700 font-semibold">
+          <th class="px-4 py-2 text-center text-gray-100 font-semibold">
             Actions
           </th>
         </tr>
@@ -57,15 +57,15 @@
           </td>
         </tr>
         <tr
-          class="hover:bg-gray-50"
+          class="hover:bg-gray-900"
           *ngFor="let food of filteredFoods; let i = index"
         >
-          <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
-          <td class="px-4 py-2 text-center text-gray-600">{{food.foodName}}</td>
-          <td class="px-4 py-2 text-center text-gray-600">{{food.category}}</td>
-          <td class="px-4 py-2 text-center text-gray-600">{{food.price}}</td>
-          <td class="px-4 py-2 text-center text-gray-600">{{food.foodSection}}</td>
-          <td class="px-4 py-2 text-center text-gray-600">
+          <td class="px-4 py-2 text-center text-gray-400">{{ i + 1 }}</td>
+          <td class="px-4 py-2 text-center text-gray-400">{{food.foodName}}</td>
+          <td class="px-4 py-2 text-center text-gray-400">{{food.category}}</td>
+          <td class="px-4 py-2 text-center text-gray-400">{{food.price}}</td>
+          <td class="px-4 py-2 text-center text-gray-400">{{food.foodSection}}</td>
+          <td class="px-4 py-2 text-center text-gray-400">
             <div class="flex items-center justify-center">
               <button class="px-3 py-1 rounded w-24"
               [ngClass]="{'text-green-500':food.status ==='Available', 'text-red-500': food.status === 'Not Available'}"
@@ -231,7 +231,7 @@
 </div>
 
 <!------------Pagination------------->
-<div class="flex justify-center pb-7">
+<div class="flex justify-center pt-7 pb-2">
   <app-pagination
     [currentPage]="currentPage"
     [totalPages]="totalPages"

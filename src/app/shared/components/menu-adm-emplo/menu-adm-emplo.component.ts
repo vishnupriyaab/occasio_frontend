@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
+import { AdminService } from '../../../core/services/admin/authService/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
 
 @Component({
   selector: 'app-menu-adm-emplo',

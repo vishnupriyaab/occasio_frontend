@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class EventServiceService {
-  private baseUrl = environment.baseUrl;
+    private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
   createEvent(eventData: FormData): Observable<EventResponse> {
     return this.http.post<EventResponse>( `${this.baseUrl}admin/addEvent`, eventData );

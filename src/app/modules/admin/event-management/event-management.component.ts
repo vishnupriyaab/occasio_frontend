@@ -15,7 +15,7 @@ import { PackageManagementComponent } from '../package-management/package-manage
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { TableComponent } from "../../../shared/components/table/table.component";
-import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
+import { AdminService } from '../../../core/services/admin/authService/admin.service';
 import { EventServiceService } from '../../../core/services/admin/eventService/event-service.service';
 
 @Component({

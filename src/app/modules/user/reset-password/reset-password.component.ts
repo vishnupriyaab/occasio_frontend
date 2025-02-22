@@ -12,7 +12,7 @@ import { passwordMatchValidator } from '../../../shared/validator/formValidator'
 import { AuthService } from '../../../core/services/users/auth.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import {jwtDecode} from 'jwt-decode'
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
 
 
 @Component({

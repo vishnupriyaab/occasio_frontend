@@ -11,9 +11,13 @@ export class PaginationComponent {
   @Input() currentPage: number = 1;
   @Input() totalPages: number = 1;
   @Input() totalItems: number = 0;
-  @Input() itemsPerPage: number = 10;
+  @Input() itemsPerPage: number = 5;
 
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+  
+  shouldShowPagination(): boolean {
+    return this.itemsPerPage > 0 && this.totalItems > 0;
+}
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {

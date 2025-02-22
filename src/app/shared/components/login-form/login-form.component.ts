@@ -16,8 +16,8 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { OtpComponent } from '../otp/otp.component';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
-import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
+import { AdminService } from '../../../core/services/admin/authService/admin.service';
 
 @Component({
   selector: 'app-login-form',

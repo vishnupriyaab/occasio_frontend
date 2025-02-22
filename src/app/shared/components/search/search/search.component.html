@@ -1,13 +1,14 @@
-  <div class="flex flex-wrap items-center gap-4 p-4">
+  <div class="flex flex-wrap items-center gap-3 pl-4 pr-4">
     <!-- Search Input -->
-    <div class="flex-grow min-w-[200px] max-w-[750px]">
+    <div class="flex-grow min-w-[100px] max-w-[450px]">
       <div class="flex items-center border border-gray-300 rounded-md shadow-md">
         <input
           type="text"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onInputChange($event)"
           [placeholder]="placeholder"
-          class="flex-grow p-2 text-sm text-gray-600 outline-none bg-transparent"
+          class="flex-grow p-2 text-sm text-black outline-none bg-transparent"
+          [ngClass]="isFoodManagement ? 'text-gray-100' : 'text-gray-900'"
         />
         <button class="px-4 text-gray-500 hover:text-black">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -20,7 +21,8 @@
       <select
         [(ngModel)]="filters.status"
         (change)="onFilterChange('status', $event)"
-        class="w-full p-2 text-sm text-gray-600 border border-gray-300 rounded-md shadow-md"
+        class="w-full p-2 text-sm text-black border border-gray-300  rounded-md shadow-md"
+        [ngClass]="isFoodManagement ? 'text-gray-400 bg-black' : 'text-gray-900'"
       >
         <option value="all">All Status</option>
         <option value="blocked">Blocked</option>
@@ -35,7 +37,7 @@
         <select
           [(ngModel)]="filters.price"
           (change)="onFilterChange('price', $event)"
-          class="w-full p-2 text-sm text-gray-600 border border-gray-300 rounded-md shadow-md"
+          class="w-full p-2 text-sm text-gray-400 bg-black border border-gray-300 rounded-md shadow-md"
         >
           <option value="all">All Prices</option>
           <option value="low">Low to High</option>
@@ -48,7 +50,7 @@
         <select
           [(ngModel)]="filters.category"
           (change)="onFilterChange('category', $event)"
-          class="w-full p-2 text-sm text-gray-600 border border-gray-300 rounded-md shadow-md"
+          class="w-full p-2 text-sm text-gray-400 bg-black border border-gray-300 rounded-md shadow-md"
         >
           <option value="all">All Categories</option>
           <option value="vegetarian">Vegetarian</option>
@@ -61,7 +63,7 @@
         <select
           [(ngModel)]="filters.session"
           (change)="onFilterChange('session', $event)"
-          class="w-full p-2 text-sm text-gray-600 border border-gray-300 rounded-md shadow-md"
+          class="w-full p-2 text-sm text-gray-400 bg-black border border-gray-300 rounded-md shadow-md"
         >
           <option value="all">All Sessions</option>
           <option value="welcome-drink">Welcome Drink</option>

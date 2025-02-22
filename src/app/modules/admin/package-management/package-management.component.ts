@@ -20,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router } from '@angular/router';
 import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 import { TableComponent } from '../../../shared/components/table/table.component';
+import { PackageServiceService } from '../../../core/services/admin/packageService/package-service.service';
 
 @Component({
   selector: 'app-package-management',
@@ -48,7 +49,7 @@ export class PackageManagementComponent {
 
   constructor(
     private fb: FormBuilder,
-    private packageAuthService: EventServiceService,
+    private packageAuthService: PackageServiceService,
     private toastService: ToastService,
     private router: Router,
     private sweetAlert: SweetAlertService
@@ -283,7 +284,7 @@ export class PackageManagementComponent {
         (response) => {
           // this.isLoading = true;
           console.log(response, 'responsseeeeeeeee');
-          if (response.statusCode === 201) {
+          if (response.statusCode === 200) {
             const toastOption: IToastOption = {
               severity: 'success-toast',
               summary: 'Success',

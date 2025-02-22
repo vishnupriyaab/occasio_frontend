@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FoodFilters,
   SearchComponent,
-} from '../search/search/search.component';
+} from '../../../shared/components/search/search/search.component';
 import { CommonModule } from '@angular/common';
-import { LoadingComponent } from '../loading/loading.component';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import {
   FormBuilder,
   FormGroup,
@@ -12,11 +12,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { noAllSpacesValidator } from '../../validator/formValidator';
+import { noAllSpacesValidator } from '../../../shared/validator/formValidator';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
-import { FoodServiceService } from '../../../core/services/food/food-service.service';
-import { PaginationComponent } from '../pagination/pagination.component';
+// import { FoodServiceService } from '../../../core/services/food/food-service.service';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { FoodServiceService } from '../../../core/services/employees/foodService/food-service.service';
 
 @Component({
   selector: 'app-food-management',
@@ -49,7 +50,7 @@ export class FoodManagementComponent implements OnInit {
   };
 
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 0;
   totalPages: number = 0;
 
@@ -156,7 +157,7 @@ export class FoodManagementComponent implements OnInit {
         next: (response) => {
           this.isLoading = true;
           console.log(response, 'response');
-          if (response.statusCode === 201) {
+          if (response.statusCode === 200) {
             const toastOption: IToastOption = {
               severity: 'success-toast',
               summary: 'Success',

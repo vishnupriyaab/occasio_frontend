@@ -136,6 +136,7 @@
 <!------------Searching input-------------->
 <div class="container">
   <app-search
+    [isFoodManagement]="false"
     placeholder="Search events..."
     (searchQuery)="onSearch($event)"
     (filterChange)="onFilterChange($event)"
@@ -153,7 +154,7 @@
 ></app-table>
 
 <!---------------Pagination------------------->
-<div class="flex justify-center pb-7">
+<div class="flex justify-center pt-7">
   <app-pagination
     [currentPage]="currentPage"
     [totalPages]="totalPages"

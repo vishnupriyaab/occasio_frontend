@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminService } from '../../../core/services/admin/AuthService/admin.service';
+import { AdminService } from '../../../core/services/admin/authService/admin.service';
 import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
@@ -22,7 +22,7 @@ export class ClientListingComponent implements OnInit {
   currentFilter: string = 'all';
 
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 0;
   totalPages: number = 0;
   constructor(

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from '../../../core/services/employees/auth-service.service';
+import { AuthServiceService } from '../../../core/services/employees/authService/auth-service.service';
 import { Employee } from '../../../core/models/employeeModel';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';

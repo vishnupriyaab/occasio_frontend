@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
-import { EventServiceService } from '../../../core/services/event-management/event-service.service';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
@@ -9,6 +8,7 @@ import { Feature, Package } from '../../../core/models/IPackageManagement';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { SweetAlertService } from '../../../core/services/common/sweetAlert/sweet-alert.service';
 import { FormsModule } from '@angular/forms';
+import { FeatureServiceService } from '../../../core/services/admin/featureService/feature-service.service';
 
 @Component({
   selector: 'app-package-more-info',
@@ -40,7 +40,7 @@ export class PackageMoreInfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private packageService: EventServiceService,
+    private packageService: FeatureServiceService,
     private toastService: ToastService,
     private sweetAlert: SweetAlertService
   ) {}
