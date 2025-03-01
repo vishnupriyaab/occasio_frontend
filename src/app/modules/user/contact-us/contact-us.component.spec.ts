@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReTableComponent } from './re-table.component';
+import { ContactUsComponent } from './contact-us.component';
 
-describe('ReTableComponent', () => {
-  let component: ReTableComponent;
-  let fixture: ComponentFixture<ReTableComponent>;
+describe('ContactUsComponent', () => {
+  let component: ContactUsComponent;
+  let fixture: ComponentFixture<ContactUsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReTableComponent]
+      imports: [ContactUsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReTableComponent);
+    fixture = TestBed.createComponent(ContactUsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

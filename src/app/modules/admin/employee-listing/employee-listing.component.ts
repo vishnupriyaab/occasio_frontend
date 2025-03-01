@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
-import { ReTableComponent } from '../../../shared/components/re-table/re-table.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { AdminService } from '../../../core/services/admin/authService/admin.service';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import IToastOption from '../../../core/models/IToastOptions';
+import { UserEmployeeListingComponent } from "../../../shared/components/user-employee-listing/user-employee-listing.component";
 
 @Component({
   selector: 'app-employee-listing',
-  imports: [SearchComponent, ReTableComponent, PaginationComponent],
+  imports: [SearchComponent, PaginationComponent, UserEmployeeListingComponent],
   templateUrl: './employee-listing.component.html',
   styleUrl: './employee-listing.component.css',
 })

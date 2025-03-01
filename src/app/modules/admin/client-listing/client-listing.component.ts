@@ -5,11 +5,11 @@ import IToastOption from '../../../core/models/IToastOptions';
 import { ToastService } from '../../../core/services/common/toaster/toast.service';
 import { SearchComponent } from '../../../shared/components/search/search/search.component';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
-import { ReTableComponent } from "../../../shared/components/re-table/re-table.component";
+import { UserEmployeeListingComponent } from "../../../shared/components/user-employee-listing/user-employee-listing.component";
 
 @Component({
   selector: 'app-client-listing',
-  imports: [CommonModule, SearchComponent, PaginationComponent, ReTableComponent],
+  imports: [CommonModule, SearchComponent, PaginationComponent, UserEmployeeListingComponent],
   templateUrl: './client-listing.component.html',
   styleUrl: './client-listing.component.css',
 })

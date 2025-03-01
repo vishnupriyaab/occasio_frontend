@@ -1,0 +1,120 @@
+<div class="container">
+  <app-user-scnd-nav></app-user-scnd-nav>
+</div>
+<div class="m-6">
+    <div class="inset-0 flex flex-col items-center justify-center">
+      <h1 class="text-4xl mb-4 font-kaushan text-yellow-600">Get In Touch</h1>
+      <div class="w-52 h-[1px] bg-gray-500 mb-4"></div>
+    </div>
+    <div class="pl-36 pr-36">
+        <div class="bg-gray-100/50 flex items-center rounded-lg justify-center min-h-screen p-6">
+        
+            <div class="bg-white shadow-lg rounded-lg p-2 md:p-12 w-full max-w-3xl">
+                <form class="space-y-2">
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">First & Last Name</label>
+                        <input type="text" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">Email Address</label>
+                        <input type="email" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">Phone Number</label>
+                        <input type="tel" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">Date of Event</label>
+                        <input type="date" class="w-full mb-2 text-gray-300 border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu text-sm md:text-base">Location of Event:</label>
+                        <div class="flex justify-between gap-3">
+                            <div>
+                                <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">District:</label>
+                                <input type="text" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                            </div>
+                            <div>
+                                <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">city:</label>
+                                <input type="text" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                            </div>
+                            <div>
+                                <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">Pincode:</label>
+                                <input type="number" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">Howmany guest are you anticipating? (Avrg)</label>
+                        <input type="number" class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                    </div>
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu text-sm md:text-base">Which area do you need our help with?</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="flex flex-col space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" id="venue" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                    <label for="venue" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Venue </label>
+                                </div>
+                                <!-----------------------dropdown-------------------------->
+                                <select id="venueDropdown" class="w-full border text-sm text-gray-700 border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400">
+                                    <option value="not_confirmed" class="text-sm text-gray-700">Not Confirmed</option>
+                                    <option value="open_ground" class="text-sm text-gray-700">Open Ground</option>
+                                    <option value="convention_center" class="text-sm text-gray-700">Convention Center</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="seating" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="seating" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Seating </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="food" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="food" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Food </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="decoration" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="decoration" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Decoration </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="sound" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="sound" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Sound & Entertainment </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="photography" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="photography" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Photography & Videography </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="miscellaneous" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="miscellaneous" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Miscellaneous </label>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="notSure" class="w-4 h-4 text-gray-500 border-gray-300 rounded focus:ring-gray-400">
+                                <label for="notSure" class="text-gray-500 font-KayPhoDu text-sm md:text-base"> Not sure, Let's Chat </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+        
+                    <!-- Additional Information
+                    <div>
+                        <label class="text-gray-500 font-KayPhoDu mb-1 text-sm md:text-base">
+                            Tell us more of how we can help, your vision, and any details you know now 
+                            <span class="text-gray-500 italic">(Optional)</span>
+                        </label>
+                        <textarea class="w-full border border-gray-300 p-1 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 h-28"></textarea>
+                    </div>
+         -->
+                    <!-- Submit Button -->
+                    <div class="flex justify-center">
+                        <button class="bg-gray-500 text-white px-6 py-1 rounded-md hover:bg-gray-600 transition duration-300">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

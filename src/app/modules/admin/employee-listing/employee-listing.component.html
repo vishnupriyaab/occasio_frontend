@@ -14,11 +14,13 @@
 
 <!----------------------client listing----------------------->
 
-<app-re-table
-  [users]="filteredEmployees"
-  [isClientList]="true"
-  (toggleBlockStatus)="toggleBlockStatus($event.userId, $event.status)"
-></app-re-table>
+
+<app-user-employee-listing
+[users]="filteredEmployees"
+[isClientList]="true"
+(toggleBlockStatus)="toggleBlockStatus($event.userId, $event.status)"
+></app-user-employee-listing>
+
 
 <!----------------------------------------------------------->
 <div class="flex justify-center pt-7">

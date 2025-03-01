@@ -12,10 +12,10 @@
             Image
           </th>
           <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Event Name
+            Package Name
           </th>
           <th class="px-4 py-2 text-center text-gray-700 font-semibold">
-            Packages
+            Features
           </th>
           <th class="px-4 py-2 text-center text-gray-700 font-semibold">
             Status
@@ -31,10 +31,7 @@
             No events found.
           </td>
         </tr>
-        <tr
-          class="hover:bg-gray-50"
-          *ngFor="let event of data; let i = index"
-        >
+        <tr class="hover:bg-gray-50" *ngFor="let event of data; let i = index">
           <td class="px-4 py-2 text-center text-gray-600">{{ i + 1 }}</td>
           <td class="px-4 py-2 text-center text-gray-600">
             <img
@@ -46,14 +43,39 @@
           <td class="px-4 py-2 text-center text-gray-600">
             {{ event.eventName }}
           </td>
-          
+
           <!------------------------PACKAGE DIV------------------------>
           <td class="px-4 py-2 text-center text-gray-600">
-            <button
+            <!-- <button
               (click)="packageVisibility(event._id)"
               class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
             >
               Available packages
+            </button> -->
+
+            <button
+              (click)="packageVisibility(event._id)"
+              class="bg-yellow-500 w-40 rounded-sm shadow-md text-white"
+              [disabled]="
+                event.eventName === 'Fullplanning & Design' ||
+                event.eventName === 'Customizable'
+              "
+              [ngClass]="{
+                'bg-gray-400 cursor-not-allowed':
+                  event.eventName === 'Fullplanning & Design' ||
+                  event.eventName === 'Customizable',
+                'bg-yellow-500': !(
+                  event.eventName === 'Fullplanning & Design' ||
+                  event.eventName === 'Customizable'
+                )
+              }"
+            >
+              {{
+                event.eventName === "Fullplanning & Design" ||
+                event.eventName === "Customizable"
+                  ? "Accessible to User"
+                  : "Available features"
+              }}
             </button>
           </td>
           <!------------------------------------------------------------->
@@ -62,7 +84,6 @@
             <div class="flex items-center justify-center">
               <button
                 (click)="blockStatus(event._id, event.isBlocked)"
-                
                 class="px-3 py-1 rounded w-20"
                 [ngClass]="
                   event.isBlocked

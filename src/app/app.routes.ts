@@ -23,6 +23,8 @@ import { userAuthGuard } from './core/guards/userAuthGuard/user-auth.guard';
 import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
 import { PackageListingComponent } from './modules/user/package-listing/package-listing.component';
 import { FoodManagementComponent } from './modules/Employee/food-management/food-management.component';
+import { KindWordsComponent } from './modules/user/kind-words/kind-words.component';
+import { ContactUsComponent } from './modules/user/contact-us/contact-us.component';
 
 export const routes: Routes = [
   //User-Side
@@ -66,6 +68,15 @@ export const routes: Routes = [
     path:'user-profile',
     component: UserProfileComponent,
     canActivate:[userAuthGuard]
+  },
+  {
+    path:'kind-words',
+    component: KindWordsComponent,
+    canActivate:[userAuthGuard]
+  },
+  {
+    path:'contact-us',
+    component: ContactUsComponent,
   },
 
   //Admin-Side
